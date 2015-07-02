@@ -1,0 +1,7 @@
+
+
+1.0.alpha-SNAPSHOT:
+    · Initial code import
+    · Tads2 game support through Jetty
+
+
