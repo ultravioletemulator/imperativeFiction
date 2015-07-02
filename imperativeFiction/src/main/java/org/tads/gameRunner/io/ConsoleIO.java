@@ -13,7 +13,7 @@ import org.tads.jetty.PlatformIO;
 public class ConsoleIO implements PlatformIO {
 
 	public void clear_screen() {
-		System.out.println("clear_screen");
+//		System.out.println("clear_screen");
 		try {
 			Runtime.getRuntime().exec("clear");
 		} catch (IOException e) {
@@ -39,8 +39,8 @@ public class ConsoleIO implements PlatformIO {
 
 	public void print_text(String s) {
 		System.out.print(s);
-		if (s != null && s.contains("\n"))
-			System.out.print(Ansi.ANSI_RESET);
+//		if (s != null && s.contains("\n"))
+//			System.out.print(Ansi.ANSI_RESET);
 	}
 
 	public String read_key() {
@@ -70,27 +70,27 @@ public class ConsoleIO implements PlatformIO {
 	}
 
 	public void set_out(OutputFormatter out) {
-		System.out.println("set_out " + out);
+//		System.out.println("set_out " + out);
 	}
 
 	public void set_status_string(String s, boolean left) {
-		System.out.println("set_status_string" + s + "left:" + left);
-		System.out.print(Ansi.RED);
+//		System.out.println("set_status_string" + s + "left:" + left);
+//		System.out.print(Ansi.RED);
 	}
 
 	public void set_style(int style, boolean turn_on) {
-		switch (style) {
-		case PlatformIO.BOLD:
-			System.console().printf(Ansi.BOLD);
-			break;
-		case PlatformIO.ITALIC:
-			System.console().printf(Ansi.ITALIC);
-			break;
-		default:
-			break;
-		}
-		System.out.println("set_style");
-		System.out.print(Ansi.CYAN);
+//		switch (style) {
+//		case PlatformIO.BOLD:
+//			System.console().printf(Ansi.BOLD);
+//			break;
+//		case PlatformIO.ITALIC:
+//			System.console().printf(Ansi.ITALIC);
+//			break;
+//		default:
+//			break;
+//		}
+//		System.out.println("set_style");
+//		System.out.print(Ansi.CYAN);
 	}
 
 	public int size_text(char c) {
