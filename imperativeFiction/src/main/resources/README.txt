@@ -1,7 +1,9 @@
-Imperative Fiction
-------------------
+Imperative Fiction "Space was not the final frontier"
+-----------------------------------------------------
 
-Is a Java Interactive Fiction game running engine currently supporting tads2 games using Jetty engine.
+
+
+Is a Cross Platform Java Interactive Fiction game running engine currently supporting tads2 games using Jetty engine.
 
 
 Project is available on github:
@@ -17,6 +19,9 @@ Project Jetty's website:
     Some work has been done to provide console support instead of jetty's applet support.
 
 
+Z-code games are supported using Zplet project
+
+GLULX engine provided By Zag
 
 
 
@@ -29,7 +34,9 @@ Requirements
 
 Program can be built using standard Maven compilation
 
-mvn clean compile package -DskipTests
+
+mvn clean compile assembly:single  package -DskipTests
+
 
 
 
@@ -37,3 +44,19 @@ Game Execution
 --------------
 
 java -jar target/imperativeFiction-1.0.alpha-SNAPSHOT.jar path/to/gameFile.gam
+
+
+
+
+
+Games
+-----
+
+To get games I recomend the Interactive Fiction Archive for those who aren't familiar with it.
+
+http://www.ifarchive.org/
+
+Lots of games are available on this site in many different formats, including tads2.
+
+
+

@@ -3,12 +3,10 @@ package org.tads.gameRunner;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.commons.io.FileUtils;
+import org.tads.engines.tads2.jetty.GameWindow;
+import org.tads.gameRunner.engine.Engine;
 import org.tads.gameRunner.core.GameFormat;
-import org.tads.gameRunner.io.ConsoleIO;
 import org.tads.gameRunner.core.TadsUtils;
-import org.tads.jetty.GameWindow;
-import org.tads.jetty.Jetty;
 
 /**
  * Created by developer on 7/1/15.
@@ -18,6 +16,7 @@ public class GameRunner {
 	private GameWindow _display = null;
 
 	public void runGame(String fileName) throws IOException {
+		System.out.println("runGame:" + fileName);
 		String[] fonts = new String[3];
 		String[] fg_colors = new String[3];
 		String[] bg_colors = new String[3];
@@ -42,21 +41,23 @@ public class GameRunner {
 		int[] font_sizes = { 0, 0, 0 };
 		_display = new GameWindow(fonts, font_sizes, fg_colors, bg_colors);
 		GameFormat format = TadsUtils.getFormat(fileName);
+		System.out.println("GameFormat:" + format);
 		File gameFile = new File(fileName);
-		switch (format) {
-		case tads2:
-			System.out.println("Running Jetty...");
-			Jetty tads2Interpreter = new Jetty(new ConsoleIO(), FileUtils.openInputStream(gameFile));
-			System.out.println("Loading Game:" + gameFile);
-			if (tads2Interpreter.load()) {
-				System.out.println("Running Game: " + gameFile);
-				tads2Interpreter.run();
-			}
-			break;
-		case tads3:
-			break;
-		default:
-			break;
-		}
+		Engine engine = EngineSelector.selectEngine(gameFile);
+		System.out.println("SelectedEngine:" + engine);
+		engine.run(gameFile);
+		/*
+		 * 
+		 * switch (format) { case tads2: System.out.println("Running Jetty...");
+		 * Jetty tads2Interpreter = new Jetty(new ConsoleIO(),
+		 * FileUtils.openInputStream(gameFile));
+		 * System.out.println("Loading Game:" + gameFile); if
+		 * (tads2Interpreter.load()) { System.out.println("Running Game: " +
+		 * gameFile); tads2Interpreter.run(); } break; case tads3: break; case
+		 * glulx: // /mnt/shared/software/textAdventures/games/2044.gam //Run
+		 * zag Main.main(new String[] { fileName }); break; case zcode5:
+		 * ZJApp.main(new String[] { fileName }); break; case zcode8:
+		 * ZJApp.main(new String[] { fileName }); break; default: break; }
+		 */
 	}
 }

@@ -14,6 +14,12 @@ public class TadsUtils {
 			format = GameFormat.tads2;
 		} else if (filename != null && filename.endsWith(GameFormat.tads3.getExtension())) {
 			format = GameFormat.tads3;
+		} else if (filename != null && filename.endsWith(GameFormat.glulx.getExtension())) {
+			format = GameFormat.glulx;
+		} else if (filename != null && filename.endsWith(GameFormat.zcode5.getExtension())) {
+			format = GameFormat.zcode5;
+		} else if (filename != null && filename.endsWith(GameFormat.zcode8.getExtension())) {
+			format = GameFormat.zcode8;
 		}
 		return format;
 	}

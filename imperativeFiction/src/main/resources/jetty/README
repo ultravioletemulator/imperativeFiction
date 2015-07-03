@@ -1,8 +1,8 @@
-This is the source code for org.tads.jetty.Jetty, my TADS 2 interpreter. For more
+This is the source code for org.tads.engines.jetty.Jetty, my TADS 2 interpreter. For more
 information, you should take a look at my webpage, which as of this
 writing is at http://www.drizzle.com/~dans/if/jetty/. 
 
-org.tads.jetty.Jetty is released with the understanding that people should feel free
+org.tads.engines.jetty.Jetty is released with the understanding that people should feel free
 to modify it, fix bugs, add features, whatever. If you find a bug or
 make an improvement I would appreciate if you let me know so I can
 update the main source, but it's not required. The specific license
@@ -16,7 +16,7 @@ and on my webpage mentioned above.
 
 Note that this does not include the source for the regexp package, which is
 by the Jakarta project, not by me. If you want that source (and you'll
-need it or the jarfile to compile org.tads.jetty.Jetty), you can get it at
+need it or the jarfile to compile org.tads.engines.jetty.Jetty), you can get it at
 http://jakarta.apache.org/regexp/index.html.
 
       -- Dan Shiovitz (dbs@cs.wisc.edu)

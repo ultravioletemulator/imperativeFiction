@@ -1,5 +1,56 @@
-Jetty
-    Fix consoleIO  set_style.
 
-Add More game engines.
+
+Gameplay
+--------
+	· Are game saves supported? Check it.
+
+	· Play full game searching for missing functionality.
+
+	· Game translation using google translator
+		https://cloud.google.com/translate/docs
+
+	· tab --> auto complete
+
+Engines
+-------
+
+	Tads2 
+		Jetty
+		    Fix consoleIO  set_style.
+
+	Tads3 
+		Develope Engine	
+
+	Other 
+		Add More game engines.
+		    Z-Machine:
+			Zmpp --> http://sourceforge.net/projects/zmpp/
+		    Glulx
+			Zag --> https://github.com/novalis/zag
+		ChooseYourStory
+			http://chooseyourstory.com/
+
+UI
+--
+	General UI i18n. Support eu & en.
+
+	Console UI
+		Add Scumm like interface for standard actions support.
+
+	Develop a Web Ui, thorugh a J2ee webapp, Javascript or even a Firefox addon.
+		https://developer.mozilla.org/es/docs/Java_in_Firefox_Extensions
+
+
+Extension
+	Asciimation
+		http://www.asciimation.co.nz/
+		Ascii art?¿
+
+
+
+Easter Eggs
+	 Telnet star Wars
+		telnet towel.blinkenlights.nl
+		http://lifehacker.com/373571/watch-star-wars-in-text-via-telnet
+		http://www.asciimation.co.nz/
 

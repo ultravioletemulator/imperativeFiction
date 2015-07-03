@@ -23,6 +23,18 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.tads</groupId>
+            <artifactId>zag</artifactId>
+            <version>1.0.alpha-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.tads</groupId>
+            <artifactId>zplet</artifactId>
+            <version>1.0.alpha-SNAPSHOT</version>
+        </dependency>
+
     </dependencies>
 
 
