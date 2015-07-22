@@ -326,7 +326,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="definition" minOccurs="1"
-                            maxOccurs="unbounded"/>
+                            maxOccurs="1"/>
                 <xs:element ref="artwork" minOccurs="0"
                             maxOccurs="1"/>
                 <xs:element ref="screenshots" minOccurs="0"
