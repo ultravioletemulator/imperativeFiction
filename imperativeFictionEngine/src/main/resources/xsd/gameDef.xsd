@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <!--
+    Inheritance in xml
+    http://www.w3schools.com/schema/el_extension.asp
+    -->
+
+    <xs:element name="word">
+        <xs:complexType>
+            <xs:attribute name="value" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="file">
+        <xs:complexType>
+            <xs:attribute name="path" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="image">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="file" minOccurs="1"
+                            maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="music">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="file" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="synonyms">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="word" minOccurs="1"
+                            maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="object" type="objectType"/>
+
+    <xs:complexType name="objectType">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element ref="supportedActions" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+        <xs:attribute name="size" type="xs:integer" use="required"/>
+        <xs:attribute name="status" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+
+    <xs:simpleType name="objectStatus">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="hidden"/>
+            <xs:enumeration value="visible"/>
+            <xs:enumeration value="broken"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="inventory">
+        <xs:sequence>
+            <xs:element ref="object" minOccurs="1"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="size" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="path">
+        <xs:complexContent>
+            <xs:extension base="objectType">
+
+                <xs:attribute name="direction" type="xs:string"
+                              use="required"/>
+                <xs:attribute name="toLocation" type="xs:string"
+                              use="required"/>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="placement">
+        <xs:attribute name="placement" type="xs:string"
+                      use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="door">
+        <xs:complexContent>
+            <xs:extension base="objectType">
+                <xs:attribute name="fromLocation" type="xs:string"
+                              use="required"/>
+                <xs:attribute name="toLocation" type="xs:string"
+                              use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="armour">
+        <xs:complexContent>
+            <xs:extension base="objectType">
+                <!-- How many damage units it protects per strike -->
+                <xs:attribute name="protection" type="xs:integer"
+                              use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="weapon">
+        <xs:complexContent>
+            <xs:extension base="objectType">
+                <!-- How many damage units it causes per strike -->
+                <xs:attribute name="damage" type="xs:integer" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="precondition">
+        <xs:sequence>
+
+            <xs:sequence>
+                <xs:element name="andCondition" type="xs:string"
+                            minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element name="orCondition" type="xs:string"
+                            minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"
+                      use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="personStatus">
+        <xs:sequence>
+            <xs:element name="precondition" type="precondition"></xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string"
+                      use="required"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="personStatuses">
+        <xs:sequence>
+            <xs:element name="personStatus" type="personStatus" minOccurs="0"
+                        maxOccurs="unbounded"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="hunger">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="hunger" type="xs:integer" use="required"/>
+        <!-- How many food units it consumes per move-->
+        <xs:attribute name="moves" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+
+    <xs:complexType name="person">
+        <xs:complexContent>
+            <xs:extension base="objectType">
+                <xs:sequence>
+
+                    <xs:element name="personStatuses" type="xs:string"/>
+
+                    <xs:element name="hunger" type="hunger"/>
+
+                    <xs:element name="armour" type="armour"/>
+                </xs:sequence>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="location">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:element name="goal">
+        <xs:complexType>
+
+            <xs:sequence>
+                <xs:element ref="image" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+            <!-- 1 main goal , 2 secondary -->
+            <xs:attribute name="name" type="xs:integer" use="required"/>
+            <xs:attribute name="Description" type="xs:integer" use="required"/>
+            <xs:attribute name="level" type="xs:integer" use="required"/>
+            <!-- weight of goal, to calculate progress in the game-->
+            <xs:attribute name="weight" type="xs:integer" use="required"/>
+
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="action">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="image" minOccurs="0"
+                            maxOccurs="1"/>
+                <xs:element ref="synonyms" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="locations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="location" type="location" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="supportedActions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="action" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="genericActions">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="action" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="automatedAction">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="precondition" type="precondition"
+                            minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element ref="action" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="timeBasedAction">
+        <xs:sequence>
+            <!-- Time is expressed in seconds -->
+            <xs:element name="time" type="xs:integer"
+                        minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="moves" type="xs:integer"
+                        minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element ref="action" minOccurs="1"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="automatedActions">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element ref="action" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="goals">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="goal" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="artwork">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="image" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="screenshots">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="image" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="definition">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="genericActions" minOccurs="1"
+                            maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="game">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="definition" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element ref="locations" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element ref="goals" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element ref="artwork" minOccurs="0"
+                            maxOccurs="1"/>
+                <xs:element ref="screenshots" minOccurs="0"
+                            maxOccurs="unbounded"/>
+                <xs:element ref="music" minOccurs="0"
+                            maxOccurs="1"/>
+            </xs:sequence>
+
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="version" type="xs:string" use="required"/>
+            <xs:attribute name="author" type="xs:string" use="required"/>
+            <xs:attribute name="enterprise" type="xs:string" use="required"/>
+            <xs:attribute name="licensing" type="xs:string" use="required"/>
+            <xs:attribute name="year" type="xs:string" use="required"/>
+            <xs:attribute name="language" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="gameState">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="location" type="location"/>
+                <xs:element name="inventory" type="inventory"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
+
+
+
