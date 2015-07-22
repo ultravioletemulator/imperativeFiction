@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../main/resources/xsd/gameDef.xsd"
+      name="testGame" author="Asier Alkorta" enterprise="None"
+      language="English" licensing="GPL v3" version="0.1-alpha" year="2015">
+    <definition>
+        <genericActions>
+            <action name="go">
+                <synonyms>
+                    <word value="walk"/>
+                    <word value="move"/>
+                    <word value="run"/>
+                </synonyms>
+            </action>
+            <action name="use">
+                <synonyms>
+                    <word value="manipulate"/>
+                </synonyms>
+            </action>
+            <action name="talk to">
+                <synonyms>
+                    <word value="chat with"/>
+                </synonyms>
+            </action>
+            <action name="view">
+                <synonyms>
+                    <word value="check"/>
+                    <word value="see"/>
+                    <word value="look at"/>
+                </synonyms>
+            </action>
+        </genericActions>
+        <locations>
+            <location name="mainLocation" description="main description">
+            </location>
+        </locations>
+        <goals>
+            <goal name="mainGoal" description="main goal" level="1"
+                  weight="1"></goal>
+        </goals>
+        <entryPointLocationName>mainLocation</entryPointLocationName>
+    </definition>
+
+    <artwork>
+        <image>
+            <file path="images/infocom.png"></file>
+        </image>
+    </artwork>
+    <screenshots>
+        <image>
+            <file path="images/infocom.png"></file>
+        </image>
+    </screenshots>
+    <music>
+        <file path="music/Deadman’sHand.mp3"/>
+    </music>
+    <description>
+        Test Game description
+    </description>
+</game>

@@ -1,3 +1,6 @@
+import junit.framework.Assert;
+import org.imperativeFiction.engine.GameEngine;
+import org.imperativeFiction.engine.GameException;
 import org.junit.Test;
 
 /**
@@ -5,8 +8,15 @@ import org.junit.Test;
  */
 public class TestEngine {
 
-
-
 	@Test
-	public void testEngine(){}
+	public void testEngine() {
+		String gameFileName = "/home/developer/caf/projects/tads/imperativeFictionEngine/src/test/resources/testGame.xml";
+		GameEngine engine = new GameEngine();
+		try {
+			engine.runGame(gameFileName);
+		} catch (GameException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
 }

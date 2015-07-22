@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <!--
     Inheritance in xml
@@ -40,7 +40,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="word" minOccurs="1"
-                            maxOccurs="1"/>
+                            maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -197,8 +197,8 @@
                             maxOccurs="unbounded"/>
             </xs:sequence>
             <!-- 1 main goal , 2 secondary -->
-            <xs:attribute name="name" type="xs:integer" use="required"/>
-            <xs:attribute name="Description" type="xs:integer" use="required"/>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="description" type="xs:string" use="required"/>
             <xs:attribute name="level" type="xs:integer" use="required"/>
             <!-- weight of goal, to calculate progress in the game-->
             <xs:attribute name="weight" type="xs:integer" use="required"/>
@@ -212,7 +212,7 @@
                 <xs:element ref="image" minOccurs="0"
                             maxOccurs="1"/>
                 <xs:element ref="synonyms" minOccurs="1"
-                            maxOccurs="unbounded"/>
+                            maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required"/>
         </xs:complexType>
@@ -313,6 +313,11 @@
             <xs:sequence>
                 <xs:element ref="genericActions" minOccurs="1"
                             maxOccurs="1"/>
+                <xs:element ref="locations" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element ref="goals" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element name="entryPointLocationName" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -322,15 +327,13 @@
             <xs:sequence>
                 <xs:element ref="definition" minOccurs="1"
                             maxOccurs="unbounded"/>
-                <xs:element ref="locations" minOccurs="1"
-                            maxOccurs="unbounded"/>
-                <xs:element ref="goals" minOccurs="1"
-                            maxOccurs="unbounded"/>
                 <xs:element ref="artwork" minOccurs="0"
                             maxOccurs="1"/>
                 <xs:element ref="screenshots" minOccurs="0"
                             maxOccurs="unbounded"/>
                 <xs:element ref="music" minOccurs="0"
+                            maxOccurs="1"/>
+                <xs:element name="description" type="xs:string" minOccurs="0"
                             maxOccurs="1"/>
             </xs:sequence>
 
@@ -341,6 +344,7 @@
             <xs:attribute name="licensing" type="xs:string" use="required"/>
             <xs:attribute name="year" type="xs:string" use="required"/>
             <xs:attribute name="language" type="xs:string" use="required"/>
+
         </xs:complexType>
     </xs:element>
 

@@ -29,9 +29,11 @@
 
     <logger name="org.impertiveFiction" level="DEBUG">
         <appender-ref ref="file"/>
+        <appender-ref ref="CONOSLE"/>
     </logger>
 
     <root level="WARN">
         <appender-ref ref="file"/>
+        <appender-ref ref="CONOSLE"/>
     </root>
 </configuration>

@@ -49,8 +49,16 @@ public class GameEngine {
 
 	public void executeGame(Game game) throws GameException {
 		if (game == null || (game != null && game.equals(""))) {
-			presentation.presentText("Executing game..." + game.getName() + " version:" + game.getVersion());
+			presentation.presentText("Could not load game:" + game);
+		} else {
+			presentation.presentText("******************************************************");
+			presentation.presentText("Executing game " + game.getName() + " version:" + game.getVersion() + "...");
+			presentation.presentText("Author:" + game.getAuthor());
 			presentation.presentText("License: " + game.getLicensing());
+			presentation.presentText("******************************************************");
+			presentation.presentText(game.getName());
+			presentation.presentText(game.getDescription());
+			presentation.presentText("******************************************************");
 			gameExecutor.executeGame(game);
 		}
 	}
