@@ -1,8 +1,8 @@
 package org.imperativeFiction.engine;
 
 import org.imperativeFiction.generated.Game;
-import org.imperativeFiction.presentations.ConsolePersentation;
 import org.imperativeFiction.presentations.Presentation;
+import org.imperativeFiction.presentations.SwingPresentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +18,6 @@ public class GameEngine {
 
 	private Logger logger = LoggerFactory.getLogger(GameEngine.class);
 	GameExecutor gameExecutor = new GameExecutor();
-	Presentation presentation = new ConsolePersentation();
 
 	public void runGame(String fileName) throws GameException {
 		logger.debug("Running game..." + fileName);
@@ -49,16 +48,16 @@ public class GameEngine {
 
 	public void executeGame(Game game) throws GameException {
 		if (game == null || (game != null && game.equals(""))) {
-			presentation.presentText("Could not load game:" + game);
+			System.out.println("Could not load game:" + game);
 		} else {
-			presentation.presentText("******************************************************");
-			presentation.presentText("Executing game " + game.getName() + " version:" + game.getVersion() + "...");
-			presentation.presentText("Author:" + game.getAuthor());
-			presentation.presentText("License: " + game.getLicensing());
-			presentation.presentText("******************************************************");
-			presentation.presentText(game.getName());
-			presentation.presentText(game.getDescription());
-			presentation.presentText("******************************************************");
+			System.out.println("******************************************************");
+			System.out.println("Executing game " + game.getName() + " version:" + game.getVersion() + "...");
+			System.out.println("Author:" + game.getAuthor());
+			System.out.println("License: " + game.getLicensing());
+			System.out.println("******************************************************");
+			System.out.println(game.getName());
+			System.out.println(game.getDescription());
+			System.out.println("******************************************************");
 			gameExecutor.executeGame(game);
 		}
 	}

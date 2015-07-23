@@ -19,4 +19,16 @@ public class TestEngine {
 			Assert.fail();
 		}
 	}
+
+	@Test
+	public void testMovements() {
+		String gameFileName = "/home/developer/caf/projects/tads/imperativeFictionEngine/src/test/resources/caveCrawlerMovementTest.xml";
+		GameEngine engine = new GameEngine();
+		try {
+			engine.runGame(gameFileName);
+		} catch (GameException e) {
+			e.printStackTrace();
+			Assert.fail();
+		}
+	}
 }

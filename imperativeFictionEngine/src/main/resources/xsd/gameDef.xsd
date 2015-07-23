@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
     <!--
     Inheritance in xml
     http://www.w3schools.com/schema/el_extension.asp
@@ -48,6 +49,20 @@
 
     <xs:element name="object" type="objectType"/>
 
+    <xs:element name="gameObjects">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="object" type="objectType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="gameWeapons">
+        <xs:sequence>
+            <xs:element name="weapon" type="weaponType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
     <xs:complexType name="objectType">
         <xs:sequence>
             <xs:element ref="image" minOccurs="1"
@@ -58,7 +73,7 @@
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="description" type="xs:string" use="required"/>
         <xs:attribute name="size" type="xs:integer" use="required"/>
-        <xs:attribute name="status" type="xs:integer" use="required"/>
+        <xs:attribute name="status" type="objectStatus" use="required"/>
     </xs:complexType>
 
 
@@ -67,28 +82,30 @@
             <xs:enumeration value="hidden"/>
             <xs:enumeration value="visible"/>
             <xs:enumeration value="broken"/>
+            <xs:enumeration value="open"/>
+            <xs:enumeration value="closed"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="movements">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="north"/>
+            <xs:enumeration value="south"/>
+            <xs:enumeration value="east"/>
+            <xs:enumeration value="west"/>
+            <xs:enumeration value="northeast"/>
+            <xs:enumeration value="northwest"/>
+            <xs:enumeration value="southeast"/>
+            <xs:enumeration value="southwest"/>
         </xs:restriction>
     </xs:simpleType>
 
     <xs:complexType name="inventory">
         <xs:sequence>
-            <xs:element ref="object" minOccurs="1"
-                        maxOccurs="1"/>
+            <xs:element name="objectName" minOccurs="0"
+                        maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="size" type="xs:integer" use="required"/>
-    </xs:complexType>
-
-    <xs:complexType name="path">
-        <xs:complexContent>
-            <xs:extension base="objectType">
-
-                <xs:attribute name="direction" type="xs:string"
-                              use="required"/>
-                <xs:attribute name="toLocation" type="xs:string"
-                              use="required"/>
-
-            </xs:extension>
-        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="placement">
@@ -96,18 +113,98 @@
                       use="required"/>
     </xs:complexType>
 
+    <!--
+        <xs:complexType name="boundary">
+            <xs:complexContent>
+                <xs:extension base="objectType">
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    -->
+
+    <!--
+    <xs:complexType name="boundary">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element ref="supportedActions" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+    </xs:complexType>
+
+
     <xs:complexType name="door">
         <xs:complexContent>
-            <xs:extension base="objectType">
-                <xs:attribute name="fromLocation" type="xs:string"
-                              use="required"/>
-                <xs:attribute name="toLocation" type="xs:string"
-                              use="required"/>
+            <xs:extension base="boundadry">
+                <xs:attribute name="status" type="objectStatus"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="armour">
+-->
+    <!-- Boundaries -->
+    <xs:complexType name="path">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element ref="supportedActions" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+        <xs:attribute name="toLocation" type="xs:string"
+                      use="required"/>
+        <xs:attribute name="fromLocation" type="xs:string"
+                      use="required"/>
+
+    </xs:complexType>
+
+
+    <xs:complexType name="door">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element ref="supportedActions" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+        <xs:attribute name="toLocation" type="xs:string"
+                      use="required"/>
+        <xs:attribute name="fromLocation" type="xs:string"
+                      use="required"/>
+
+        <xs:attribute name="status" type="objectStatus"/>
+    </xs:complexType>
+
+    <xs:complexType name="wall">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element ref="supportedActions" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="emptyBoundary">
+        <xs:sequence>
+            <xs:element ref="image" minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element ref="supportedActions" minOccurs="0"
+                        maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="description" type="xs:string" use="required"/>
+    </xs:complexType>
+
+
+    <!-- armours -->
+
+    <xs:complexType name="armourType">
         <xs:complexContent>
             <xs:extension base="objectType">
                 <!-- How many damage units it protects per strike -->
@@ -117,7 +214,8 @@
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="weapon">
+    <!-- weapons -->
+    <xs:complexType name="weaponType">
         <xs:complexContent>
             <xs:extension base="objectType">
                 <!-- How many damage units it causes per strike -->
@@ -159,7 +257,7 @@
     <xs:complexType name="hunger">
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="hunger" type="xs:integer" use="required"/>
-        <!-- How many food units it consumes per move-->
+        <!-- How many food units it consumes per go-->
         <xs:attribute name="moves" type="xs:integer" use="required"/>
     </xs:complexType>
 
@@ -173,20 +271,38 @@
 
                     <xs:element name="hunger" type="hunger"/>
 
-                    <xs:element name="armour" type="armour"/>
+                    <xs:element name="armour" type="armourType"/>
                 </xs:sequence>
 
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
+
     <xs:complexType name="location">
         <xs:sequence>
             <xs:element ref="image" minOccurs="0"
                         maxOccurs="unbounded"/>
+            <xs:element name="north" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="south" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="east" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="west" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="northeast" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="northwest" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="southeast" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="southwest" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" use="required"/>
         <xs:attribute name="description" type="xs:string" use="required"/>
+
     </xs:complexType>
 
     <xs:element name="goal">
@@ -215,6 +331,16 @@
                             maxOccurs="1"/>
             </xs:sequence>
             <xs:attribute name="name" type="xs:string" use="required"/>
+            <xs:attribute name="basicAction" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="actionResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="response" type="xs:string"/>
+            </xs:sequence>
         </xs:complexType>
     </xs:element>
 
@@ -240,6 +366,16 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="action" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
+    <xs:element name="boundaries">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="boundary" type="boundary" minOccurs="1"
                             maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
@@ -308,19 +444,42 @@
         </xs:complexType>
     </xs:element>
 
+
     <xs:element name="definition">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="genericActions" minOccurs="1"
                             maxOccurs="1"/>
+                <xs:element ref="boundaries" minOccurs="1"
+                            maxOccurs="1"/>
                 <xs:element ref="locations" minOccurs="1"
-                            maxOccurs="unbounded"/>
+                            maxOccurs="1"/>
                 <xs:element ref="goals" minOccurs="1"
                             maxOccurs="unbounded"/>
-                <xs:element name="entryPointLocationName" type="xs:string"/>
+                <xs:element ref="gameObjects" minOccurs="1"
+                            maxOccurs="unbounded"/>
+                <xs:element name="gameWeapons" type="gameWeapons" minOccurs="1"
+                            maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+
+    <xs:complexType name="initialization">
+        <xs:sequence>
+            <!-- character initialization -->
+            <xs:element name="life" type="xs:integer"
+                        minOccurs="0"
+                        maxOccurs="1"/>
+            <xs:element name="inventory" type="inventory"
+                        minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="initialLocationName" type="xs:string"
+                        minOccurs="1"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
 
     <xs:element name="game">
         <xs:complexType>
@@ -335,6 +494,9 @@
                             maxOccurs="1"/>
                 <xs:element name="description" type="xs:string" minOccurs="0"
                             maxOccurs="1"/>
+                <xs:element name="initialization" type="initialization"
+                            minOccurs="1"
+                            maxOccurs="1"/>
             </xs:sequence>
 
             <xs:attribute name="name" type="xs:string" use="required"/>
@@ -348,11 +510,28 @@
         </xs:complexType>
     </xs:element>
 
+
+    <xs:complexType name="characterState">
+        <xs:sequence>
+            <xs:element name="life" type="xs:integer"
+                        minOccurs="1"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:complexType name="character">
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="life" type="xs:integer" use="required"/>
+    </xs:complexType>
+
+
     <xs:element name="gameState">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="location" type="location"/>
                 <xs:element name="inventory" type="inventory"/>
+                <xs:element name="characterState" type="characterState"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

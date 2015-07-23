@@ -35,10 +35,25 @@
             </location>
         </locations>
         <goals>
-            <goal name="mainGoal" description="main goal" level="1"
-                  weight="1"></goal>
+            <goal name="gameFinished" description="Game finished" level="1"
+                  weight="100"></goal>
         </goals>
-        <entryPointLocationName>mainLocation</entryPointLocationName>
+        <gameObjects>
+            <object name="finishDoorKey" description="Game end door Key"
+                    size="1" status="visible">
+                <image>
+                    <file path="images/key.jpeg"/>
+                </image>
+            </object>
+        </gameObjects>
+        <gameWeapons>
+            <weapon name="whip" description="Indiana Jones like whip" size="0"
+                    status="visible" damage="1">
+                <image>
+                    <file path="images/whip.jpeg"/>
+                </image>
+            </weapon>
+        </gameWeapons>
     </definition>
 
     <artwork>
@@ -52,9 +67,16 @@
         </image>
     </screenshots>
     <music>
-        <file path="music/Deadman’sHand.mp3"/>
+        <file path="music/DeadmansHand.mp3"/>
     </music>
     <description>
         Test Game description
     </description>
+    <initialization>
+        <life>100</life>
+        <inventory size="100">
+            <objectName>whip</objectName>
+        </inventory>
+        <initialLocationName>mainLocation</initialLocationName>
+    </initialization>
 </game>

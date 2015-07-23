@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<game xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="../../main/resources/xsd/gameDef.xsd"
+      name="caveCrawlerMovementTest" author="Asier Alkorta" enterprise="None"
+      language="English" licensing="GPL v3" version="0.1-alpha" year="2015">
+    <definition>
+        <genericActions>
+            <action name="go" basicAction="go">
+                <synonyms>
+                    <word value="walk"/>
+                    <word value="move"/>
+                    <word value="run"/>
+                </synonyms>
+            </action>
+            <action name="use" basicAction="use">
+                <synonyms>
+                    <word value="manipulate"/>
+                </synonyms>
+            </action>
+            <action name="talk to" basicAction="talk">
+                <synonyms>
+                    <word value="chat with"/>
+                </synonyms>
+            </action>
+            <action name="view" basicAction="examine">
+                <synonyms>
+                    <word value="check"/>
+                    <word value="see"/>
+                    <word value="look at"/>
+                </synonyms>
+            </action>
+        </genericActions>
+        <boundaries>
+            <boundary name="mlNorthDoor"
+                      description="Main location north door"></boundary>
+        </boundaries>
+
+
+        <locations>
+            <location name="mainLocation"
+                      description="You are in the main location">
+                <north>mlNorthDoor</north>
+                <south>mlSouthDoor</south>
+                <east>mlEastDoor</east>
+                <west>mlWestDoor</west>
+                <northeast>emptyBoundary</northeast>
+                <northwest>emptyBoundary</northwest>
+                <southeast>emptyBoundary</southeast>
+                <southwest>emptyBoundary</southwest>
+            </location>
+
+            <location name="northLocation"
+                      description="This is the north location">
+                <north>wall</north>
+                <south>mlNorthDoor</south>
+                <east>wall</east>
+                <west>wall</west>
+                <northeast>emptyBoundary</northeast>
+                <northwest>emptyBoundary</northwest>
+                <southeast>emptyBoundary</southeast>
+                <southwest>emptyBoundary</southwest>
+            </location>
+            <location name="southLocation"
+                      description="This is the south location">
+                <north>mlSouthDoor</north>
+                <south>wall</south>
+                <east>wall</east>
+                <west>wall</west>
+                <northeast>emptyBoundary</northeast>
+                <northwest>emptyBoundary</northwest>
+                <southeast>emptyBoundary</southeast>
+                <southwest>emptyBoundary</southwest>
+            </location>
+
+            <location name="eastLocation"
+                      description="This is the east location">
+                <north>wall</north>
+                <south>wall</south>
+                <east>wall</east>
+                <west>mlEastDoor</west>
+                <northeast>emptyBoundary</northeast>
+                <northwest>emptyBoundary</northwest>
+                <southeast>emptyBoundary</southeast>
+                <southwest>emptyBoundary</southwest>
+            </location>
+            <location name="westLocation"
+                      description="This is the west location">
+                <north>wall</north>
+                <south>wall</south>
+                <east>mlWestDoor</east>
+                <west>wall</west>
+                <northeast>emptyBoundary</northeast>
+                <northwest>emptyBoundary</northwest>
+                <southeast>emptyBoundary</southeast>
+                <southwest>emptyBoundary</southwest>
+            </location>
+        </locations>
+        <goals>
+            <goal name="gameFinished" description="Game finished" level="1"
+                  weight="100"></goal>
+        </goals>
+        <gameObjects>
+
+            <object name="finishDoorKey" description="Game end door Key"
+                    size="1" status="visible">
+                <image>
+                    <file path="images/key.jpeg"/>
+                </image>
+            </object>
+        </gameObjects>
+        <gameWeapons>
+            <weapon name="whip" description="Indiana Jones like whip" size="0"
+                    status="visible" damage="1">
+                <image>
+                    <file path="images/whip.jpeg"/>
+                </image>
+            </weapon>
+        </gameWeapons>
+    </definition>
+
+    <artwork>
+        <image>
+            <file path="images/infocom.png"></file>
+        </image>
+    </artwork>
+    <screenshots>
+        <image>
+            <file path="images/infocom.png"></file>
+        </image>
+    </screenshots>
+    <music>
+        <file path="music/DeadmansHand.mp3"/>
+    </music>
+    <description>
+        cave Crawler Movement Test
+    </description>
+    <initialization>
+        <life>100</life>
+        <inventory size="100">
+            <objectName>whip</objectName>
+        </inventory>
+        <initialLocationName>mainLocation</initialLocationName>
+    </initialization>
+</game>
