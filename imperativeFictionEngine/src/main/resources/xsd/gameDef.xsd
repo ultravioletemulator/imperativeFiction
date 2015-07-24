@@ -3,7 +3,7 @@
            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
 
            jaxb:version="2.1"
-           >
+        >
 
 
     <!--
@@ -128,91 +128,49 @@
     </xs:complexType>
 
     <!-- -->
-        <xs:complexType name="boundary">
-            <xs:complexContent>
-                <xs:extension base="objectType">
-                </xs:extension>
-            </xs:complexContent>
-        </xs:complexType>
-
-
-    <!--
     <xs:complexType name="boundary">
-        <xs:sequence>
-            <xs:element ref="image" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element ref="supportedActions" minOccurs="0"
-                        maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="description" type="xs:string" use="required"/>
+        <xs:complexContent>
+            <xs:extension base="objectType">
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <!-- Boundaries -->
+    <xs:complexType name="path">
+
+        <xs:complexContent>
+            <xs:extension base="boundary">
+                <xs:attribute name="toLocation" type="xs:string"
+                              use="required"/>
+                <xs:attribute name="fromLocation" type="xs:string"
+                              use="required"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
 
     <xs:complexType name="door">
         <xs:complexContent>
-            <xs:extension base="boundadry">
-                <xs:attribute name="status" type="objectStatus"/>
+            <xs:extension base="boundary">
+                <xs:attribute name="toLocation" type="xs:string"
+                              use="required"/>
+                <xs:attribute name="fromLocation" type="xs:string"
+                              use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
--->
-    <!-- Boundaries -->
-    <xs:complexType name="path">
-        <xs:sequence>
-            <xs:element ref="image" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element ref="supportedActions" minOccurs="0"
-                        maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="description" type="xs:string" use="required"/>
-        <xs:attribute name="toLocation" type="xs:string"
-                      use="required"/>
-        <xs:attribute name="fromLocation" type="xs:string"
-                      use="required"/>
-
-    </xs:complexType>
-
-
-    <xs:complexType name="door">
-        <xs:sequence>
-            <xs:element ref="image" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element ref="supportedActions" minOccurs="0"
-                        maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="description" type="xs:string" use="required"/>
-        <xs:attribute name="toLocation" type="xs:string"
-                      use="required"/>
-        <xs:attribute name="fromLocation" type="xs:string"
-                      use="required"/>
-
-        <xs:attribute name="status" type="objectStatus"/>
-    </xs:complexType>
-
     <xs:complexType name="wall">
-        <xs:sequence>
-            <xs:element ref="image" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element ref="supportedActions" minOccurs="0"
-                        maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="description" type="xs:string" use="required"/>
+        <xs:complexContent>
+            <xs:extension base="boundary"></xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="emptyBoundary">
-        <xs:sequence>
-            <xs:element ref="image" minOccurs="0"
-                        maxOccurs="1"/>
-            <xs:element ref="supportedActions" minOccurs="0"
-                        maxOccurs="1"/>
-        </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="description" type="xs:string" use="required"/>
+        <xs:complexContent>
+            <xs:extension base="boundary"></xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
 
@@ -280,14 +238,10 @@
         <xs:complexContent>
             <xs:extension base="objectType">
                 <xs:sequence>
-
                     <xs:element name="personStatuses" type="xs:string"/>
-
                     <xs:element name="hunger" type="hunger"/>
-
                     <xs:element name="armour" type="armourType"/>
                 </xs:sequence>
-
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
