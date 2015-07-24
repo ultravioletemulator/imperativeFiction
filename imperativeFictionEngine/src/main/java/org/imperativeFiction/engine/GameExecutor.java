@@ -29,6 +29,7 @@ public class GameExecutor {
 	static ObjectFactory factory = new ObjectFactory();
 	static Inventory inventory = null;
 	static GameState gameState = null;
+	static CommandParser parser = new CommandParser();
 	CharacterState characterState = factory.createCharacterState();
 
 	public static ObjectFactory getFactory() {
@@ -74,7 +75,7 @@ public class GameExecutor {
 		while (!finished) {
 			String command = presentation.readCommand();
 			try {
-				GameAction gAction = GameUtils.parseCommand(runningGame.getDefinition().getGenericActions(), command);
+				GameAction gAction = parser.parseCommand(runningGame.getDefinition().getGenericActions(), command);
 				ActionResponse response = executeAction(gAction);
 				presentation.presentText(response.getResponse());
 				presentation.presentText(gameState.getLocation().getDescription());
