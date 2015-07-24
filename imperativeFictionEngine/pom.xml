@@ -36,6 +36,26 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-commons-lang</artifactId>
+            <version>2.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-tools</artifactId>
+            <version>0.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics-runtime</artifactId>
+            <version>0.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jvnet.jaxb2_commons</groupId>
+            <artifactId>jaxb2-basics</artifactId>
+            <version>0.9.4</version>
+        </dependency>
 
     </dependencies>
 
@@ -50,16 +70,55 @@
                             <goal>generate</goal>
                         </goals>
                         <configuration>
-                            <schemaDirectory>src/main/resources/xsd
-                            </schemaDirectory>
-                            <generatePackage>org.imperativeFiction.generated
-                            </generatePackage>
-                            <generateDirectory>
-                                src/main/java/
-                            </generateDirectory>
+                            <extension>true</extension>
+                            <args>
+                                <arg>-XtoString</arg>
+                                <arg>-Xequals</arg>
+                                <arg>-Xinheritance</arg>
+                                <arg>-Xsetters</arg>
+                            </args>
+                            <schemaDirectory>src/main/resources/xsd</schemaDirectory>
+                            <generatePackage>org.imperativeFiction.generated</generatePackage>
+                            <generateDirectory>src/main/java/</generateDirectory>
+                            <bindingIncludes>
+                                <include>src/main/resources/xsd/bindings.xjb</include>
+                            </bindingIncludes>
+                            <plugins>
+                                <plugin>
+                                    <groupId>org.jvnet.jaxb2_commons</groupId>
+                                    <artifactId>jaxb2-basics-annotate</artifactId>
+                                    <version>1.0.1</version>
+                                </plugin>
+                                <plugin>
+                                    <groupId>org.jvnet.jaxb2_commons</groupId>
+                                    <artifactId>jaxb2-basics</artifactId>
+                                    <version>0.9.4</version>
+                                </plugin>
+
+
+                            </plugins>
+
                         </configuration>
                     </execution>
                 </executions>
+                <dependencies>
+                    <!-- This dependency is required to execute the plugin -->
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics-tools</artifactId>
+                        <version>0.9.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-basics-runtime</artifactId>
+                        <version>0.9.4</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jvnet.jaxb2_commons</groupId>
+                        <artifactId>jaxb2-commons-lang</artifactId>
+                        <version>2.3</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
 

@@ -1,5 +1,19 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+
+           jaxb:version="2.1"
+           >
+
+
+    <!--
+     <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+           xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+           jaxb:version="2.1"
+           jaxb:extensionBindingPrefixes="inheritance">
+
+    -->
 
     <!--
     Inheritance in xml
@@ -113,14 +127,14 @@
                       use="required"/>
     </xs:complexType>
 
-    <!--
+    <!-- -->
         <xs:complexType name="boundary">
             <xs:complexContent>
                 <xs:extension base="objectType">
                 </xs:extension>
             </xs:complexContent>
         </xs:complexType>
-    -->
+
 
     <!--
     <xs:complexType name="boundary">

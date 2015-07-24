@@ -1,0 +1,75 @@
+<!--  Activation: -Xinheritance -->
+<jaxb:bindings
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd "
+
+        version="2.1">
+
+<!-- jaxb:extensionBindingPrefixes="xjc" -->
+
+    <!--
+
+    <jaxb:bindings
+        xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:inheritance="http://jaxb2-commons.dev.java.net/basic/inheritance"
+        jaxb:extensionBindingPrefixes="inheritance"
+        jaxb:version="2.1">
+
+
+    <jaxb:bindings schemaLocation="schema.xsd" node="/xsd:schema">
+        <jaxb:bindings node="xsd:simpleType[@name='issueJIIB38Type']">
+            <inheritance:implements>java.lang.Cloneable</inheritance:implements>
+        </jaxb:bindings>
+        <jaxb:bindings node="xsd:element[@name='issueJIIB38']">
+            <jaxb:class/>
+            <inheritance:implements>java.lang.Cloneable</inheritance:implements>
+        </jaxb:bindings>
+
+    </jaxb:bindings>
+-->
+
+
+    <jaxb:bindings schemaLocation="gameDef.xsd" node="/xs:schema">
+        <jaxb:bindings node="xs:complexType[@name='objectType']">
+            <inheritance:implements>org.imperativeFiction.ObjectTypeI</inheritance:implements>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='armourType']">
+            <inheritance:implements>org.imperativeFiction.ObjectTypeI</inheritance:implements>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='weaponType']">
+            <inheritance:implements>org.imperativeFiction.ObjectTypeI</inheritance:implements>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="xs:element[@name='object']">
+            <jaxb:class/>
+            <inheritance:implements>java.lang.Cloneable</inheritance:implements>
+        </jaxb:bindings>
+
+        <!-- boundaries -->
+        <jaxb:bindings node="xs:complexType[@name='boundary']">
+            <inheritance:implements>org.imperativeFiction.BoundaryI</inheritance:implements>
+        </jaxb:bindings>
+
+        <jaxb:bindings node="xs:complexType[@name='path']">
+            <inheritance:implements>org.imperativeFiction.BoundaryI</inheritance:implements>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='door']">
+            <inheritance:implements>org.imperativeFiction.BoundaryI</inheritance:implements>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='wall']">
+            <inheritance:implements>org.imperativeFiction.BoundaryI</inheritance:implements>
+        </jaxb:bindings>
+        <jaxb:bindings node="xs:complexType[@name='person']">
+            <inheritance:implements>org.imperativeFiction.CharacterI</inheritance:implements>
+        </jaxb:bindings>
+
+        <!-- Character -->
+
+    </jaxb:bindings>
+
+
+
+</jaxb:bindings>
