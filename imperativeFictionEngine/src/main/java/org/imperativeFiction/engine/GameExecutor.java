@@ -102,6 +102,7 @@ public class GameExecutor {
 		System.out.println("Action =" + gAction.getAction().getName());
 		if (gAction != null) {
 			ActionTypes actionType = ActionTypes.valueOf(gAction.getAction().getBasicAction());
+			System.out.println("Action type:" + actionType);
 			if (actionType != null) {
 				switch (actionType) {
 				case open:
@@ -128,7 +129,10 @@ public class GameExecutor {
 				case use:
 					throw new GameException(new NotImplementedException());
 				case quit:
-					throw new GameException("Game Finished");
+					//throw new GameException("Game Finished");
+					response = new ActionResponse();
+					response.setResponse("Exit game.");
+					response.setQuit(true);
 				default:
 					break;
 				}

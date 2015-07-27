@@ -29,6 +29,11 @@
                     <word value="look at"/>
                 </synonyms>
             </action>
+            <action name="quit" basicAction="quit">
+                <synonyms>
+                    <word value="exit"/>
+                </synonyms>
+            </action>
         </genericActions>
 
         <doors>

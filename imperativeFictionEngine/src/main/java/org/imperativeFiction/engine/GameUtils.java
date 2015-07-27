@@ -227,7 +227,7 @@ public class GameUtils {
 	}
 
 	public static ActionResponse mergeActionResponses(ActionResponse r1, ActionResponse r2) {
-		System.out.println("Act1:" + r1 + "\nAct2" + r2);
+		//		System.out.println("Act1:" + r1 + "\nAct2" + r2);
 		if (r1 == null && r2 == null)
 			return null;
 		else if (r1 != null && r2 == null)
@@ -237,7 +237,7 @@ public class GameUtils {
 		else {
 			ActionResponse resp = new ActionResponse();
 			resp.setResponse(r1.getResponse() + "\n" + r2.getResponse());
-			System.out.println("Gor merged response: " + resp);
+			//			System.out.println("Gor merged response: " + resp);
 			return resp;
 		}
 	}

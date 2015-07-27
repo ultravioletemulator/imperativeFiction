@@ -24,38 +24,40 @@ public class MovementUtils {
 			String param = gAction.getParameters() != null ? gAction.getParameters().get(0) : null;
 			System.out.println("Movement:" + param);
 			Movements movement = param != null ? Movements.valueOf(param.toUpperCase()) : null;
-			switch (movement) {
-			case NORTH:
-				System.out.println("North..." + location);
-				boundary = GameUtils.getDoor(location.getNorth());
-				break;
-			case SOUTH:
-				boundary = GameUtils.getDoor(location.getSouth());
-				break;
-			case EAST:
-				boundary = GameUtils.getDoor(location.getEast());
-				break;
-			case WEST:
-				boundary = GameUtils.getDoor(location.getWest());
-				break;
-			case NORTHEAST:
-				boundary = GameUtils.getDoor(location.getNortheast());
-				break;
-			case NORTHWEST:
-				boundary = GameUtils.getDoor(location.getNorthwest());
-				break;
-			case SOUTHEAST:
-				boundary = GameUtils.getDoor(location.getSoutheast());
-				break;
-			case SOUTHWEST:
-				boundary = GameUtils.getDoor(location.getSouthwest());
-				break;
-			default:
-				response.setResponse("Could not go to the " + param);
-				break;
+			if (movement != null) {
+				switch (movement) {
+				case NORTH:
+					System.out.println("North..." + location);
+					boundary = GameUtils.getDoor(location.getNorth());
+					break;
+				case SOUTH:
+					boundary = GameUtils.getDoor(location.getSouth());
+					break;
+				case EAST:
+					boundary = GameUtils.getDoor(location.getEast());
+					break;
+				case WEST:
+					boundary = GameUtils.getDoor(location.getWest());
+					break;
+				case NORTHEAST:
+					boundary = GameUtils.getDoor(location.getNortheast());
+					break;
+				case NORTHWEST:
+					boundary = GameUtils.getDoor(location.getNorthwest());
+					break;
+				case SOUTHEAST:
+					boundary = GameUtils.getDoor(location.getSoutheast());
+					break;
+				case SOUTHWEST:
+					boundary = GameUtils.getDoor(location.getSouthwest());
+					break;
+				default:
+					response.setResponse("Could not go to the " + param);
+					break;
+				}
 			}
 			boolean canGo = canGoDirection(boundary);
-			System.out.println("canGo?" + canGo);
+			//			System.out.println("canGo?" + canGo);
 			if (canGo) {
 				GameExecutor.getGameState().setLocation(getOtherLocation((Path) boundary, location));
 				response.setResponse("You go " + param + " to " + location.getName());

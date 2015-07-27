@@ -1,5 +1,7 @@
 package org.imperativeFiction.engine;
 
+import org.imperativeFiction.core.ActionNameEquals;
+import org.imperativeFiction.core.ActionTypes;
 import org.imperativeFiction.core.GameAction;
 import org.imperativeFiction.core.UnknownCommandException;
 import org.imperativeFiction.generated.Action;
@@ -56,7 +58,7 @@ public class CommandParser {
 				System.out.println("token :" + token);
 				if (i == 0) {
 					res = new GameAction();
-					res.setAction(supAction);
+					res.setAction(getActionFromCommand(token));
 				} else {
 					if (res != null && res.getParameters() == null)
 						res.setParameters(new ArrayList<String>());
@@ -81,5 +83,15 @@ public class CommandParser {
 			//			}
 		}
 		return res;
+	}
+
+	public static Action getActionFromCommand(String command) {
+		Action action = null;
+		if (command != null) {
+			ActionTypes actType = ActionTypes.valueOf(command.trim());
+			Action act = actType != null ? GameUtils.getElement(new ActionNameEquals(), GameExecutor.getRunningGame().getDefinition().getGenericActions().getAction(), actType.name()) : null;
+			action = act;
+		}
+		return action;
 	}
 }
