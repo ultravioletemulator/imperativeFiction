@@ -1,7 +1,9 @@
 package org.imperativeFiction.engine;
 
 import javazoom.jl.decoder.JavaLayerException;
+import org.imperativeFiction.core.DirectionBoundary;
 import org.imperativeFiction.core.GameAction;
+import org.imperativeFiction.core.MovementTypes;
 import org.imperativeFiction.core.UnknownCommandException;
 import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
@@ -12,6 +14,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -67,24 +70,23 @@ public class GameUtils {
 		return true;
 	}
 
-	public static Boundary getBoundary(String boundaryName) {
-		boolean found = false;
-		Boundary res = null;
-		if (boundaryName != null) {
-			if ("wall".equalsIgnoreCase(boundaryName) || "emptyBoundary".equalsIgnoreCase(boundaryName)) {
-				res = new Wall();
-			}
-			Iterator<Boundary> lit = GameExecutor.getRunningGame().getDefinition().getBoundaries().getBoundary().iterator();
-			while (!found && lit.hasNext()) {
-				Boundary loc = lit.next();
-				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {
-					res = loc;
-				}
-			}
-		}
-		return res;
-	}
-
+	//	public static Boundary getBoundary(String boundaryName) {
+	//		boolean found = false;
+	//		Boundary res = null;
+	//		if (boundaryName != null) {
+	//			if ("wall".equalsIgnoreCase(boundaryName) || "emptyBoundary".equalsIgnoreCase(boundaryName)) {
+	//				res = new Wall();
+	//			}
+	//			Iterator<Boundary> lit = GameExecutor.getRunningGame().getDefinition().getBoundaries().getBoundary().iterator();
+	//			while (!found && lit.hasNext()) {
+	//				Boundary loc = lit.next();
+	//				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {
+	//					res = loc;
+	//				}
+	//			}
+	//		}
+	//		return res;
+	//	}
 	public static Boundary getDoor(String boundaryName) {
 		boolean found = false;
 		Boundary res = null;
@@ -151,4 +153,39 @@ public class GameUtils {
 		response.setResponse(sb.toString());
 		return response;
 	}
+
+	public static List<DirectionBoundary> getPaths(Location location) {
+		List<DirectionBoundary> boundaries = new ArrayList<DirectionBoundary>();
+		if (location.getNorth() != null && !"emptyBoundary".equalsIgnoreCase(location.getNorth()) && !"wall".equalsIgnoreCase(location.getNorth())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.north, GameUtils.getDoor(location.getNorth())));
+		}
+		if (location.getSouth() != null && !"emptyBoundary".equalsIgnoreCase(location.getSouth()) && !"wall".equalsIgnoreCase(location.getSouth())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.south, GameUtils.getDoor(location.getSouth())));
+		}
+		if (location.getEast() != null && !"emptyBoundary".equalsIgnoreCase(location.getEast()) && !"wall".equalsIgnoreCase(location.getEast())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.east, GameUtils.getDoor(location.getEast())));
+		}
+		if (location.getWest() != null && !"emptyBoundary".equalsIgnoreCase(location.getWest()) && !"wall".equalsIgnoreCase(location.getWest())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.west, GameUtils.getDoor(location.getWest())));
+		}
+		if (location.getNortheast() != null && !"emptyBoundary".equalsIgnoreCase(location.getNortheast()) && !"wall".equalsIgnoreCase(location.getNortheast())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.northeast, GameUtils.getDoor(location.getNortheast())));
+		}
+		if (location.getNorthwest() != null && !"emptyBoundary".equalsIgnoreCase(location.getNorthwest()) && !"wall".equalsIgnoreCase(location.getNorthwest())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.northwest, GameUtils.getDoor(location.getNorthwest())));
+		}
+		if (location.getSoutheast() != null && !"emptyBoundary".equalsIgnoreCase(location.getSoutheast()) && !"wall".equalsIgnoreCase(location.getSoutheast())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.north, GameUtils.getDoor(location.getSoutheast())));
+		}
+		if (location.getSouthwest() != null && !"emptyBoundary".equalsIgnoreCase(location.getSouthwest()) && !"wall".equalsIgnoreCase(location.getSouthwest())) {
+			boundaries.add(new DirectionBoundary(MovementTypes.north, GameUtils.getDoor(location.getSouthwest())));
+		}
+		return boundaries;
+	}
+
+
+	public static boolean isFirst(int i) {
+		return i == 0;
+	}
+
 }

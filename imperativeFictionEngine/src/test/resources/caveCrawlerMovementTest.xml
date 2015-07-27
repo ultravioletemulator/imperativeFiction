@@ -30,13 +30,12 @@
                 </synonyms>
             </action>
         </genericActions>
-        <boundaries>
 
-        </boundaries>
         <doors>
             <door name="mlNorthDoor"
                   description="Main location north door" size="0" status="open"
-                  fromLocation="mainLocation" toLocation="northLocation">
+                  fromLocation="mainLocation" toLocation="northLocation"
+                  doorStatus="open">
                 <image>
                     <file path="door.jpg"/>
                 </image>
@@ -44,7 +43,8 @@
             <door name="mlSouthDoor"
                   description="Main location south door" size="0"
                   status="visible"
-                  fromLocation="mainLocation" toLocation="southLocation">
+                  fromLocation="mainLocation" toLocation="southLocation"
+                  doorStatus="open">
                 <image>
                     <file path="door.jpg"/>
                 </image>
@@ -52,7 +52,8 @@
             <door name="mlEastDoor"
                   description="Main location east door" size="0"
                   status="visible"
-                  fromLocation="mainLocation" toLocation="eastLocation">
+                  fromLocation="mainLocation" toLocation="eastLocation"
+                  doorStatus="open">
                 <image>
                     <file path="door.jpg"/>
                 </image>
@@ -60,11 +61,31 @@
             <door name="mlWestDoor"
                   description="Main location west door" size="0"
                   status="visible"
-                  fromLocation="mainLocation" toLocation="westLocation">
+                  fromLocation="mainLocation" toLocation="westLocation"
+                  doorStatus="open">
                 <image>
                     <file path="door.jpg"/>
                 </image>
             </door>
+            <door name="fPNorthDoor"
+                  description="North location south door" size="0"
+                  status="visible"
+                  fromLocation="northLocation" toLocation="endLocation"
+                  doorStatus="open">
+                <image>
+                    <file path="door.jpg"/>
+                </image>
+            </door>
+            <door name="fNorthDoor"
+                  description="Main location south door" size="0"
+                  status="closed"
+                  fromLocation="northLocation" toLocation="finish"
+                  doorStatus="closed">
+                <image>
+                    <file path="door.jpg"/>
+                </image>
+            </door>
+
         </doors>
 
         <locations>
@@ -82,7 +103,7 @@
 
             <location name="northLocation"
                       description="This is the north location">
-                <north>wall</north>
+                <north>fPNorthDoor</north>
                 <south>mlNorthDoor</south>
                 <east>wall</east>
                 <west>wall</west>
@@ -125,6 +146,17 @@
                 <southeast>emptyBoundary</southeast>
                 <southwest>emptyBoundary</southwest>
             </location>
+            <location name="endLocation"
+                      description="You are in the final location">
+                <north>fNorthDoor</north>
+                <south>fPNorthDoor</south>
+                <east>emptyBoundary</east>
+                <west>emptyBoundary</west>
+                <northeast>emptyBoundary</northeast>
+                <northwest>emptyBoundary</northwest>
+                <southeast>emptyBoundary</southeast>
+                <southwest>emptyBoundary</southwest>
+            </location>
         </locations>
         <goals>
             <goal name="gameFinished" description="Game finished" level="1"
@@ -147,6 +179,9 @@
                 </image>
             </weapon>
         </gameWeapons>
+        <gameObjectPlacements>
+            <objectPlacements objectName="finishDoorKey" locationName="mainLocation"/>
+        </gameObjectPlacements>
     </definition>
 
     <artwork>

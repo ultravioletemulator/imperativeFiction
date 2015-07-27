@@ -1,22 +1,18 @@
 package org.imperativeFiction.engine;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.StringTokenizer;
 
 import javazoom.jl.decoder.JavaLayerException;
-import org.imperativeFiction.core.ActionTypes;
-import org.imperativeFiction.core.GameAction;
-import org.imperativeFiction.core.NotImplementedException;
-import org.imperativeFiction.core.UnknownCommandException;
+import org.imperativeFiction.core.*;
 import org.imperativeFiction.generated.*;
 import org.imperativeFiction.presentations.ConsolePresentation;
 import org.imperativeFiction.presentations.Presentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by developer on 7/22/15.
@@ -78,7 +74,10 @@ public class GameExecutor {
 				GameAction gAction = parser.parseCommand(runningGame.getDefinition().getGenericActions(), command);
 				ActionResponse response = executeAction(gAction);
 				presentation.presentText(response.getResponse());
-				presentation.presentText(gameState.getLocation().getDescription());
+				//				presentation.presentText(gameState.getLocation().getDescription());
+				//				System.out.println("Objects in location :" + InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
+				//				presentation.presentText(InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
+				presentation.presentText(getFullLocationDescription(gameState.getLocation()));
 			} catch (UnknownCommandException e) {
 				presentation.presentText(e.getLocalizedMessage());
 			}
@@ -93,7 +92,7 @@ public class GameExecutor {
 		gameState.setLocation(location);
 		presentation.presentText("InitialState :" + characterState);
 		presentation.presentText("Inventory :" + inventory);
-		presentation.presentText(gameState.getLocation().getDescription());
+		presentation.presentText(getFullLocationDescription(location));
 		return gameState;
 	}
 
@@ -135,5 +134,29 @@ public class GameExecutor {
 			}
 		}
 		return response;
+	}
+
+	private String getFullLocationDescription(Location location) {
+		StringBuilder sb = new StringBuilder();
+		//		System.out.println("Location:" + location);
+		if (location != null)
+			sb.append(location.getDescription());
+		sb.append("\n");
+		//		System.out.println("Placements:" + runningGame.getDefinition().getGameObjectPlacements());
+		sb.append(InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), location).getResponse());
+		sb.append("\n");
+		List<DirectionBoundary> paths = GameUtils.getPaths(location);
+		if (paths != null) {
+			sb.append("You can go ");
+			int i = 0;
+			for (DirectionBoundary dirBoundary : paths) {
+				if (!GameUtils.isFirst(i))
+					sb.append(" , ");
+				if (dirBoundary != null && dirBoundary.getMovementTypes() != null)
+					sb.append(dirBoundary.getMovementTypes().name());
+				i++;
+			}
+		}
+		return sb.toString();
 	}
 }

@@ -70,12 +70,21 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="gameObjectPlacements">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objectPlacements" type="objectPlacement"
+                            minOccurs="0" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
     <xs:complexType name="gameWeapons">
         <xs:sequence>
             <xs:element name="weapon" type="weaponType"/>
         </xs:sequence>
     </xs:complexType>
-
 
     <xs:complexType name="objectType">
         <xs:sequence>
@@ -127,6 +136,14 @@
                       use="required"/>
     </xs:complexType>
 
+
+    <xs:complexType name="objectPlacement">
+        <xs:attribute name="objectName" type="xs:string"
+                      use="required"/>
+        <xs:attribute name="locationName" type="xs:string"
+                      use="required"/>
+    </xs:complexType>
+
     <!-- -->
     <xs:complexType name="boundary">
         <xs:complexContent>
@@ -153,6 +170,8 @@
     <xs:complexType name="door">
         <xs:complexContent>
             <xs:extension base="path">
+                <xs:attribute name="doorStatus" type="objectStatus"
+                              use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -171,7 +190,6 @@
 
 
     <!-- armours -->
-
     <xs:complexType name="armourType">
         <xs:complexContent>
             <xs:extension base="objectType">
@@ -354,7 +372,6 @@
         </xs:complexType>
     </xs:element>
 
-
     <xs:element name="automatedAction">
         <xs:complexType>
             <xs:sequence>
@@ -424,8 +441,6 @@
             <xs:sequence>
                 <xs:element ref="genericActions" minOccurs="1"
                             maxOccurs="1"/>
-                <xs:element ref="boundaries" minOccurs="0"
-                            maxOccurs="1"/>
                 <xs:element ref="doors" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element ref="locations" minOccurs="1"
@@ -436,6 +451,8 @@
                             maxOccurs="unbounded"/>
                 <xs:element name="gameWeapons" type="gameWeapons" minOccurs="1"
                             maxOccurs="unbounded"/>
+                <xs:element ref="gameObjectPlacements" minOccurs="1"
+                            maxOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
