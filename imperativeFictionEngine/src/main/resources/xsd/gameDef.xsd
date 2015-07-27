@@ -519,16 +519,26 @@
     </xs:complexType>
 
 
+    <xs:complexType name="gainedGoals">
+        <xs:sequence>
+            <xs:element name="gainedGoal" type="xs:string"
+                        minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="gameState">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="location" type="location"/>
                 <xs:element name="inventory" type="inventory"/>
                 <xs:element name="characterState" type="characterState"/>
+                <xs:element name="gainedGoals" type="gainedGoals"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 </xs:schema>
+
 
 
 

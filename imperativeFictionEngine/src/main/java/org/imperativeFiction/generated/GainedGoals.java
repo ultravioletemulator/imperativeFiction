@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
@@ -26,16 +24,16 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 
 /**
- * <p>Java class for anonymous complex type.
+ * <p>Java class for gainedGoals complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType&gt;
+ * &lt;complexType name="gainedGoals"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="location" type="{}location" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="gainedGoal" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -45,44 +43,42 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-    "location"
+@XmlType(name = "gainedGoals", propOrder = {
+    "gainedGoal"
 })
-@XmlRootElement(name = "locations")
-public class Locations
+public class GainedGoals
     implements Equals, ToString
 {
 
-    @XmlElement(required = true)
-    protected List<Location> location;
+    protected List<String> gainedGoal;
 
     /**
-     * Gets the value of the location property.
+     * Gets the value of the gainedGoal property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the location property.
+     * This is why there is not a <CODE>set</CODE> method for the gainedGoal property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLocation().add(newItem);
+     *    getGainedGoal().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Location }
+     * {@link String }
      * 
      * 
      */
-    public List<Location> getLocation() {
-        if (location == null) {
-            location = new ArrayList<Location>();
+    public List<String> getGainedGoal() {
+        if (gainedGoal == null) {
+            gainedGoal = new ArrayList<String>();
         }
-        return this.location;
+        return this.gainedGoal;
     }
 
     public String toString() {
@@ -101,27 +97,27 @@ public class Locations
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            List<Location> theLocation;
-            theLocation = (((this.location!= null)&&(!this.location.isEmpty()))?this.getLocation():null);
-            strategy.appendField(locator, this, "location", buffer, theLocation);
+            List<String> theGainedGoal;
+            theGainedGoal = (((this.gainedGoal!= null)&&(!this.gainedGoal.isEmpty()))?this.getGainedGoal():null);
+            strategy.appendField(locator, this, "gainedGoal", buffer, theGainedGoal);
         }
         return buffer;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof Locations)) {
+        if (!(object instanceof GainedGoals)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final Locations that = ((Locations) object);
+        final GainedGoals that = ((GainedGoals) object);
         {
-            List<Location> lhsLocation;
-            lhsLocation = (((this.location!= null)&&(!this.location.isEmpty()))?this.getLocation():null);
-            List<Location> rhsLocation;
-            rhsLocation = (((that.location!= null)&&(!that.location.isEmpty()))?that.getLocation():null);
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "location", lhsLocation), LocatorUtils.property(thatLocator, "location", rhsLocation), lhsLocation, rhsLocation)) {
+            List<String> lhsGainedGoal;
+            lhsGainedGoal = (((this.gainedGoal!= null)&&(!this.gainedGoal.isEmpty()))?this.getGainedGoal():null);
+            List<String> rhsGainedGoal;
+            rhsGainedGoal = (((that.gainedGoal!= null)&&(!that.gainedGoal.isEmpty()))?that.getGainedGoal():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "gainedGoal", lhsGainedGoal), LocatorUtils.property(thatLocator, "gainedGoal", rhsGainedGoal), lhsGainedGoal, rhsGainedGoal)) {
                 return false;
             }
         }
@@ -133,9 +129,9 @@ public class Locations
         return equals(null, null, object, strategy);
     }
 
-    public void setLocation(List<Location> value) {
-        this.location = null;
-        List<Location> draftl = this.getLocation();
+    public void setGainedGoal(List<String> value) {
+        this.gainedGoal = null;
+        List<String> draftl = this.getGainedGoal();
         draftl.addAll(value);
     }
 

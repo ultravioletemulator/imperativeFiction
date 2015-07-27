@@ -11,7 +11,6 @@ package org.imperativeFiction.generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
@@ -24,17 +23,17 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 
 /**
- * <p>Java class for path complex type.
+ * <p>Java class for objectPlacement complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="path"&gt;
+ * &lt;complexType name="objectPlacement"&gt;
  *   &lt;complexContent&gt;
- *     &lt;extension base="{}boundary"&gt;
- *       &lt;attribute name="toLocation" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *       &lt;attribute name="fromLocation" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
- *     &lt;/extension&gt;
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
+ *       &lt;attribute name="objectName" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *       &lt;attribute name="locationName" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
+ *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
@@ -42,66 +41,62 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "path")
-@XmlSeeAlso({
-    Door.class
-})
-public class Path
-    extends Boundary
+@XmlType(name = "objectPlacement")
+public class ObjectPlacement
     implements Equals, ToString
 {
 
-    @XmlAttribute(name = "toLocation", required = true)
-    protected String toLocation;
-    @XmlAttribute(name = "fromLocation", required = true)
-    protected String fromLocation;
+    @XmlAttribute(name = "objectName", required = true)
+    protected String objectName;
+    @XmlAttribute(name = "locationName", required = true)
+    protected String locationName;
 
     /**
-     * Gets the value of the toLocation property.
+     * Gets the value of the objectName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getToLocation() {
-        return toLocation;
+    public String getObjectName() {
+        return objectName;
     }
 
     /**
-     * Sets the value of the toLocation property.
+     * Sets the value of the objectName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setToLocation(String value) {
-        this.toLocation = value;
+    public void setObjectName(String value) {
+        this.objectName = value;
     }
 
     /**
-     * Gets the value of the fromLocation property.
+     * Gets the value of the locationName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getFromLocation() {
-        return fromLocation;
+    public String getLocationName() {
+        return locationName;
     }
 
     /**
-     * Sets the value of the fromLocation property.
+     * Sets the value of the locationName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFromLocation(String value) {
-        this.fromLocation = value;
+    public void setLocationName(String value) {
+        this.locationName = value;
     }
 
     public String toString() {
@@ -119,46 +114,42 @@ public class Path
     }
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
-        super.appendFields(locator, buffer, strategy);
         {
-            String theToLocation;
-            theToLocation = this.getToLocation();
-            strategy.appendField(locator, this, "toLocation", buffer, theToLocation);
+            String theObjectName;
+            theObjectName = this.getObjectName();
+            strategy.appendField(locator, this, "objectName", buffer, theObjectName);
         }
         {
-            String theFromLocation;
-            theFromLocation = this.getFromLocation();
-            strategy.appendField(locator, this, "fromLocation", buffer, theFromLocation);
+            String theLocationName;
+            theLocationName = this.getLocationName();
+            strategy.appendField(locator, this, "locationName", buffer, theLocationName);
         }
         return buffer;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof Path)) {
+        if (!(object instanceof ObjectPlacement)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        if (!super.equals(thisLocator, thatLocator, object, strategy)) {
-            return false;
-        }
-        final Path that = ((Path) object);
+        final ObjectPlacement that = ((ObjectPlacement) object);
         {
-            String lhsToLocation;
-            lhsToLocation = this.getToLocation();
-            String rhsToLocation;
-            rhsToLocation = that.getToLocation();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "toLocation", lhsToLocation), LocatorUtils.property(thatLocator, "toLocation", rhsToLocation), lhsToLocation, rhsToLocation)) {
+            String lhsObjectName;
+            lhsObjectName = this.getObjectName();
+            String rhsObjectName;
+            rhsObjectName = that.getObjectName();
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "objectName", lhsObjectName), LocatorUtils.property(thatLocator, "objectName", rhsObjectName), lhsObjectName, rhsObjectName)) {
                 return false;
             }
         }
         {
-            String lhsFromLocation;
-            lhsFromLocation = this.getFromLocation();
-            String rhsFromLocation;
-            rhsFromLocation = that.getFromLocation();
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "fromLocation", lhsFromLocation), LocatorUtils.property(thatLocator, "fromLocation", rhsFromLocation), lhsFromLocation, rhsFromLocation)) {
+            String lhsLocationName;
+            lhsLocationName = this.getLocationName();
+            String rhsLocationName;
+            rhsLocationName = that.getLocationName();
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "locationName", lhsLocationName), LocatorUtils.property(thatLocator, "locationName", rhsLocationName), lhsLocationName, rhsLocationName)) {
                 return false;
             }
         }

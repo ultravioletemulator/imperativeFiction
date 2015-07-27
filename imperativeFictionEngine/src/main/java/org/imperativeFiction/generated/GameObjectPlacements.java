@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.Equals;
@@ -35,7 +34,7 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="location" type="{}location" maxOccurs="unbounded"/&gt;
+ *         &lt;element name="objectPlacements" type="{}objectPlacement" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -46,43 +45,42 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
-    "location"
+    "objectPlacements"
 })
-@XmlRootElement(name = "locations")
-public class Locations
+@XmlRootElement(name = "gameObjectPlacements")
+public class GameObjectPlacements
     implements Equals, ToString
 {
 
-    @XmlElement(required = true)
-    protected List<Location> location;
+    protected List<ObjectPlacement> objectPlacements;
 
     /**
-     * Gets the value of the location property.
+     * Gets the value of the objectPlacements property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the location property.
+     * This is why there is not a <CODE>set</CODE> method for the objectPlacements property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getLocation().add(newItem);
+     *    getObjectPlacements().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link Location }
+     * {@link ObjectPlacement }
      * 
      * 
      */
-    public List<Location> getLocation() {
-        if (location == null) {
-            location = new ArrayList<Location>();
+    public List<ObjectPlacement> getObjectPlacements() {
+        if (objectPlacements == null) {
+            objectPlacements = new ArrayList<ObjectPlacement>();
         }
-        return this.location;
+        return this.objectPlacements;
     }
 
     public String toString() {
@@ -101,27 +99,27 @@ public class Locations
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            List<Location> theLocation;
-            theLocation = (((this.location!= null)&&(!this.location.isEmpty()))?this.getLocation():null);
-            strategy.appendField(locator, this, "location", buffer, theLocation);
+            List<ObjectPlacement> theObjectPlacements;
+            theObjectPlacements = (((this.objectPlacements!= null)&&(!this.objectPlacements.isEmpty()))?this.getObjectPlacements():null);
+            strategy.appendField(locator, this, "objectPlacements", buffer, theObjectPlacements);
         }
         return buffer;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof Locations)) {
+        if (!(object instanceof GameObjectPlacements)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final Locations that = ((Locations) object);
+        final GameObjectPlacements that = ((GameObjectPlacements) object);
         {
-            List<Location> lhsLocation;
-            lhsLocation = (((this.location!= null)&&(!this.location.isEmpty()))?this.getLocation():null);
-            List<Location> rhsLocation;
-            rhsLocation = (((that.location!= null)&&(!that.location.isEmpty()))?that.getLocation():null);
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "location", lhsLocation), LocatorUtils.property(thatLocator, "location", rhsLocation), lhsLocation, rhsLocation)) {
+            List<ObjectPlacement> lhsObjectPlacements;
+            lhsObjectPlacements = (((this.objectPlacements!= null)&&(!this.objectPlacements.isEmpty()))?this.getObjectPlacements():null);
+            List<ObjectPlacement> rhsObjectPlacements;
+            rhsObjectPlacements = (((that.objectPlacements!= null)&&(!that.objectPlacements.isEmpty()))?that.getObjectPlacements():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "objectPlacements", lhsObjectPlacements), LocatorUtils.property(thatLocator, "objectPlacements", rhsObjectPlacements), lhsObjectPlacements, rhsObjectPlacements)) {
                 return false;
             }
         }
@@ -133,9 +131,9 @@ public class Locations
         return equals(null, null, object, strategy);
     }
 
-    public void setLocation(List<Location> value) {
-        this.location = null;
-        List<Location> draftl = this.getLocation();
+    public void setObjectPlacements(List<ObjectPlacement> value) {
+        this.objectPlacements = null;
+        List<ObjectPlacement> draftl = this.getObjectPlacements();
         draftl.addAll(value);
     }
 

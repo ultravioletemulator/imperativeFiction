@@ -183,9 +183,13 @@ public class GameUtils {
 		return boundaries;
 	}
 
-
 	public static boolean isFirst(int i) {
 		return i == 0;
 	}
 
+	//Automatic action executed on location entrance, object usage, etc...
+	public void executeAutoAction() throws GameException {
+		logger.debug("TODO executeAutoAction");
+		throw new GameException("Unimplemented");
+	}
 }
