@@ -13,10 +13,11 @@ xjc -extension ../resources/xsd/gameDef.xsd -b ../resources/xsd/bindings.xjb
 
 mvn clean generate-sources
 
+
+
+Build
+-----
 mvn clean compile assembly:single package -DskipTests
-
-
-
 
 Run Game
 --------
