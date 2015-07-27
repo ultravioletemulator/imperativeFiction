@@ -1,10 +1,7 @@
 package org.imperativeFiction.engine;
 
 import javazoom.jl.decoder.JavaLayerException;
-import org.imperativeFiction.core.DirectionBoundary;
-import org.imperativeFiction.core.GameAction;
-import org.imperativeFiction.core.MovementTypes;
-import org.imperativeFiction.core.UnknownCommandException;
+import org.imperativeFiction.core.*;
 import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -192,4 +190,40 @@ public class GameUtils {
 		logger.debug("TODO executeAutoAction");
 		throw new GameException("Unimplemented");
 	}
+
+	public static <T> T getElement(BeanNameEquals<T> equals, List<T> o1, String name) {
+		T res = null;
+		if (o1 != null) {
+			Iterator<T> lit = o1.iterator();
+			boolean found = false;
+			while (lit.hasNext() && !found) {
+				T elem = lit.next();
+				if (equals.equals(elem, name)) {
+					found = true;
+					res = elem;
+				}
+			}
+		}
+		return res;
+	}
+
+	public static ActionResponse die() {
+		ActionResponse response = new ActionResponse();
+		GameExecutor.getGameState().getCharacterState().setLife(BigInteger.valueOf(0));
+		GameMessages.Message msg = GameUtils.getElement(new MessageNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameMessages().getMessage(), MSG_DIE);
+		if (msg != null)
+			response.setResponse(msg.getMsg());
+		return response;
+	}
+
+	public static ActionResponse finishGame() {
+		ActionResponse response = new ActionResponse();
+		GameMessages.Message msg = GameUtils.getElement(new MessageNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameMessages().getMessage(), MSG_GAME_FINISH);
+		if (msg != null)
+			response.setResponse(msg.getMsg());
+		return response;
+	}
+
+	public static String MSG_DIE = "dieMessage";
+	public static String MSG_GAME_FINISH = "gameFinishMessage";
 }

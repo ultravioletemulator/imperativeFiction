@@ -25,19 +25,18 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 
 /**
- * <p>Java class for precondition complex type.
+ * <p>Java class for automaticAction complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="precondition"&gt;
+ * &lt;complexType name="automaticAction"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;sequence&gt;
- *           &lt;element name="andCondition" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/&gt;
- *           &lt;element name="orCondition" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/&gt;
- *         &lt;/sequence&gt;
+ *         &lt;element name="accomplishGoal" type="{http://www.w3.org/2001/XMLSchema}string" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element name="die" type="{http://www.w3.org/2001/XMLSchema}boolean" minOccurs="0"/&gt;
+ *         &lt;element name="execution" type="{}execution" maxOccurs="unbounded" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" /&gt;
  *     &lt;/restriction&gt;
@@ -48,32 +47,34 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "precondition", propOrder = {
-    "andCondition",
-    "orCondition"
+@XmlType(name = "automaticAction", propOrder = {
+    "accomplishGoal",
+    "die",
+    "execution"
 })
-public class Precondition
+public class AutomaticAction
     implements Equals, ToString
 {
 
-    protected List<String> andCondition;
-    protected List<String> orCondition;
+    protected List<String> accomplishGoal;
+    protected Boolean die;
+    protected List<Execution> execution;
     @XmlAttribute(name = "name", required = true)
     protected String name;
 
     /**
-     * Gets the value of the andCondition property.
+     * Gets the value of the accomplishGoal property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the andCondition property.
+     * This is why there is not a <CODE>set</CODE> method for the accomplishGoal property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getAndCondition().add(newItem);
+     *    getAccomplishGoal().add(newItem);
      * </pre>
      * 
      * 
@@ -83,40 +84,64 @@ public class Precondition
      * 
      * 
      */
-    public List<String> getAndCondition() {
-        if (andCondition == null) {
-            andCondition = new ArrayList<String>();
+    public List<String> getAccomplishGoal() {
+        if (accomplishGoal == null) {
+            accomplishGoal = new ArrayList<String>();
         }
-        return this.andCondition;
+        return this.accomplishGoal;
     }
 
     /**
-     * Gets the value of the orCondition property.
+     * Gets the value of the die property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link Boolean }
+     *     
+     */
+    public Boolean isDie() {
+        return die;
+    }
+
+    /**
+     * Sets the value of the die property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link Boolean }
+     *     
+     */
+    public void setDie(Boolean value) {
+        this.die = value;
+    }
+
+    /**
+     * Gets the value of the execution property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the orCondition property.
+     * This is why there is not a <CODE>set</CODE> method for the execution property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getOrCondition().add(newItem);
+     *    getExecution().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link String }
+     * {@link Execution }
      * 
      * 
      */
-    public List<String> getOrCondition() {
-        if (orCondition == null) {
-            orCondition = new ArrayList<String>();
+    public List<Execution> getExecution() {
+        if (execution == null) {
+            execution = new ArrayList<Execution>();
         }
-        return this.orCondition;
+        return this.execution;
     }
 
     /**
@@ -159,14 +184,19 @@ public class Precondition
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            List<String> theAndCondition;
-            theAndCondition = (((this.andCondition!= null)&&(!this.andCondition.isEmpty()))?this.getAndCondition():null);
-            strategy.appendField(locator, this, "andCondition", buffer, theAndCondition);
+            List<String> theAccomplishGoal;
+            theAccomplishGoal = (((this.accomplishGoal!= null)&&(!this.accomplishGoal.isEmpty()))?this.getAccomplishGoal():null);
+            strategy.appendField(locator, this, "accomplishGoal", buffer, theAccomplishGoal);
         }
         {
-            List<String> theOrCondition;
-            theOrCondition = (((this.orCondition!= null)&&(!this.orCondition.isEmpty()))?this.getOrCondition():null);
-            strategy.appendField(locator, this, "orCondition", buffer, theOrCondition);
+            Boolean theDie;
+            theDie = this.isDie();
+            strategy.appendField(locator, this, "die", buffer, theDie);
+        }
+        {
+            List<Execution> theExecution;
+            theExecution = (((this.execution!= null)&&(!this.execution.isEmpty()))?this.getExecution():null);
+            strategy.appendField(locator, this, "execution", buffer, theExecution);
         }
         {
             String theName;
@@ -177,28 +207,37 @@ public class Precondition
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof Precondition)) {
+        if (!(object instanceof AutomaticAction)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final Precondition that = ((Precondition) object);
+        final AutomaticAction that = ((AutomaticAction) object);
         {
-            List<String> lhsAndCondition;
-            lhsAndCondition = (((this.andCondition!= null)&&(!this.andCondition.isEmpty()))?this.getAndCondition():null);
-            List<String> rhsAndCondition;
-            rhsAndCondition = (((that.andCondition!= null)&&(!that.andCondition.isEmpty()))?that.getAndCondition():null);
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "andCondition", lhsAndCondition), LocatorUtils.property(thatLocator, "andCondition", rhsAndCondition), lhsAndCondition, rhsAndCondition)) {
+            List<String> lhsAccomplishGoal;
+            lhsAccomplishGoal = (((this.accomplishGoal!= null)&&(!this.accomplishGoal.isEmpty()))?this.getAccomplishGoal():null);
+            List<String> rhsAccomplishGoal;
+            rhsAccomplishGoal = (((that.accomplishGoal!= null)&&(!that.accomplishGoal.isEmpty()))?that.getAccomplishGoal():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "accomplishGoal", lhsAccomplishGoal), LocatorUtils.property(thatLocator, "accomplishGoal", rhsAccomplishGoal), lhsAccomplishGoal, rhsAccomplishGoal)) {
                 return false;
             }
         }
         {
-            List<String> lhsOrCondition;
-            lhsOrCondition = (((this.orCondition!= null)&&(!this.orCondition.isEmpty()))?this.getOrCondition():null);
-            List<String> rhsOrCondition;
-            rhsOrCondition = (((that.orCondition!= null)&&(!that.orCondition.isEmpty()))?that.getOrCondition():null);
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "orCondition", lhsOrCondition), LocatorUtils.property(thatLocator, "orCondition", rhsOrCondition), lhsOrCondition, rhsOrCondition)) {
+            Boolean lhsDie;
+            lhsDie = this.isDie();
+            Boolean rhsDie;
+            rhsDie = that.isDie();
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "die", lhsDie), LocatorUtils.property(thatLocator, "die", rhsDie), lhsDie, rhsDie)) {
+                return false;
+            }
+        }
+        {
+            List<Execution> lhsExecution;
+            lhsExecution = (((this.execution!= null)&&(!this.execution.isEmpty()))?this.getExecution():null);
+            List<Execution> rhsExecution;
+            rhsExecution = (((that.execution!= null)&&(!that.execution.isEmpty()))?that.getExecution():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "execution", lhsExecution), LocatorUtils.property(thatLocator, "execution", rhsExecution), lhsExecution, rhsExecution)) {
                 return false;
             }
         }
@@ -219,15 +258,15 @@ public class Precondition
         return equals(null, null, object, strategy);
     }
 
-    public void setAndCondition(List<String> value) {
-        this.andCondition = null;
-        List<String> draftl = this.getAndCondition();
+    public void setAccomplishGoal(List<String> value) {
+        this.accomplishGoal = null;
+        List<String> draftl = this.getAccomplishGoal();
         draftl.addAll(value);
     }
 
-    public void setOrCondition(List<String> value) {
-        this.orCondition = null;
-        List<String> draftl = this.getOrCondition();
+    public void setExecution(List<Execution> value) {
+        this.execution = null;
+        List<Execution> draftl = this.getExecution();
         draftl.addAll(value);
     }
 

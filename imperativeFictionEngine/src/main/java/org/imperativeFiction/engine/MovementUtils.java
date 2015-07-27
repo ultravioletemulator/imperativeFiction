@@ -1,9 +1,13 @@
 package org.imperativeFiction.engine;
 
+import org.imperativeFiction.core.AutomaticActionLocationNameEquals;
 import org.imperativeFiction.core.GameAction;
+import org.imperativeFiction.core.GoalNameEquals;
 import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Iterator;
 
 /**
  * Created by developer on 7/23/15.
@@ -58,8 +62,28 @@ public class MovementUtils {
 			} else {
 				response.setResponse("Could not go to the " + param);
 			}
+			executeAutomaticAction(GameExecutor.getGameState().getLocation());
 		}
 		return response;
+	}
+
+	private static void executeAutomaticAction(Location location) {
+		//		... Get Automatic Action with location ...
+		AutomaticAction autoAction = GameUtils.getElement(new AutomaticActionLocationNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameAutomaticActions().getAutomaticAction(), location != null && location.getName() != null ? location.getName() : null);
+		if (autoAction != null) {
+			if (autoAction.isDie()) {
+				GameUtils.die();
+			}
+			if (autoAction.getAccomplishGoal() != null) {
+				Iterator<String> ait = autoAction.getAccomplishGoal().iterator();
+				boolean found = false;
+				while (!found && ait.hasNext()) {
+					String goalName = ait.next();
+					Goal goal = GameUtils.getElement(new GoalNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameGoals().getGoal(), goalName);
+					GoalUtils.accomplishGoal(goal);
+				}
+			}
+		}
 	}
 
 	private static Location getOtherLocation(Path path, Location location) {

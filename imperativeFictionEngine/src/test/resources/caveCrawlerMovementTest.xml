@@ -158,10 +158,10 @@
                 <southwest>emptyBoundary</southwest>
             </location>
         </locations>
-        <goals>
+        <gameGoals>
             <goal name="gameFinished" description="Game finished" level="1"
                   weight="100"></goal>
-        </goals>
+        </gameGoals>
         <gameObjects>
 
             <object name="finishDoorKey" description="Game end door Key"
@@ -180,8 +180,22 @@
             </weapon>
         </gameWeapons>
         <gameObjectPlacements>
-            <objectPlacements objectName="finishDoorKey" locationName="mainLocation"/>
+            <objectPlacements objectName="finishDoorKey"
+                              locationName="mainLocation"/>
         </gameObjectPlacements>
+        <gameAutomaticActions>
+            <automaticAction name="gameFinishedAction">
+                <accomplishGoal>gameFinished</accomplishGoal>
+                <execution>
+                    <onEnterLocation>endLocation</onEnterLocation>
+                </execution>
+            </automaticAction>
+        </gameAutomaticActions>
+        <gameMessages>
+            <message name="gameFinishMessage"
+                     msg="You got out of the cave and finished the game"/>
+            <message name="dieMessage" msg="You have died"/>
+        </gameMessages>
     </definition>
 
     <artwork>

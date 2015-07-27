@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.jvnet.jaxb2_commons.lang.Equals;
 import org.jvnet.jaxb2_commons.lang.EqualsStrategy;
@@ -24,16 +26,16 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
 
 
 /**
- * <p>Java class for personStatuses complex type.
+ * <p>Java class for anonymous complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="personStatuses"&gt;
+ * &lt;complexType&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="personStatus" type="{}personStatus" maxOccurs="unbounded" minOccurs="0"/&gt;
+ *         &lt;element ref="{}goal" maxOccurs="unbounded"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -43,42 +45,44 @@ import org.jvnet.jaxb2_commons.locator.util.LocatorUtils;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "personStatuses", propOrder = {
-    "personStatus"
+@XmlType(name = "", propOrder = {
+    "goal"
 })
-public class PersonStatuses
+@XmlRootElement(name = "gameGoals")
+public class GameGoals
     implements Equals, ToString
 {
 
-    protected List<PersonStatus> personStatus;
+    @XmlElement(required = true)
+    protected List<Goal> goal;
 
     /**
-     * Gets the value of the personStatus property.
+     * Gets the value of the goal property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the personStatus property.
+     * This is why there is not a <CODE>set</CODE> method for the goal property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getPersonStatus().add(newItem);
+     *    getGoal().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link PersonStatus }
+     * {@link Goal }
      * 
      * 
      */
-    public List<PersonStatus> getPersonStatus() {
-        if (personStatus == null) {
-            personStatus = new ArrayList<PersonStatus>();
+    public List<Goal> getGoal() {
+        if (goal == null) {
+            goal = new ArrayList<Goal>();
         }
-        return this.personStatus;
+        return this.goal;
     }
 
     public String toString() {
@@ -97,27 +101,27 @@ public class PersonStatuses
 
     public StringBuilder appendFields(ObjectLocator locator, StringBuilder buffer, ToStringStrategy strategy) {
         {
-            List<PersonStatus> thePersonStatus;
-            thePersonStatus = (((this.personStatus!= null)&&(!this.personStatus.isEmpty()))?this.getPersonStatus():null);
-            strategy.appendField(locator, this, "personStatus", buffer, thePersonStatus);
+            List<Goal> theGoal;
+            theGoal = (((this.goal!= null)&&(!this.goal.isEmpty()))?this.getGoal():null);
+            strategy.appendField(locator, this, "goal", buffer, theGoal);
         }
         return buffer;
     }
 
     public boolean equals(ObjectLocator thisLocator, ObjectLocator thatLocator, Object object, EqualsStrategy strategy) {
-        if (!(object instanceof PersonStatuses)) {
+        if (!(object instanceof GameGoals)) {
             return false;
         }
         if (this == object) {
             return true;
         }
-        final PersonStatuses that = ((PersonStatuses) object);
+        final GameGoals that = ((GameGoals) object);
         {
-            List<PersonStatus> lhsPersonStatus;
-            lhsPersonStatus = (((this.personStatus!= null)&&(!this.personStatus.isEmpty()))?this.getPersonStatus():null);
-            List<PersonStatus> rhsPersonStatus;
-            rhsPersonStatus = (((that.personStatus!= null)&&(!that.personStatus.isEmpty()))?that.getPersonStatus():null);
-            if (!strategy.equals(LocatorUtils.property(thisLocator, "personStatus", lhsPersonStatus), LocatorUtils.property(thatLocator, "personStatus", rhsPersonStatus), lhsPersonStatus, rhsPersonStatus)) {
+            List<Goal> lhsGoal;
+            lhsGoal = (((this.goal!= null)&&(!this.goal.isEmpty()))?this.getGoal():null);
+            List<Goal> rhsGoal;
+            rhsGoal = (((that.goal!= null)&&(!that.goal.isEmpty()))?that.getGoal():null);
+            if (!strategy.equals(LocatorUtils.property(thisLocator, "goal", lhsGoal), LocatorUtils.property(thatLocator, "goal", rhsGoal), lhsGoal, rhsGoal)) {
                 return false;
             }
         }
@@ -129,9 +133,9 @@ public class PersonStatuses
         return equals(null, null, object, strategy);
     }
 
-    public void setPersonStatus(List<PersonStatus> value) {
-        this.personStatus = null;
-        List<PersonStatus> draftl = this.getPersonStatus();
+    public void setGoal(List<Goal> value) {
+        this.goal = null;
+        List<Goal> draftl = this.getGoal();
         draftl.addAll(value);
     }
 
