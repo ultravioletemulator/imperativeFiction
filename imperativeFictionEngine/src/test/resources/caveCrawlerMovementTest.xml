@@ -31,10 +31,41 @@
             </action>
         </genericActions>
         <boundaries>
-            <boundary name="mlNorthDoor"
-                      description="Main location north door"></boundary>
-        </boundaries>
 
+        </boundaries>
+        <doors>
+            <door name="mlNorthDoor"
+                  description="Main location north door" size="0" status="open"
+                  fromLocation="mainLocation" toLocation="northLocation">
+                <image>
+                    <file path="door.jpg"/>
+                </image>
+            </door>
+            <door name="mlSouthDoor"
+                  description="Main location south door" size="0"
+                  status="visible"
+                  fromLocation="mainLocation" toLocation="southLocation">
+                <image>
+                    <file path="door.jpg"/>
+                </image>
+            </door>
+            <door name="mlEastDoor"
+                  description="Main location east door" size="0"
+                  status="visible"
+                  fromLocation="mainLocation" toLocation="eastLocation">
+                <image>
+                    <file path="door.jpg"/>
+                </image>
+            </door>
+            <door name="mlWestDoor"
+                  description="Main location west door" size="0"
+                  status="visible"
+                  fromLocation="mainLocation" toLocation="westLocation">
+                <image>
+                    <file path="door.jpg"/>
+                </image>
+            </door>
+        </doors>
 
         <locations>
             <location name="mainLocation"

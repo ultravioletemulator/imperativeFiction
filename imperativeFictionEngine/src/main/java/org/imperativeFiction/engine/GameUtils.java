@@ -43,7 +43,6 @@ public class GameUtils {
 		//		frame.show();
 	}
 
-
 	public static ObjectType findObject(String objName) {
 		ObjectType obj = null;
 		if (objName != null) {
@@ -68,7 +67,6 @@ public class GameUtils {
 		return true;
 	}
 
-
 	public static Boundary getBoundary(String boundaryName) {
 		boolean found = false;
 		Boundary res = null;
@@ -77,6 +75,24 @@ public class GameUtils {
 				res = new Wall();
 			}
 			Iterator<Boundary> lit = GameExecutor.getRunningGame().getDefinition().getBoundaries().getBoundary().iterator();
+			while (!found && lit.hasNext()) {
+				Boundary loc = lit.next();
+				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {
+					res = loc;
+				}
+			}
+		}
+		return res;
+	}
+
+	public static Boundary getDoor(String boundaryName) {
+		boolean found = false;
+		Boundary res = null;
+		if (boundaryName != null) {
+			if ("wall".equalsIgnoreCase(boundaryName) || "emptyBoundary".equalsIgnoreCase(boundaryName)) {
+				res = new Wall();
+			}
+			Iterator<Door> lit = GameExecutor.getRunningGame().getDefinition().getDoors().getDoor().iterator();
 			while (!found && lit.hasNext()) {
 				Boundary loc = lit.next();
 				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {

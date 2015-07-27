@@ -2,11 +2,15 @@ package org.imperativeFiction.engine;
 
 import org.imperativeFiction.core.GameAction;
 import org.imperativeFiction.generated.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by developer on 7/23/15.
  */
 public class MovementUtils {
+
+	public static Logger logger = LoggerFactory.getLogger(MovementUtils.class);
 
 	public static ActionResponse move(Location location, GameAction gAction) {
 		ActionResponse response = GameExecutor.getFactory().createActionResponse();
@@ -19,28 +23,28 @@ public class MovementUtils {
 			switch (movement) {
 			case NORTH:
 				System.out.println("North..." + location);
-				boundary = GameUtils.getBoundary(location.getNorth());
+				boundary = GameUtils.getDoor(location.getNorth());
 				break;
 			case SOUTH:
-				boundary = GameUtils.getBoundary(location.getSouth());
+				boundary = GameUtils.getDoor(location.getSouth());
 				break;
 			case EAST:
-				boundary = GameUtils.getBoundary(location.getEast());
+				boundary = GameUtils.getDoor(location.getEast());
 				break;
 			case WEST:
-				boundary = GameUtils.getBoundary(location.getWest());
+				boundary = GameUtils.getDoor(location.getWest());
 				break;
 			case NORTHEAST:
-				boundary = GameUtils.getBoundary(location.getNortheast());
+				boundary = GameUtils.getDoor(location.getNortheast());
 				break;
 			case NORTHWEST:
-				boundary = GameUtils.getBoundary(location.getNorthwest());
+				boundary = GameUtils.getDoor(location.getNorthwest());
 				break;
 			case SOUTHEAST:
-				boundary = GameUtils.getBoundary(location.getSoutheast());
+				boundary = GameUtils.getDoor(location.getSoutheast());
 				break;
 			case SOUTHWEST:
-				boundary = GameUtils.getBoundary(location.getSouthwest());
+				boundary = GameUtils.getDoor(location.getSouthwest());
 				break;
 			default:
 				response.setResponse("Could not go to the " + param);
@@ -62,16 +66,28 @@ public class MovementUtils {
 		Location other = null;
 		String toName = path.getToLocation();
 		String fromName = path.getFromLocation();
+		System.out.println("Path:" + path);
+		System.out.println("Current Location:" + location);
+		System.out.println("fromLocation:" + fromName);
+		System.out.println("toLocation:" + toName);
 		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(toName))
-			other = GameUtils.getLocation(toName);
-		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(fromName))
 			other = GameUtils.getLocation(fromName);
+		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(fromName))
+			other = GameUtils.getLocation(toName);
 		return other;
 	}
 
 	private static boolean canGoDirection(Boundary boundary) {
-		System.out.println("boundary:" + boundary.getName());
-		return (((boundary instanceof Path || (boundary instanceof Door && ((Door) boundary).getStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name())))));
+		//		System.out.println("boundary:" + boundary.getName());
+		System.out.println("boundary:" + boundary);
+		if (boundary != null) {
+			System.out.println("boundary Name:" + boundary.getName());
+			System.out.println("isPath?" + (boundary instanceof Path));
+			System.out.println("IsDoor?" + (boundary instanceof Door));
+			System.out.println("is door Open?" + ((Door) boundary).getStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name()));
+			return (((boundary instanceof Path || (boundary instanceof Door && ((Door) boundary).getStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name())))));
+		} else
+			return false;
 	}
 
 	private static boolean checkMovementPreconditions(Location location, GameAction gAction) {

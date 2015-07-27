@@ -79,7 +79,7 @@
 
     <xs:complexType name="objectType">
         <xs:sequence>
-            <xs:element ref="image" minOccurs="1"
+            <xs:element ref="image" minOccurs="0"
                         maxOccurs="1"/>
             <xs:element ref="supportedActions" minOccurs="0"
                         maxOccurs="1"/>
@@ -152,11 +152,7 @@
 
     <xs:complexType name="door">
         <xs:complexContent>
-            <xs:extension base="boundary">
-                <xs:attribute name="toLocation" type="xs:string"
-                              use="required"/>
-                <xs:attribute name="fromLocation" type="xs:string"
-                              use="required"/>
+            <xs:extension base="path">
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -349,6 +345,16 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="doors">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="door" type="door" minOccurs="1"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
     <xs:element name="automatedAction">
         <xs:complexType>
             <xs:sequence>
@@ -418,7 +424,9 @@
             <xs:sequence>
                 <xs:element ref="genericActions" minOccurs="1"
                             maxOccurs="1"/>
-                <xs:element ref="boundaries" minOccurs="1"
+                <xs:element ref="boundaries" minOccurs="0"
+                            maxOccurs="1"/>
+                <xs:element ref="doors" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element ref="locations" minOccurs="1"
                             maxOccurs="1"/>

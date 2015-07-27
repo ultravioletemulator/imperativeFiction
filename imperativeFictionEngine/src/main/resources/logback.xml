@@ -17,9 +17,7 @@
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
             <maxIndex>1</maxIndex>
-            <FileNamePattern>
-                /imperativeFiction/imperativeFiction-Stdout.log.%i
-            </FileNamePattern>
+            <FileNamePattern>/imperativeFiction/imperativeFiction-Stdout.log.%i</FileNamePattern>
         </rollingPolicy>
         <triggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
@@ -28,6 +26,10 @@
     </appender>
 
     <logger name="org.impertiveFiction" level="DEBUG">
+        <appender-ref ref="file"/>
+        <appender-ref ref="CONOSLE"/>
+    </logger>
+    <logger name="org.impertiveFiction.engine" level="DEBUG">
         <appender-ref ref="file"/>
         <appender-ref ref="CONOSLE"/>
     </logger>
