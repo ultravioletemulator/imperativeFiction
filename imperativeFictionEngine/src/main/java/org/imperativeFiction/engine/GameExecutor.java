@@ -2,6 +2,7 @@ package org.imperativeFiction.engine;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javazoom.jl.decoder.JavaLayerException;
@@ -21,7 +22,7 @@ public class GameExecutor {
 	static Presentation presentation = new ConsolePresentation();
 	static Game runningGame = null;
 	static ObjectFactory factory = new ObjectFactory();
-	static Inventory inventory = null;
+	//	static Inventory inventory = new Inventory();
 	static GameState gameState = null;
 	static CommandParser parser = new CommandParser();
 	CharacterState characterState = factory.createCharacterState();
@@ -32,10 +33,6 @@ public class GameExecutor {
 
 	public static GameState getGameState() {
 		return gameState;
-	}
-
-	public static Inventory getInventory() {
-		return inventory;
 	}
 
 	public static Presentation getPresentation() {
@@ -72,6 +69,10 @@ public class GameExecutor {
 				GameAction gAction = parser.parseCommand(runningGame.getDefinition().getGenericActions(), command);
 				ActionResponse response = executeAction(gAction);
 				System.out.println("ActionResponse:" + response);
+				if (response == null) {
+					response = new ActionResponse();
+					response.setResponse("Could not understand " + command);
+				}
 				presentation.presentText(response.getResponse());
 				//				presentation.presentText(gameState.getLocation().getDescription());
 				//				System.out.println("Objects in location :" + InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
@@ -88,19 +89,23 @@ public class GameExecutor {
 	private GameState initGame() {
 		GameState gameState = factory.createGameState();
 		characterState.setLife(runningGame.getInitialization().getLife());
-		inventory = runningGame.getInitialization().getInventory();
+		gameState.setInventory(runningGame.getInitialization().getInventory());
+		if (gameState.getInventory() == null)
+			gameState.setInventory(new Inventory());
+		if (gameState.getInventory().getObjectName() == null)
+			gameState.getInventory().setObjectName(new ArrayList<String>());
 		Location location = GameUtils.getLocation(runningGame.getInitialization().getInitialLocationName());
 		gameState.setLocation(location);
 		presentation.presentText("InitialState :" + characterState);
-		presentation.presentText("Inventory :" + inventory);
+		presentation.presentText("Inventory :" + gameState.getInventory());
 		presentation.presentText(getFullLocationDescription(location));
 		return gameState;
 	}
 
 	private ActionResponse executeAction(GameAction gAction) throws GameException {
 		ActionResponse response = null;
-		System.out.println("Action =" + gAction.getAction().getName());
-		if (gAction != null) {
+		System.out.println("Action =" + gAction);
+		if (gAction != null && gAction.getAction() != null && gAction.getAction().getBasicAction() != null) {
 			ActionTypes actionType = ActionTypes.valueOf(gAction.getAction().getBasicAction());
 			System.out.println("Action type:" + actionType);
 			if (actionType != null) {
@@ -115,7 +120,9 @@ public class GameExecutor {
 					response = InteractionUtils.examineObject(gAction);
 					break;
 				case get:
-					response = GameUtils.getObject(gAction);
+					ActionResponse rAct = InteractionUtils.getObject(gAction, GameExecutor.getGameState().getLocation());
+					ActionResponse rInt = InteractionUtils.showInventory();
+					response = GameUtils.mergeActionResponses(rAct, rInt);
 					break;
 				case go:
 					response = MovementUtils.move(gameState.getLocation(), gAction);
@@ -162,6 +169,14 @@ public class GameExecutor {
 				i++;
 			}
 		}
+		List<DoorLocationPlacement> doorPlacements = GameUtils.getDoorsOfLocation(location);
+		if (doorPlacements != null && doorPlacements.size() > 0)
+			sb.append("\nYou can see the following doors in the location: ");
+		for (DoorLocationPlacement plc : doorPlacements) {
+			sb.append("There's the ").append(plc.getDoorName()).append(" to the ").append(plc.getDirection()).append("\n");
+			//			sb.append(doorPlacements);
+		}
+		sb.append("\n");
 		return sb.toString();
 	}
 }

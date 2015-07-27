@@ -37,7 +37,7 @@ public class ConsolePresentation implements Presentation {
 		if (console.hasNextLine()) {
 			command = console.nextLine();
 		}
-		System.out.println("Command read: " + command);
+		//		System.out.println("Command read: " + command);
 		return command;
 	}
 }

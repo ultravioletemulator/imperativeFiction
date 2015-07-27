@@ -47,12 +47,12 @@ public class GameUtils {
 	public static ObjectType findObject(String objName) {
 		ObjectType obj = null;
 		if (objName != null) {
-			Iterator<GameObjects> git = GameExecutor.getRunningGame().getDefinition().getGameObjects().iterator();
+			Iterator<ObjectType> git = GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject().iterator();
 			boolean found = false;
 			while (git.hasNext() && !found) {
-				GameObjects gobj = git.next();
+				ObjectType gobj = git.next();
 				if (gobj != null) {
-					ObjectType objNew = gobj.getObject();
+					ObjectType objNew = gobj;
 					if (objNew != null && objNew.getName() != null && objNew.getName().trim().toLowerCase().startsWith(objName.trim().toLowerCase())) {
 						obj = objNew;
 						found = true;
@@ -118,20 +118,6 @@ public class GameUtils {
 		return res;
 	}
 
-	public static ActionResponse getObject(GameAction gAction) {
-		ActionResponse response = GameExecutor.getFactory().createActionResponse();
-		if (gAction != null && gAction.getParameters() != null && gAction.getParameters().size() > 0) {
-			ObjectType obj = findObject(gAction.getParameters().get(0));
-			if (obj != null) {
-				GameExecutor.getInventory().getObjectName().add(obj);
-			}
-			response.setResponse("You got " + obj.getName());
-		} else {
-			response.setResponse("I don't know what to " + gAction.getAction().getName());
-		}
-		return response;
-	}
-
 	private static String getStatusMessage(ObjectType obj) {
 		StringBuilder sb = new StringBuilder();
 		sb.append("The ").append(obj.getName() + " is now " + obj.getStatus().name());
@@ -141,8 +127,8 @@ public class GameUtils {
 	public static ActionResponse setObjectsStatus(GameAction gAction, ObjectStatus status) {
 		ActionResponse response = GameExecutor.getFactory().createActionResponse();
 		StringBuilder sb = new StringBuilder();
-		for (GameObjects obj : GameExecutor.getRunningGame().getDefinition().getGameObjects()) {
-			ObjectType objt = obj.getObject();
+		for (ObjectType obj : GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject()) {
+			ObjectType objt = obj;
 			if (checkPreconditions(gAction, objt)) {
 				objt.setStatus(status);
 				sb.append(getStatusMessage(objt));
@@ -189,6 +175,22 @@ public class GameUtils {
 	public void executeAutoAction() throws GameException {
 		logger.debug("TODO executeAutoAction");
 		throw new GameException("Unimplemented");
+	}
+
+	public static ObjectPlacement getPlacement(ObjectType obj, Location location) {
+		ObjectPlacement objPlc = null;
+		if (obj != null && location != null) {
+			Iterator<ObjectPlacement> objPlcIt = GameExecutor.getRunningGame().getDefinition().getGameObjectPlacements().getObjectPlacements().iterator();
+			boolean found = false;
+			while (objPlcIt.hasNext() && !found) {
+				ObjectPlacement plc = objPlcIt.next();
+				if (plc != null && plc.getLocationName() != null && plc.getLocationName().equalsIgnoreCase(location.getName()) && plc.getObjectName().equalsIgnoreCase(obj.getName())) {
+					objPlc = plc;
+					found = true;
+				}
+			}
+		}
+		return objPlc;
 	}
 
 	public static <T> T getElement(BeanNameEquals<T> equals, List<T> o1, String name) {
@@ -240,6 +242,77 @@ public class GameUtils {
 			//			System.out.println("Gor merged response: " + resp);
 			return resp;
 		}
+	}
+
+	public static List<DoorLocationPlacement> getDoorsOfLocation(Location location) {
+		List<DoorLocationPlacement> doors = new ArrayList<DoorLocationPlacement>();
+		if (location != null) {
+			if ((location.getNorth() != null) && (MovementUtils.isBoundaryCrossable(location.getNorth()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNorth());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.NORTH.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getSouth() != null) && (MovementUtils.isBoundaryCrossable(location.getSouth()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSouth());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.SOUTH.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getEast() != null) && (MovementUtils.isBoundaryCrossable(location.getEast()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getEast());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.EAST.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getWest() != null) && (MovementUtils.isBoundaryCrossable(location.getWest()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getWest());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.WEST.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getNortheast() != null) && (MovementUtils.isBoundaryCrossable(location.getNortheast()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNortheast());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.NORTHEAST.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getNorthwest() != null) && (MovementUtils.isBoundaryCrossable(location.getNorthwest()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNorthwest());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.NORTHWEST.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getSoutheast() != null) && (MovementUtils.isBoundaryCrossable(location.getSoutheast()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSoutheast());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.SOUTHEAST.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+			if ((location.getSouthwest() != null) && (MovementUtils.isBoundaryCrossable(location.getSouthwest()))) {
+				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSouthwest());
+				DoorLocationPlacement plc = new DoorLocationPlacement();
+				plc.setDirection(Movements.SOUTHWEST.name());
+				plc.setDoorName(door.getName());
+				plc.setLocationName(location.getName());
+				doors.add(plc);
+			}
+		}
+		return doors;
 	}
 
 	public static String MSG_DIE = "dieMessage";

@@ -24,8 +24,8 @@ public class CommandParser {
 	}
 
 	public static GameAction parseCommand(org.imperativeFiction.generated.GenericActions actions, String command) throws UnknownCommandException {
-		logger.debug("Parsing " + command);
-		System.out.println("Parsing " + command);
+		//		logger.debug("Parsing " + command);
+		//		System.out.println("Parsing " + command);
 		GameAction gAction = new GameAction();
 		boolean found = false;
 		Iterator<Action> ait = actions.getAction().iterator();
@@ -42,14 +42,14 @@ public class CommandParser {
 	}
 
 	private static GameAction matches(Action supAction, String command) {
-		logger.debug("matchesL:");
-		System.out.println("matchesS:" + command + " action" + supAction.getName() + "?");
+		//		logger.debug("matchesL:");
+		//		System.out.println("matchesS:" + command + " action" + supAction.getName() + "?");
 		GameAction res = null;
 		if (supAction != null && supAction.getName() != null && command != null) {
 			//			System.out.println("Not empty");
 			String supActCom = supAction.getName().trim().toLowerCase();
 			String comQuery = command.trim().toLowerCase();
-			System.out.println("Command:" + comQuery + " Action:" + supActCom + " ?" + comQuery.startsWith(supActCom));
+			//			System.out.println("Command:" + comQuery + " Action:" + supActCom + " ?" + comQuery.startsWith(supActCom));
 			String commandToParse = command.trim().toLowerCase();
 			StringTokenizer st = new StringTokenizer(commandToParse, " ");
 			int i = 0;
@@ -88,9 +88,14 @@ public class CommandParser {
 	public static Action getActionFromCommand(String command) {
 		Action action = null;
 		if (command != null) {
-			ActionTypes actType = ActionTypes.valueOf(command.trim());
-			Action act = actType != null ? GameUtils.getElement(new ActionNameEquals(), GameExecutor.getRunningGame().getDefinition().getGenericActions().getAction(), actType.name()) : null;
-			action = act;
+			ActionTypes actType = null;
+			try {
+				actType = ActionTypes.valueOf(command.trim());
+				Action act = actType != null ? GameUtils.getElement(new ActionNameEquals(), GameExecutor.getRunningGame().getDefinition().getGenericActions().getAction(), actType.name()) : null;
+				System.out.println("getActionFromCommand:" + command + " action: " + actType + " act:" + act);
+				action = act;
+			} catch (IllegalArgumentException e) {
+			}
 		}
 		return action;
 	}

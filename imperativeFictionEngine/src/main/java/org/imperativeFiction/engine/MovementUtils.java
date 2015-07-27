@@ -122,8 +122,11 @@ public class MovementUtils {
 			System.out.println("boundary Name:" + boundary.getName());
 			System.out.println("isPath?" + (boundary instanceof Path));
 			System.out.println("IsDoor?" + (boundary instanceof Door));
-			System.out.println("is door Open?" + ((Door) boundary).getStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name()));
-			return (((boundary instanceof Path || (boundary instanceof Door && ((Door) boundary).getStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name())))));
+			System.out.println("Door Status:" + ((Door) boundary).getDoorStatus().value());
+			System.out.println("is door Open?" + ((Door) boundary).getDoorStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name()));
+			boolean res = ((((boundary instanceof Path && !(boundary instanceof Door)) || (boundary instanceof Door && ((Door) boundary).getDoorStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name())))));
+			System.out.println("canGo:" + res);
+			return res;
 		} else
 			return false;
 	}
@@ -131,5 +134,12 @@ public class MovementUtils {
 	private static boolean checkMovementPreconditions(Location location, GameAction gAction) {
 		// Drools?¿
 		return true;
+	}
+
+	public static boolean isBoundaryCrossable(String boundaryName) {
+		if (boundaryName == null || boundaryName != null && (boundaryName.equalsIgnoreCase("emptyBoundary") || boundaryName.equalsIgnoreCase("wall"))) {
+			return false;
+		} else
+			return true;
 	}
 }

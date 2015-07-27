@@ -66,7 +66,8 @@
     <xs:element name="gameObjects">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="object" type="objectType"/>
+                <xs:element name="object" type="objectType" minOccurs="0"
+                            maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -126,7 +127,7 @@
     <xs:complexType name="inventory">
         <xs:sequence>
             <xs:element name="objectName" minOccurs="0"
-                        maxOccurs="unbounded"/>
+                        maxOccurs="unbounded" type="xs:string"/>
         </xs:sequence>
         <xs:attribute name="size" type="xs:integer" use="required"/>
     </xs:complexType>
@@ -166,12 +167,23 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="doorLocationPlacement">
+        <xs:attribute name="direction" type="xs:string"
+                      use="required"/>
+        <xs:attribute name="doorName" type="xs:string"
+                      use="required"/>
+        <xs:attribute name="locationName" type="xs:string"
+                      use="required"/>
+    </xs:complexType>
+
 
     <xs:complexType name="door">
         <xs:complexContent>
             <xs:extension base="path">
                 <xs:attribute name="doorStatus" type="objectStatus"
                               use="required"/>
+                <xs:attribute name="openWith" type="xs:string"
+                        />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -502,7 +514,7 @@
                 <xs:element ref="gameGoals" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element ref="gameObjects" minOccurs="1"
-                            maxOccurs="unbounded"/>
+                            maxOccurs="1"/>
                 <xs:element name="gameWeapons" type="gameWeapons" minOccurs="1"
                             maxOccurs="unbounded"/>
                 <xs:element ref="gameObjectPlacements" minOccurs="1"
@@ -590,10 +602,16 @@
     <xs:element name="gameState">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="location" type="location"/>
-                <xs:element name="inventory" type="inventory"/>
-                <xs:element name="characterState" type="characterState"/>
-                <xs:element name="gainedGoals" type="gainedGoals"/>
+                <xs:element name="location" type="location" minOccurs="1"
+                            maxOccurs="1"/>
+                <xs:element name="inventory" type="inventory"
+                            minOccurs="1"
+                            maxOccurs="1"/>
+                <xs:element name="characterState" type="characterState"
+                            minOccurs="1"
+                            maxOccurs="1"/>
+                <xs:element name="gainedGoals" type="gainedGoals" minOccurs="1"
+                            maxOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

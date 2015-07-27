@@ -29,6 +29,11 @@
                     <word value="look at"/>
                 </synonyms>
             </action>
+            <action name="get" basicAction="get">
+                <synonyms>
+                    <word value="obtain"/>
+                </synonyms>
+            </action>
             <action name="quit" basicAction="quit">
                 <synonyms>
                     <word value="exit"/>
@@ -76,7 +81,7 @@
                   description="North location south door" size="0"
                   status="visible"
                   fromLocation="northLocation" toLocation="endLocation"
-                  doorStatus="open">
+                  doorStatus="closed" openWith="finishDoorKey">
                 <image>
                     <file path="door.jpg"/>
                 </image>
