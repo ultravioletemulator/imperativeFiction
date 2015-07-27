@@ -8,9 +8,10 @@ import org.imperativeFiction.generated.Goal;
 public class GoalNameEquals implements BeanNameEquals<Goal> {
 
 	public boolean equals(Goal o1, String name) {
+		System.out.println("Goal:" + o1 + " finding Name:" + name);
 		boolean res = false;
-		if (o1 != null && o1 == null || o1 == null && name != null)
-			res = (o1.getName() != null && !"".equals(name) || (name != null && !"".equals(o1.getName())));
+		res = (o1 != null && o1.getName() != null && o1.getName().equalsIgnoreCase(name));
+		System.out.println("found:" + res);
 		return res;
 	}
 }

@@ -71,10 +71,13 @@ public class GameExecutor {
 			try {
 				GameAction gAction = parser.parseCommand(runningGame.getDefinition().getGenericActions(), command);
 				ActionResponse response = executeAction(gAction);
+				System.out.println("ActionResponse:" + response);
 				presentation.presentText(response.getResponse());
 				//				presentation.presentText(gameState.getLocation().getDescription());
 				//				System.out.println("Objects in location :" + InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
 				//				presentation.presentText(InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
+				if (response != null && response.isQuit() != null && response.isQuit())
+					System.exit(0);
 				presentation.presentText(getFullLocationDescription(gameState.getLocation()));
 			} catch (UnknownCommandException e) {
 				presentation.presentText(e.getLocalizedMessage());

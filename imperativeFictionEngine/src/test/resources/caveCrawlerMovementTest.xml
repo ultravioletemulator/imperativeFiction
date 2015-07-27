@@ -159,7 +159,7 @@
             </location>
         </locations>
         <gameGoals>
-            <goal name="gameFinished" description="Game finished" level="1"
+            <goal name="gameFinished" description="Game finished!!" level="1"
                   weight="100"></goal>
         </gameGoals>
         <gameObjects>
@@ -185,6 +185,7 @@
         </gameObjectPlacements>
         <gameAutomaticActions>
             <automaticAction name="gameFinishedAction">
+
                 <accomplishGoal>gameFinished</accomplishGoal>
                 <execution>
                     <onEnterLocation>endLocation</onEnterLocation>

@@ -192,6 +192,7 @@ public class GameUtils {
 	}
 
 	public static <T> T getElement(BeanNameEquals<T> equals, List<T> o1, String name) {
+		logger.debug("Searching element :" + name);
 		T res = null;
 		if (o1 != null) {
 			Iterator<T> lit = o1.iterator();
@@ -204,6 +205,7 @@ public class GameUtils {
 				}
 			}
 		}
+		logger.debug("got element :" + res);
 		return res;
 	}
 
@@ -222,6 +224,22 @@ public class GameUtils {
 		if (msg != null)
 			response.setResponse(msg.getMsg());
 		return response;
+	}
+
+	public static ActionResponse mergeActionResponses(ActionResponse r1, ActionResponse r2) {
+		System.out.println("Act1:" + r1 + "\nAct2" + r2);
+		if (r1 == null && r2 == null)
+			return null;
+		else if (r1 != null && r2 == null)
+			return r1;
+		else if (r2 != null && r1 == null)
+			return r2;
+		else {
+			ActionResponse resp = new ActionResponse();
+			resp.setResponse(r1.getResponse() + "\n" + r2.getResponse());
+			System.out.println("Gor merged response: " + resp);
+			return resp;
+		}
 	}
 
 	public static String MSG_DIE = "dieMessage";

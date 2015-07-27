@@ -62,28 +62,40 @@ public class MovementUtils {
 			} else {
 				response.setResponse("Could not go to the " + param);
 			}
-			executeAutomaticAction(GameExecutor.getGameState().getLocation());
+			System.out.println("Executing location actions...");
+			ActionResponse autoActionResponse = executeAutomaticAction(GameExecutor.getGameState().getLocation());
+			if (autoActionResponse != null && autoActionResponse.isQuit() != null && autoActionResponse.isQuit())
+				response = autoActionResponse;
+			else
+				response = GameUtils.mergeActionResponses(response, autoActionResponse);
 		}
 		return response;
 	}
 
-	private static void executeAutomaticAction(Location location) {
+	private static ActionResponse executeAutomaticAction(Location location) {
 		//		... Get Automatic Action with location ...
+		ActionResponse resp = new ActionResponse();
+		System.out.println("executing action " + location);
 		AutomaticAction autoAction = GameUtils.getElement(new AutomaticActionLocationNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameAutomaticActions().getAutomaticAction(), location != null && location.getName() != null ? location.getName() : null);
+		System.out.println("Automatic action " + autoAction);
 		if (autoAction != null) {
-			if (autoAction.isDie()) {
-				GameUtils.die();
+			if (autoAction.isDie() != null && autoAction.isDie()) {
+				resp = GameUtils.die();
 			}
 			if (autoAction.getAccomplishGoal() != null) {
+				System.out.println("Get accomplishedGoal");
 				Iterator<String> ait = autoAction.getAccomplishGoal().iterator();
 				boolean found = false;
 				while (!found && ait.hasNext()) {
 					String goalName = ait.next();
+					System.out.println("Goal name: " + goalName);
 					Goal goal = GameUtils.getElement(new GoalNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameGoals().getGoal(), goalName);
-					GoalUtils.accomplishGoal(goal);
+					System.out.println("Goal:" + goal);
+					resp = GoalUtils.accomplishGoal(goal);
 				}
 			}
 		}
+		return resp;
 	}
 
 	private static Location getOtherLocation(Path path, Location location) {
