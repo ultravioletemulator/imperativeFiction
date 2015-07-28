@@ -6,6 +6,9 @@ import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -180,7 +183,7 @@ public class GameUtils {
 	public static ObjectPlacement getPlacement(ObjectType obj, Location location) {
 		ObjectPlacement objPlc = null;
 		if (obj != null && location != null) {
-			Iterator<ObjectPlacement> objPlcIt = GameExecutor.getRunningGame().getDefinition().getGameObjectPlacements().getObjectPlacements().iterator();
+			Iterator<ObjectPlacement> objPlcIt = GameExecutor.gameState.getGameObjectPlacements().getObjectPlacements().iterator();
 			boolean found = false;
 			while (objPlcIt.hasNext() && !found) {
 				ObjectPlacement plc = objPlcIt.next();

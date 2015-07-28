@@ -46,8 +46,8 @@ public class InteractionUtils {
 		return GameUtils.setObjectsStatus(gAction, ObjectStatus.CLOSED);
 	}
 
-	public static ActionResponse getObjectsInLocation(GameObjectPlacements placements, Location location) {
-		ActionResponse response = GameExecutor.getFactory().createActionResponse();
+	public static java.util.List<ObjectPlacement> getObjectsInLocation(GameObjectPlacements placements, Location location) {
+		//		System.out.println("getObjectsInLocation...");
 		java.util.List<ObjectPlacement> foundPlacements = new ArrayList<ObjectPlacement>();
 		if (placements != null && location != null) {
 			for (ObjectPlacement plc : placements.getObjectPlacements()) {
@@ -56,6 +56,14 @@ public class InteractionUtils {
 				}
 			}
 		}
+		return foundPlacements;
+	}
+
+	public static ActionResponse getObjectsInLocationResponse(GameObjectPlacements placements, Location location) {
+		//		System.out.println("getObjectsInLocationResponse...");
+		ActionResponse response = GameExecutor.getFactory().createActionResponse();
+		java.util.List<ObjectPlacement> foundPlacements = new ArrayList<ObjectPlacement>();
+		foundPlacements = getObjectsInLocation(placements, location);
 		StringBuilder sb = new StringBuilder();
 		int i = 0;
 		if (foundPlacements != null && foundPlacements.size() > 0) {
@@ -88,7 +96,7 @@ public class InteractionUtils {
 				System.out.println("inventory after:" + GameExecutor.getGameState().getInventory());
 				//removeObject from location ....
 				ObjectPlacement placement = GameUtils.getPlacement(obj, location);
-				GameExecutor.getRunningGame().getDefinition().getGameObjectPlacements().getObjectPlacements().remove(placement);
+				GameExecutor.gameState.getGameObjectPlacements().getObjectPlacements().remove(placement);
 			}
 			response.setResponse("You got " + obj.getName());
 		} else {

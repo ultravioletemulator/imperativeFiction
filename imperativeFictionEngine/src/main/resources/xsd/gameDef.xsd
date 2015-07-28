@@ -612,6 +612,8 @@
                             maxOccurs="1"/>
                 <xs:element name="gainedGoals" type="gainedGoals" minOccurs="1"
                             maxOccurs="1"/>
+                <xs:element ref="gameObjectPlacements" minOccurs="0"
+                            maxOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

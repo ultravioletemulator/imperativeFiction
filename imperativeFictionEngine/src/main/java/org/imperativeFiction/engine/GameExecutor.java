@@ -13,6 +13,11 @@ import org.imperativeFiction.presentations.Presentation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
 /**
  * Created by developer on 7/22/15.
  */
@@ -63,6 +68,8 @@ public class GameExecutor {
 		System.out.println("Running game: " + runningGame.getName());
 		boolean finished = false;
 		gameState = initGame();
+		//Present initial text
+		presentation.presentText(getFullLocationDescription(gameState.getLocation()));
 		while (!finished) {
 			String command = presentation.readCommand();
 			try {
@@ -89,16 +96,22 @@ public class GameExecutor {
 	private GameState initGame() {
 		GameState gameState = factory.createGameState();
 		characterState.setLife(runningGame.getInitialization().getLife());
+		// Set inventory
 		gameState.setInventory(runningGame.getInitialization().getInventory());
 		if (gameState.getInventory() == null)
 			gameState.setInventory(new Inventory());
 		if (gameState.getInventory().getObjectName() == null)
 			gameState.getInventory().setObjectName(new ArrayList<String>());
+		// setObjectPlacements
+		GameObjectPlacements placements = runningGame.getDefinition().getGameObjectPlacements();
+		System.out.println("Loading Game Object placements...");
+		gameState.setGameObjectPlacements(placements);
+		System.out.println("Game Object placements loaded. " + gameState.getGameObjectPlacements());
+		//Locations
 		Location location = GameUtils.getLocation(runningGame.getInitialization().getInitialLocationName());
 		gameState.setLocation(location);
 		presentation.presentText("InitialState :" + characterState);
 		presentation.presentText("Inventory :" + gameState.getInventory());
-		presentation.presentText(getFullLocationDescription(location));
 		return gameState;
 	}
 
@@ -135,11 +148,25 @@ public class GameExecutor {
 					throw new GameException(new NotImplementedException());
 				case use:
 					throw new GameException(new NotImplementedException());
+				case inventory:
+					response = InteractionUtils.showInventory();
+					break;
 				case quit:
 					//throw new GameException("Game Finished");
 					response = new ActionResponse();
 					response.setResponse("Exit game.");
 					response.setQuit(true);
+					break;
+				case save:
+					if (gAction.getParameters() != null && gAction.getParameters().size() > 0) {
+						saveGameState(gAction.getParameters().get(0));
+					}
+					break;
+				case load:
+					if (gAction.getParameters() != null && gAction.getParameters().size() > 0) {
+						loadGameState(gAction.getParameters().get(0));
+					}
+					break;
 				default:
 					break;
 				}
@@ -155,7 +182,9 @@ public class GameExecutor {
 			sb.append(location.getDescription());
 		sb.append("\n");
 		//		System.out.println("Placements:" + runningGame.getDefinition().getGameObjectPlacements());
-		sb.append(InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), location).getResponse());
+//		System.out.println("GameState: " + gameState);
+		ActionResponse objResp = InteractionUtils.getObjectsInLocationResponse(gameState != null ? gameState.getGameObjectPlacements() : null, location);
+		sb.append(objResp.getResponse());
 		sb.append("\n");
 		List<DirectionBoundary> paths = GameUtils.getPaths(location);
 		if (paths != null) {
@@ -173,10 +202,41 @@ public class GameExecutor {
 		if (doorPlacements != null && doorPlacements.size() > 0)
 			sb.append("\nYou can see the following doors in the location: ");
 		for (DoorLocationPlacement plc : doorPlacements) {
-			sb.append("There's the ").append(plc.getDoorName()).append(" to the ").append(plc.getDirection()).append("\n");
+			sb.append("There's the ").append(plc.getDoorName()).append(" to the ").append(plc.getDirection().toLowerCase()).append("\n");
 			//			sb.append(doorPlacements);
 		}
 		sb.append("\n");
 		return sb.toString();
+	}
+
+	public void saveGameState(String fileName) throws GameException {
+		File saveGameFile = new File(fileName);
+		JAXBContext jc = null;
+		GameState gameState = null;
+		try {
+			jc = JAXBContext.newInstance(GameEngine.JAXB_PACKAGE);
+			Marshaller m = jc.createMarshaller();
+			m.marshal(GameExecutor.getGameState(), saveGameFile);
+		} catch (JAXBException e) {
+			throw new GameException(e);
+		}
+	}
+
+	public void loadGameState(String fileName) throws GameException {
+		File saveGameFile = new File(fileName);
+		JAXBContext jc = null;
+		GameState gameState = null;
+		try {
+			jc = JAXBContext.newInstance(GameEngine.JAXB_PACKAGE);
+			Unmarshaller um = jc.createUnmarshaller();
+			gameState = (GameState) um.unmarshal(saveGameFile);
+			if (gameState == null) {
+				throw new GameException("Game state not found:" + fileName);
+			} else {
+				GameExecutor.gameState = gameState;
+			}
+		} catch (JAXBException e) {
+			throw new GameException(e);
+		}
 	}
 }
