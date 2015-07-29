@@ -73,4 +73,22 @@ public class FileUtils {
 		File file = new File(".");
 		return file.getAbsolutePath();
 	}
+
+	public static File getGameFile(String fileName) throws GameException {
+		File gameFile = null;
+		if (fileName == null || (fileName != null && fileName.equals(""))) {
+			throw new GameException("Game not found" + fileName);
+		} else {
+			if (fileName != null && fileName.endsWith(".xml")) {
+				gameFile = new File(fileName);
+			} else if (fileName != null && fileName.endsWith(".ifg")) {
+				try {
+					gameFile = FileUtils.decompressFile(fileName);
+				} catch (IOException e) {
+					throw new GameException(e);
+				}
+			}
+		}
+		return gameFile;
+	}
 }

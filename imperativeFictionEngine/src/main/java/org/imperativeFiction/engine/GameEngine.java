@@ -22,36 +22,25 @@ public class GameEngine {
 	public static String JAXB_PACKAGE = "org.imperativeFiction.generated";
 
 	public void runGame(String fileName) throws GameException {
-		logger.debug("Running game..." + fileName);
+		logger.debug("Testing log Console appender...");
+		logger.debug("Game engine Running game..." + fileName);
 		Game game = loadGame(fileName);
 		executeGame(game);
 	}
 
 	public Game loadGame(String fileName) throws GameException {
-		logger.debug("Loading game...");
+		logger.debug("Game engine Loading game...");
 		logger.debug("Current folder:" + FileUtils.getCurrentDir());
 		System.out.println("Current folder:" + FileUtils.getCurrentDir());
 		Game game = null;
 		try {
-			if (fileName == null || (fileName != null && fileName.equals(""))) {
-				throw new GameException("Game not found" + fileName);
-			} else {
-				File gameFile = null;
-				if (fileName != null && fileName.endsWith(".xml")) {
-					gameFile = new File(fileName);
-				} else if (fileName != null && fileName.endsWith(".ifg")) {
-					try {
-						gameFile = FileUtils.decompressFile(fileName);
-					} catch (IOException e) {
-						throw new GameException(e);
-					}
-				}
-				JAXBContext jc = JAXBContext.newInstance(JAXB_PACKAGE);
-				Unmarshaller um = jc.createUnmarshaller();
-				game = (Game) um.unmarshal(gameFile);
-				if (game == null) {
-					throw new GameException("Game not found:" + fileName);
-				}
+			File gameFile = null;
+			gameFile = FileUtils.getGameFile(fileName);
+			JAXBContext jc = JAXBContext.newInstance(JAXB_PACKAGE);
+			Unmarshaller um = jc.createUnmarshaller();
+			game = (Game) um.unmarshal(gameFile);
+			if (game == null) {
+				throw new GameException("Game not found:" + fileName);
 			}
 		} catch (JAXBException e) {
 			throw new GameException(e);

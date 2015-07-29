@@ -72,6 +72,7 @@ public class GameExecutor {
 		System.out.println("Running game: " + runningGame.getName());
 		boolean finished = false;
 		gameState = initGame();
+		logger.debug("Testing log framework... ");
 		//Present initial text
 		presentation.presentText(getFullLocationDescription(gameState.getLocation()));
 		while (!finished) {
