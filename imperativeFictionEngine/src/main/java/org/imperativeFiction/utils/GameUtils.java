@@ -184,7 +184,7 @@ public class GameUtils {
 	public static ObjectPlacement getPlacement(ObjectType obj, Location location) {
 		ObjectPlacement objPlc = null;
 		if (obj != null && location != null) {
-			Iterator<ObjectPlacement> objPlcIt = GameExecutor.gameState.getGameObjectPlacements().getObjectPlacements().iterator();
+			Iterator<ObjectPlacement> objPlcIt = GameExecutor.getGameState().getGameObjectPlacements().getObjectPlacements().iterator();
 			boolean found = false;
 			while (objPlcIt.hasNext() && !found) {
 				ObjectPlacement plc = objPlcIt.next();

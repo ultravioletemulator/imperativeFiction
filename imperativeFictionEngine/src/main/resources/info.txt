@@ -26,7 +26,7 @@ java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar 
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml
 
 
-
+java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.ifg
 
 
 mp3 Player

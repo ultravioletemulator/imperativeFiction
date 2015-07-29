@@ -2,9 +2,7 @@ package org.imperativeFiction.engine;
 
 import org.imperativeFiction.core.OsCheck;
 import org.imperativeFiction.generated.Game;
-import org.imperativeFiction.generated.GameState;
-import org.imperativeFiction.presentations.Presentation;
-import org.imperativeFiction.presentations.SwingPresentation;
+import org.imperativeFiction.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,12 +29,23 @@ public class GameEngine {
 
 	public Game loadGame(String fileName) throws GameException {
 		logger.debug("Loading game...");
+		logger.debug("Current folder:" + FileUtils.getCurrentDir());
+		System.out.println("Current folder:" + FileUtils.getCurrentDir());
 		Game game = null;
 		try {
 			if (fileName == null || (fileName != null && fileName.equals(""))) {
 				throw new GameException("Game not found" + fileName);
 			} else {
-				File gameFile = new File(fileName);
+				File gameFile = null;
+				if (fileName != null && fileName.endsWith(".xml")) {
+					gameFile = new File(fileName);
+				} else if (fileName != null && fileName.endsWith(".ifg")) {
+					try {
+						gameFile = FileUtils.decompressFile(fileName);
+					} catch (IOException e) {
+						throw new GameException(e);
+					}
+				}
 				JAXBContext jc = JAXBContext.newInstance(JAXB_PACKAGE);
 				Unmarshaller um = jc.createUnmarshaller();
 				game = (Game) um.unmarshal(gameFile);
