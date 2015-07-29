@@ -94,20 +94,17 @@ public class GameUtils {
 	//	}
 	public static Boundary getDoor(String boundaryName) {
 		//		boolean found = false;
+		//		logger.debug("getDoor " + boundaryName);
 		Boundary res = null;
 		if (boundaryName != null) {
 			if ("wall".equalsIgnoreCase(boundaryName) || "emptyBoundary".equalsIgnoreCase(boundaryName)) {
 				res = new Wall();
+			} else {
+				res = GameExecutor.getGameDoors().get(boundaryName.toLowerCase());
 			}
-			//			Iterator<Door> lit = GameExecutor.getRunningGame().getDefinition().getDoors().getDoor().iterator();
-			//			while (!found && lit.hasNext()) {
-			//				Boundary loc = lit.next();
-			//				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {
-			//					res = loc;
-			//				}
-			//			}
-			res = GameExecutor.getGameDoors().get(boundaryName.toLowerCase());
 		}
+		//		logger.debug("Doors:" + GameExecutor.getGameDoors());
+		//		logger.debug("Got DOOR:" + res);
 		return res;
 	}
 
@@ -125,15 +122,35 @@ public class GameUtils {
 	}
 
 	public static ActionResponse setObjectsStatus(GameAction gAction, ObjectStatus status) {
+		logger.debug("gAction:" + gAction);
+		logger.debug("Status:" + status);
 		ActionResponse response = GameExecutor.getFactory().createActionResponse();
 		StringBuilder sb = new StringBuilder();
-		for (ObjectType obj : GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject()) {
-			ObjectType objt = obj;
-			if (checkPreconditions(gAction, objt)) {
-				objt.setStatus(status);
-				sb.append(getStatusMessage(objt));
+		String objName = gAction.getParameters().get(0);
+		ObjectType obj = GameExecutor.getGameObjects().get(objName);
+		logger.debug("obj:" + obj);
+		if (obj != null) {
+			logger.debug("Close object");
+			if (checkPreconditions(gAction, obj)) {
+				logger.debug("object:" + obj);
+				obj.setStatus(status);
+			}
+		} else {
+			logger.debug("Close door");
+			obj = GameExecutor.getGameDoors().get(objName);
+			logger.debug("Door:" + obj);
+			if (obj != null && (checkPreconditions(gAction, obj))) {
+				((Door) obj).setDoorStatus(status);
 			}
 		}
+		/*
+		 * for (ObjectType obj :
+		 * GameExecutor.getRunningGame().getDefinition().getGameObjects().
+		 * getObject()) { ObjectType objt = obj; if (checkPreconditions(gAction,
+		 * objt)) { objt.setStatus(status); sb.append(getStatusMessage(objt)); }
+		 * }
+		 */
+		logger.debug("Obj After:" + obj);
 		response.setResponse(sb.toString());
 		return response;
 	}

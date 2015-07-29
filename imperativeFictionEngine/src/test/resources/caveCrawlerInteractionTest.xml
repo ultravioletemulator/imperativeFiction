@@ -17,6 +17,16 @@
                     <word value="manipulate"/>
                 </synonyms>
             </action>
+            <action name="open" basicAction="open">
+                <synonyms>
+                    <word value="manipulate"/>
+                </synonyms>
+            </action>
+            <action name="close" basicAction="close">
+                <synonyms>
+                    <word value="shut"/>
+                </synonyms>
+            </action>
             <action name="talk to" basicAction="talk">
                 <synonyms>
                     <word value="chat with"/>
@@ -242,6 +252,9 @@
         </image>
     </screenshots>
     <music>
+        <!-- <file path="http://popplers5.bandcamp.com/download/track?enc=mp3-v0&amp;fsig=4864606b3206512a42f0be6a63c75525&amp;id=343484686&amp;ts=1438185289.681714727"/>-->
+        <!-- snake of fire -->
+        <file path="https://mega.co.nz/#!xoMEhJTB!GilCGAwvsqZgBisswmKw9QsmTscBKNgGZXOD2Ngsgts"/>
         <file path="src/test/resources/music/Allegro.mp3"/>
         <file path="src/test/resources/music/DeadmansHand.mp3"/>
     </music>

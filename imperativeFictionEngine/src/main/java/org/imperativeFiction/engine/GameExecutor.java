@@ -151,7 +151,7 @@ public class GameExecutor {
 			logger.debug(i + " of " + doorSize);
 			i++;
 		}
-		//		logger.debug("Loaded gameDoors:" + gameDoors);
+		logger.debug("Loaded gameDoors:" + gameDoors);
 		logger.debug("loading gameObjectPlacements...");
 		int placmentSize = runningGame.getDefinition().getGameObjectPlacements().getObjectPlacements().size();
 		i = 0;
@@ -165,7 +165,6 @@ public class GameExecutor {
 	}
 
 	private void playMusic() throws GameException {
-
 		Thread musicPlayerThread = new MusicPlayerThread();
 		musicPlayerThread.start();
 	}
@@ -232,7 +231,8 @@ public class GameExecutor {
 					throw new GameException(new NotImplementedException());
 				case use:
 					response = InteractionUtils.use(gAction);
-					throw new GameException(new NotImplementedException());
+					//					throw new GameException(new NotImplementedException());
+					break;
 				case inventory:
 					response = InventoryUtils.showInventory();
 					break;

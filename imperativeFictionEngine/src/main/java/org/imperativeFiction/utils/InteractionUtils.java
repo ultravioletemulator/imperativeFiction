@@ -4,6 +4,7 @@ import org.imperativeFiction.core.*;
 import org.imperativeFiction.core.equals.DoorNameEquals;
 import org.imperativeFiction.core.equals.ObjectCombinationEquals;
 import org.imperativeFiction.core.equals.ObjectTypeNameEquals;
+import org.imperativeFiction.core.equals.StringEquals;
 import org.imperativeFiction.engine.GameException;
 import org.imperativeFiction.engine.GameExecutor;
 import org.imperativeFiction.generated.*;
@@ -35,13 +36,23 @@ public class InteractionUtils {
 	}
 
 	public static ActionResponse openObjects(GameAction gAction) {
-		if (gAction != null && gAction.getParameters().get(0) != null) {
-			String doorName = gAction.getParameters().get(0);
-			String keyName = gAction.getParameters().get(2);
-			Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), doorName);
-			//ObjectType key = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), keyName);
-			ObjectType key = GameUtils.getGameObject (keyName);
-			openDoor(door, key);
+		//		if (gAction != null && gAction.getParameters().get(0) != null) {
+		//			String doorName = gAction.getParameters().get(0);
+		//			String keyName = gAction.getParameters().get(2);
+		//			Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), doorName);
+		//			//ObjectType key = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), keyName);
+		//			ObjectType key = GameUtils.getGameObject(keyName);
+		//			openDoor(door, key);
+		//		}
+		String objName = gAction.getParameters().get(0);
+		ObjectType obj = GameUtils.getGameObject(objName);
+		if (obj != null) {
+			if (obj instanceof Door) {
+				Door door = (Door) obj;
+				openDoor(door, null);
+			} else {
+				GameUtils.setObjectsStatus(gAction, ObjectStatus.OPEN);
+			}
 		}
 		return GameUtils.setObjectsStatus(gAction, ObjectStatus.OPEN);
 	}
@@ -93,7 +104,6 @@ public class InteractionUtils {
 		if (gAction != null && gAction.getParameters() != null && gAction.getParameters().size() > 0) {
 			String objName = gAction.getParameters().get(0);
 			//			ObjectType obj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), objName);
-
 			ObjectType obj = GameUtils.getGameObject(objName != null ? objName.toLowerCase() : null);
 			//			System.out.println("Found Object:" + obj);
 			if (obj != null) {
@@ -109,10 +119,21 @@ public class InteractionUtils {
 		return response;
 	}
 
+	public static ActionResponse closeDoor(Door door) {
+		ActionResponse response = new ActionResponse();
+		door.setDoorStatus(ObjectStatus.CLOSED);
+		response.setResponse("You closed the " + door.getName() + " door.");
+		return response;
+	}
+
 	public static ActionResponse openDoor(Door door, ObjectType obj) {
+		//		logger.debug("Opening door " + door);
 		ActionResponse res = new ActionResponse();
 		if (door != null && door.getOpenWithObject() != null && obj.getName() != null) {
 			// No object needed to open
+			logger.debug("opencondition1:" + (obj == null && door.getOpenWithObject() == null));
+			logger.debug("opencondition2:" + (door.getOpenWithObject() != null && !"".equals(door.getOpenWithObject())));
+			logger.debug("OPenCondition full :" + (obj == null && door.getOpenWithObject() == null || (door.getOpenWithObject() != null && !"".equals(door.getOpenWithObject()))));
 			if (obj == null && door.getOpenWithObject() == null || (door.getOpenWithObject() != null && !"".equals(door.getOpenWithObject()))) {
 				door.setDoorStatus(ObjectStatus.OPEN);
 			}
@@ -120,6 +141,7 @@ public class InteractionUtils {
 			if (door.getOpenWithObject().equalsIgnoreCase(obj.getName())) {
 				door.setDoorStatus(ObjectStatus.OPEN);
 			}
+			logger.debug("New Door status:" + door);
 			res.setResponse("You opened the door " + door.getName() + ".");
 		} else {
 			res.setResponse("The door " + door.getName() + " could no t be opened with " + obj.getName() + ".");
@@ -150,7 +172,7 @@ public class InteractionUtils {
 		//System.out.println("TODO");
 		ActionResponse resp = new ActionResponse();
 		ObjectCombination oc = findObjectCombination(o1, o2);
-//		ObjectType resObj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), oc.getObjectResult());
+		//		ObjectType resObj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), oc.getObjectResult());
 		ObjectType resObj = GameUtils.getGameObject(oc.getObjectResult());
 		if (resObj != null) {
 			InventoryUtils.removeFromInventory(o1);
@@ -163,11 +185,34 @@ public class InteractionUtils {
 	}
 
 	public static ActionResponse use(GameAction gAction) {
-		return null;
+		ActionResponse response = new ActionResponse();
+		logger.debug("ParamSize:" + gAction.getParameters().size());
+		if (gAction.getParameters().size() != 1 && gAction.getParameters().size() != 3) {
+			response.setResponse("I need to know what to use and with what...");
+		} else if (gAction.getParameters().size() == 1) {
+			response.setResponse("use Obj");
+		} else if (gAction.getParameters().size() == 3) {
+			String o1Name = GameUtils.getElement(new StringEquals(), GameExecutor.getGameState().getInventory().getObjectName(), gAction.getParameters().get(0));
+			String o2Name = GameUtils.getElement(new StringEquals(), GameExecutor.getGameState().getInventory().getObjectName(), gAction.getParameters().get(2));
+			ObjectType o2 = null;
+			ObjectType o1 = GameUtils.getGameObject(o1Name);
+			if (o2Name != null) {
+				o2 = GameUtils.getGameObject(o2Name);
+			} else {
+				o2Name = gAction.getParameters().get(2);
+				o2 = GameUtils.getDoor(o2Name);
+			}
+			logger.debug("UseObject:o1:" + o1 + " o2:" + o2);
+			response = useObject(o1, o2);
+		}
+		return response;
 	}
 
 	public static ActionResponse useObject(ObjectType o1, ObjectType o2) {
 		ActionResponse resp = new ActionResponse();
+		logger.debug("useObject:");
+		logger.debug("o1" + o1);
+		logger.debug("o2" + o2);
 		if (o2 instanceof Door) {
 			openDoor((Door) o2, o1);
 		} else {

@@ -23,15 +23,15 @@ Run Game
 --------
 
 Maze crawler:
-java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.xml
+java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.xml -noMusic
 
 
 Interaction:
-java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml
+java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml -noMusic
 
 
 Gzipped:
-java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.ifg
+java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.ifg -noMusic
 
 
 

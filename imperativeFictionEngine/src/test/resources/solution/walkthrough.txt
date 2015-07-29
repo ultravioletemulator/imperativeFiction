@@ -1,0 +1,6 @@
+get finishdoorkey
+go north
+use finishdoorkey with fPNorthDoor
+close fPNorthDoor
+open fPNorthDoor
+go north
