@@ -9,11 +9,9 @@ import java.awt.*;
  */
 public interface Presentation {
 
+	public void init();
+
 	public void presentText(String text);
-
-	public void presentLocation();
-
-	public void presentAction();
 
 	public void showImage(Image image);
 

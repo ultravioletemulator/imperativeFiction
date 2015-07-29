@@ -210,7 +210,8 @@
                     status="visible" protection="3"/>
         </gameArmours>
         <gameObjectPlacements>
-            <objectPlacements name="oplcfinishDoorKey" objectName="finishDoorKey"
+            <objectPlacements name="oplcfinishDoorKey"
+                              objectName="finishDoorKey"
                               locationName="mainLocation"/>
             <objectPlacements name="oplcsteelArmour" objectName="steelArmour"
                               locationName="mainLocation"/>
@@ -241,7 +242,8 @@
         </image>
     </screenshots>
     <music>
-        <file path="music/DeadmansHand.mp3"/>
+        <file path="src/test/resources/music/Allegro.mp3"/>
+        <file path="src/test/resources/music/DeadmansHand.mp3"/>
     </music>
     <description>
         cave Crawler Movement Test

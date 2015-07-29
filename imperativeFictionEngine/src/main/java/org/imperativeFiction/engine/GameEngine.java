@@ -1,9 +1,11 @@
 package org.imperativeFiction.engine;
 
 import org.imperativeFiction.core.OsCheck;
+import org.imperativeFiction.generated.ExecutionConfig;
 import org.imperativeFiction.generated.Game;
 import org.imperativeFiction.presentations.ConsolePresentation;
 import org.imperativeFiction.presentations.Presentation;
+import org.imperativeFiction.presentations.SwingPresentation;
 import org.imperativeFiction.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,19 +19,40 @@ import java.io.IOException;
 /**
  * Created by developer on 7/22/15.
  */
-public class GameEngine {
+public class GameEngine extends Thread {
 
 	private Logger logger = LoggerFactory.getLogger(GameEngine.class);
 	GameExecutor gameExecutor = new GameExecutor();
+	static ExecutionConfig exConfig = new ExecutionConfig();
 	static Presentation presentation = new ConsolePresentation();
+	//	static Presentation presentation = new SwingPresentation();
 	public static String JAXB_PACKAGE = "org.imperativeFiction.generated";
+
+	public GameEngine() {
+		// initial Config
+		GameEngine.getExConfig().setMusic(new Boolean(true));
+	}
 
 	public static Presentation getPresentation() {
 		return presentation;
 	}
 
+	public static String gameFile;
+
+	public static String getGameFile() {
+		return gameFile;
+	}
+
+	public static void setGameFile(String gameFile) {
+		GameEngine.gameFile = gameFile;
+	}
+
 	public static void setPresentation(Presentation presentation) {
 		GameEngine.presentation = presentation;
+	}
+
+	public static ExecutionConfig getExConfig() {
+		return exConfig;
 	}
 
 	public void runGame(String fileName) throws GameException {
@@ -42,7 +65,6 @@ public class GameEngine {
 	public Game loadGame(String fileName) throws GameException {
 		logger.debug("Game engine Loading game...");
 		logger.debug("Current folder:" + FileUtils.getCurrentDir());
-
 		Game game = null;
 		try {
 			File gameFile = null;
@@ -92,6 +114,15 @@ public class GameEngine {
 			} catch (IOException e) {
 			}
 			gameExecutor.executeGame(game);
+		}
+	}
+
+	@Override
+	public void run() {
+		try {
+			this.runGame(GameEngine.getGameFile());
+		} catch (GameException e) {
+			e.printStackTrace();
 		}
 	}
 }

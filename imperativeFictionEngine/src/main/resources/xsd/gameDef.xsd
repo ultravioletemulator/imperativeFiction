@@ -428,6 +428,7 @@
                 <xs:element name="response" type="xs:string"/>
             </xs:sequence>
             <xs:attribute name="quit" type="xs:boolean"/>
+            <xs:attribute name="image" type="xs:string"/>
         </xs:complexType>
     </xs:element>
 
@@ -713,6 +714,11 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+
+
+    <xs:complexType name="executionConfig">
+        <xs:attribute name="music" type="xs:boolean" />
+    </xs:complexType>
 </xs:schema>
 
 

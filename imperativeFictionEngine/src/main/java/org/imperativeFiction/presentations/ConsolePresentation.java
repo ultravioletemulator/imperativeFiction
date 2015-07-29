@@ -16,16 +16,12 @@ public class ConsolePresentation implements Presentation {
 
 	private static Logger logger = LoggerFactory.getLogger(ConsolePresentation.class);
 
+	public void init(){}
+
 	public void presentText(String text) {
 		logger.info(text);
-		//System.out.println(text);
 	}
 
-	public void presentLocation() {
-	}
-
-	public void presentAction() {
-	}
 
 	public void showImage(Image image) {
 		logger.debug("Not implemented");

@@ -1,6 +1,7 @@
 package org.imperativeFiction.utils;
 
 import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.Player;
 import org.imperativeFiction.core.*;
 import org.imperativeFiction.core.equals.BeanNameEquals;
 import org.imperativeFiction.core.equals.DoorNameEquals;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -28,9 +30,9 @@ public class GameUtils {
 	private static Logger logger = LoggerFactory.getLogger(GameUtils.class);
 
 	public static void playMusic(File file) throws FileNotFoundException, JavaLayerException {
-		//		FileInputStream fis = new FileInputStream(file);
-		//Player player = new Player(fis);
-		//player.play();
+		FileInputStream fis = new FileInputStream(file);
+		Player player = new Player(fis);
+		player.play();
 	}
 
 	public static void showArtwork(String file) throws GameException {

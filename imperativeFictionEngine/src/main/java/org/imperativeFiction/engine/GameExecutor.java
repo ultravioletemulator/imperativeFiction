@@ -1,17 +1,13 @@
 package org.imperativeFiction.engine;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javazoom.jl.decoder.JavaLayerException;
 import org.imperativeFiction.core.*;
 import org.imperativeFiction.generated.*;
-import org.imperativeFiction.presentations.ConsolePresentation;
-import org.imperativeFiction.presentations.Presentation;
 import org.imperativeFiction.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +33,7 @@ public class GameExecutor {
 	private static Map<String, Location> gameLocations = new HashMap<String, Location>();
 	private static Map<String, Door> gameDoors = new HashMap<String, Door>();
 	private static Map<String, ObjectPlacement> gameObjectPlacements = new HashMap<String, ObjectPlacement>();
+	private List<File> music = new ArrayList<File>();
 
 	public static ObjectFactory getFactory() {
 		return factory;
@@ -70,13 +67,6 @@ public class GameExecutor {
 		runningGame = game;
 		if (game != null && game.getArtwork() != null && game.getArtwork().getImage() != null && game.getArtwork().getImage().size() > 0 && game.getArtwork().getImage().get(0) != null && game.getArtwork().getImage().get(0).getFile() != null && game.getArtwork().getImage().get(0).getFile().getPath() != null) {
 			GameUtils.showArtwork(game.getArtwork().getImage().get(0).getFile().getPath());
-		}
-		try {
-			GameUtils.playMusic(new File(game.getMusic().getFile().get(0).getPath()));
-		} catch (FileNotFoundException e) {
-			throw new GameException(e);
-		} catch (JavaLayerException e) {
-			throw new GameException(e);
 		}
 		runGame();
 	}
@@ -140,7 +130,7 @@ public class GameExecutor {
 			logger.debug(i + " of " + armourSize);
 			i++;
 		}
-		logger.debug("Loaded GameObjects:" + gameObjects);
+		//		logger.debug("Loaded GameObjects:" + gameObjects);
 		//		load Locations
 		logger.debug("loading gameLocations...");
 		int locationSize = runningGame.getDefinition().getLocations().getLocation().size();
@@ -151,7 +141,7 @@ public class GameExecutor {
 			logger.debug(i + " of " + locationSize);
 			i++;
 		}
-		logger.debug("Loaded gameLocations:" + gameLocations);
+		//		logger.debug("Loaded gameLocations:" + gameLocations);
 		logger.debug("loading gameDoors...");
 		int doorSize = runningGame.getDefinition().getDoors().getDoor().size();
 		i = 0;
@@ -161,7 +151,7 @@ public class GameExecutor {
 			logger.debug(i + " of " + doorSize);
 			i++;
 		}
-		logger.debug("Loaded gameDoors:" + gameDoors);
+		//		logger.debug("Loaded gameDoors:" + gameDoors);
 		logger.debug("loading gameObjectPlacements...");
 		int placmentSize = runningGame.getDefinition().getGameObjectPlacements().getObjectPlacements().size();
 		i = 0;
@@ -171,10 +161,20 @@ public class GameExecutor {
 			logger.debug(i + " of " + placmentSize);
 			i++;
 		}
-		logger.debug("Loaded gameObjectPlacements:" + gameObjectPlacements);
+		//		logger.debug("Loaded gameObjectPlacements:" + gameObjectPlacements);
 	}
 
-	private GameState initGame() {
+	private void playMusic() throws GameException {
+
+		Thread musicPlayerThread = new MusicPlayerThread();
+		musicPlayerThread.start();
+	}
+
+	private GameState initGame() throws GameException {
+		// init presentation
+		GameEngine.getPresentation().init();
+		//Play usic
+		playMusic();
 		GameState gameState = factory.createGameState();
 		// Load Objects
 		loadGameObjects();

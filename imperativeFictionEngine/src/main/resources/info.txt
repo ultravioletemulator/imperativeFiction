@@ -29,9 +29,15 @@ java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar 
 Interaction:
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml
 
+
 Gzipped:
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.ifg
 
+
+
+No Music
+Interaction
+    java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml -noMusic
 
 mp3 Player
 ----------
