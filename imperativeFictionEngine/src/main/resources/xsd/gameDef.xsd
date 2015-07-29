@@ -146,7 +146,7 @@
 
     <xs:complexType name="gameWeapons">
         <xs:sequence>
-            <xs:element name="weapon" type="weaponType"/>
+            <xs:element name="weapon" type="weaponType" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -601,7 +601,7 @@
                 <xs:element ref="gameObjectCombinations" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element name="gameWeapons" type="gameWeapons" minOccurs="1"
-                            maxOccurs="unbounded"/>
+                            maxOccurs="1"/>
                 <xs:element ref="gameObjectPlacements" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element name="gameAutomaticActions"

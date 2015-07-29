@@ -21,11 +21,15 @@ mvn clean compile assembly:single package -DskipTests
 
 Run Game
 --------
+
+Maze crawler:
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.xml
 
+
+Interaction:
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml
 
-
+Gzipped:
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.ifg
 
 

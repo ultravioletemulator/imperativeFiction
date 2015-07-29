@@ -108,15 +108,6 @@ public class InteractionUtils {
 		return response;
 	}
 
-	public static ActionResponse showInventory() {
-		ActionResponse res = new ActionResponse();
-		StringBuilder sb = new StringBuilder();
-		logger.debug(" invetnroy:" + GameExecutor.getGameState().getInventory());
-		if (GameExecutor.getGameState() != null && GameExecutor.getGameState().getInventory() != null)
-			sb.append(GameExecutor.getGameState().getInventory());
-		res.setResponse("Inventory: " + sb.toString());
-		return res;
-	}
 
 	public static ActionResponse openDoor(Door door, ObjectType obj) {
 		ActionResponse res = new ActionResponse();

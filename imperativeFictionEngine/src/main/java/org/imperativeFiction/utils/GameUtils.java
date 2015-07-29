@@ -215,6 +215,10 @@ public class GameUtils {
 		return res;
 	}
 
+	public static ObjectType getGameObject(String name) {
+		return GameExecutor.getGameObjects().get(name);
+	}
+
 	public static ActionResponse die() {
 		ActionResponse response = new ActionResponse();
 		GameExecutor.getGameState().getCharacterState().setLife(BigInteger.valueOf(0));

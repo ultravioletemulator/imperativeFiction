@@ -196,6 +196,7 @@
                 </image>
             </object>
         </gameObjects>
+        <gameObjectCombinations></gameObjectCombinations>
         <gameWeapons>
             <weapon name="whip" description="Indiana Jones like whip" size="0"
                     status="visible" damage="1">

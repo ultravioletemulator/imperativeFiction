@@ -3,17 +3,16 @@ package org.imperativeFiction.engine;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javazoom.jl.decoder.JavaLayerException;
 import org.imperativeFiction.core.*;
 import org.imperativeFiction.generated.*;
 import org.imperativeFiction.presentations.ConsolePresentation;
 import org.imperativeFiction.presentations.Presentation;
-import org.imperativeFiction.utils.CharacterUtils;
-import org.imperativeFiction.utils.GameUtils;
-import org.imperativeFiction.utils.InteractionUtils;
-import org.imperativeFiction.utils.MovementUtils;
+import org.imperativeFiction.utils.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +33,7 @@ public class GameExecutor {
 	static GameState gameState = null;
 	static CommandParser parser = new CommandParser();
 	CharacterState characterState = factory.createCharacterState();
+	private static Map<String, ObjectType> gameObjects = new HashMap<String, ObjectType>();
 
 	public static ObjectFactory getFactory() {
 		return factory;
@@ -41,6 +41,10 @@ public class GameExecutor {
 
 	public static GameState getGameState() {
 		return gameState;
+	}
+
+	public static Map<String, ObjectType> getGameObjects() {
+		return gameObjects;
 	}
 
 	public static Game getRunningGame() {
@@ -93,8 +97,20 @@ public class GameExecutor {
 		}
 	}
 
+	private void loadGameObjects() {
+		for (ObjectType obj : runningGame.getDefinition().getGameObjects().getObject()) {
+			gameObjects.put(obj.getName(), obj);
+		}
+		for (ObjectType obj : runningGame.getDefinition().getGameWeapons().getWeapon()) {
+			gameObjects.put(obj.getName(), obj);
+		}
+		logger.debug("Loaded GameObjects:" + gameObjects);
+	}
+
 	private GameState initGame() {
 		GameState gameState = factory.createGameState();
+		// Load Objects
+		loadGameObjects();
 		characterState.setLife(runningGame.getInitialization().getLife());
 		// Set inventory
 		gameState.setInventory(runningGame.getInitialization().getInventory());
@@ -134,7 +150,7 @@ public class GameExecutor {
 					break;
 				case get:
 					ActionResponse rAct = InteractionUtils.getObject(gAction, GameExecutor.getGameState().getLocation());
-					ActionResponse rInt = InteractionUtils.showInventory();
+					ActionResponse rInt = InventoryUtils.showInventory();
 					response = GameUtils.mergeActionResponses(rAct, rInt);
 					break;
 				case go:
@@ -150,7 +166,7 @@ public class GameExecutor {
 					response = InteractionUtils.use(gAction);
 					throw new GameException(new NotImplementedException());
 				case inventory:
-					response = InteractionUtils.showInventory();
+					response = InventoryUtils.showInventory();
 					break;
 				case eat:
 					response = CharacterUtils.eat(gAction.getParameters().get(0));
