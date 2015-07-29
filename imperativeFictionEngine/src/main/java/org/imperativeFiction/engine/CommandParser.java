@@ -33,7 +33,7 @@ public class CommandParser {
 		while (!found && ait.hasNext()) {
 			org.imperativeFiction.generated.Action supAct = ait.next();
 			gAction = matches(supAct, cleanCommand(command));
-			System.out.println("gAction:" + gAction);
+			logger.debug("gAction:" + gAction);
 			found = (gAction != null);
 		}
 		if (!found) {
@@ -56,7 +56,7 @@ public class CommandParser {
 			int i = 0;
 			while (st.hasMoreTokens()) {
 				String token = st.nextToken();
-				System.out.println("token :" + token);
+				logger.debug("token :" + token);
 				if (i == 0) {
 					res = new GameAction();
 					res.setAction(getActionFromCommand(token));

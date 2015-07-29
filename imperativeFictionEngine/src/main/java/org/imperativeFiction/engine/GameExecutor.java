@@ -28,7 +28,6 @@ import javax.xml.bind.Unmarshaller;
 public class GameExecutor {
 
 	private Logger logger = LoggerFactory.getLogger(GameExecutor.class);
-	static Presentation presentation = new ConsolePresentation();
 	static Game runningGame = null;
 	static ObjectFactory factory = new ObjectFactory();
 	//	static Inventory inventory = new Inventory();
@@ -42,10 +41,6 @@ public class GameExecutor {
 
 	public static GameState getGameState() {
 		return gameState;
-	}
-
-	public static Presentation getPresentation() {
-		return presentation;
 	}
 
 	public static Game getRunningGame() {
@@ -69,31 +64,31 @@ public class GameExecutor {
 
 	private void runGame() throws GameException {
 		logger.debug("Running game: " + runningGame.getName());
-		System.out.println("Running game: " + runningGame.getName());
+		//logger.debug("Running game: " + runningGame.getName());
 		boolean finished = false;
 		gameState = initGame();
 		logger.debug("Testing log framework... ");
 		//Present initial text
-		presentation.presentText(getFullLocationDescription(gameState.getLocation()));
+		GameEngine.getPresentation().presentText(getFullLocationDescription(gameState.getLocation()));
 		while (!finished) {
-			String command = presentation.readCommand();
+			String command = GameEngine.getPresentation().readCommand();
 			try {
 				GameAction gAction = parser.parseCommand(runningGame.getDefinition().getGenericActions(), command);
 				ActionResponse response = executeAction(gAction);
-				System.out.println("ActionResponse:" + response);
+				logger.debug("ActionResponse:" + response);
 				if (response == null) {
 					response = new ActionResponse();
 					response.setResponse("Could not understand " + command);
 				}
-				presentation.presentText(response.getResponse());
+				GameEngine.getPresentation().presentText(response.getResponse());
 				//				presentation.presentText(gameState.getLocation().getDescription());
 				//				System.out.println("Objects in location :" + InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
 				//				presentation.presentText(InteractionUtils.getObjectsInLocation(runningGame.getDefinition().getGameObjectPlacements(), gameState.getLocation()).getResponse());
 				if (response != null && response.isQuit() != null && response.isQuit())
 					System.exit(0);
-				presentation.presentText(getFullLocationDescription(gameState.getLocation()));
+				GameEngine.getPresentation().presentText(getFullLocationDescription(gameState.getLocation()));
 			} catch (UnknownCommandException e) {
-				presentation.presentText(e.getLocalizedMessage());
+				GameEngine.getPresentation().presentText(e.getLocalizedMessage());
 			}
 		}
 	}
@@ -109,14 +104,14 @@ public class GameExecutor {
 			gameState.getInventory().setObjectName(new ArrayList<String>());
 		// setObjectPlacements
 		GameObjectPlacements placements = runningGame.getDefinition().getGameObjectPlacements();
-		System.out.println("Loading Game Object placements...");
+		logger.debug("Loading Game Object placements...");
 		gameState.setGameObjectPlacements(placements);
-		System.out.println("Game Object placements loaded. " + gameState.getGameObjectPlacements());
+		logger.debug("Game Object placements loaded. " + gameState.getGameObjectPlacements());
 		//Locations
 		Location location = GameUtils.getLocation(runningGame.getInitialization().getInitialLocationName());
 		gameState.setLocation(location);
-		presentation.presentText("InitialState :" + characterState);
-		presentation.presentText("Inventory :" + gameState.getInventory());
+		GameEngine.getPresentation().presentText("InitialState :" + characterState);
+		GameEngine.getPresentation().presentText("Inventory :" + gameState.getInventory());
 		return gameState;
 	}
 

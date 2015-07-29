@@ -8,7 +8,7 @@
         </encoder>
         -->
         <encoder>
-            <pattern>%m</pattern>
+            <pattern>%m%n</pattern>
         </encoder>
     </appender>
 
@@ -31,6 +31,9 @@
         </triggeringPolicy>
     </appender>
 
+
+
+    <!-- -->
     <logger name="org.impertiveFiction" level="DEBUG">
         <appender-ref ref="file"/>
         <appender-ref ref="CONSOLE"/>
@@ -46,8 +49,10 @@
     </logger>
 
 
+    <!--
     <root level="debug">
         <appender-ref ref="file"/>
         <appender-ref ref="CONSOLE"/>
     </root>
+-->
 </configuration>

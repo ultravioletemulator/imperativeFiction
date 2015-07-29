@@ -1,6 +1,8 @@
 package org.imperativeFiction.presentations;
 
 import org.imperativeFiction.engine.GameException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,6 +12,8 @@ import java.awt.*;
  */
 public class SwingPresentation implements Presentation {
 
+	private Logger logger = LoggerFactory.getLogger(SwingPresentation.class);
+
 	public void presentAction() {
 	}
 
@@ -17,7 +21,7 @@ public class SwingPresentation implements Presentation {
 	}
 
 	public void presentText(String text) {
-		System.out.println(text);
+		logger.debug(text);
 	}
 
 	public void showImage(Image image) {

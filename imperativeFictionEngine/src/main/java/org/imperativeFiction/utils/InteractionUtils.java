@@ -111,7 +111,7 @@ public class InteractionUtils {
 	public static ActionResponse showInventory() {
 		ActionResponse res = new ActionResponse();
 		StringBuilder sb = new StringBuilder();
-		System.out.println(" invetnroy:" + GameExecutor.getGameState().getInventory());
+		logger.debug(" invetnroy:" + GameExecutor.getGameState().getInventory());
 		if (GameExecutor.getGameState() != null && GameExecutor.getGameState().getInventory() != null)
 			sb.append(GameExecutor.getGameState().getInventory());
 		res.setResponse("Inventory: " + sb.toString());

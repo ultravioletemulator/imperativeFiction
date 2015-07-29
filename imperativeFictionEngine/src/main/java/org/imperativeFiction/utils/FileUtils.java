@@ -5,16 +5,19 @@ import java.io.*;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorInputStream;
 import org.apache.commons.compress.compressors.gzip.GzipCompressorOutputStream;
 import org.imperativeFiction.engine.GameException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by developer on 7/29/15.
  */
 public class FileUtils {
 
+	private static Logger logger = LoggerFactory.getLogger(FileUtils.class);
 	private static int buffersize = 1024;
 
 	public static File decompressFile(String fileName) throws IOException, GameException {
-		System.out.println("decompressing file:" + fileName);
+		logger.debug("decompressing file:" + fileName);
 		if (fileName.endsWith(".ifg")) {
 			File f = gunzip(fileName);
 			File resf = new File(f.getName() + ".xml");

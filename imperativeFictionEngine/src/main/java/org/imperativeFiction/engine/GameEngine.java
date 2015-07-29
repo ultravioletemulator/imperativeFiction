@@ -2,6 +2,8 @@ package org.imperativeFiction.engine;
 
 import org.imperativeFiction.core.OsCheck;
 import org.imperativeFiction.generated.Game;
+import org.imperativeFiction.presentations.ConsolePresentation;
+import org.imperativeFiction.presentations.Presentation;
 import org.imperativeFiction.utils.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,16 @@ public class GameEngine {
 
 	private Logger logger = LoggerFactory.getLogger(GameEngine.class);
 	GameExecutor gameExecutor = new GameExecutor();
+	static Presentation presentation = new ConsolePresentation();
 	public static String JAXB_PACKAGE = "org.imperativeFiction.generated";
+
+	public static Presentation getPresentation() {
+		return presentation;
+	}
+
+	public static void setPresentation(Presentation presentation) {
+		GameEngine.presentation = presentation;
+	}
 
 	public void runGame(String fileName) throws GameException {
 		logger.debug("Testing log Console appender...");
@@ -31,7 +42,7 @@ public class GameEngine {
 	public Game loadGame(String fileName) throws GameException {
 		logger.debug("Game engine Loading game...");
 		logger.debug("Current folder:" + FileUtils.getCurrentDir());
-		System.out.println("Current folder:" + FileUtils.getCurrentDir());
+
 		Game game = null;
 		try {
 			File gameFile = null;
@@ -50,9 +61,9 @@ public class GameEngine {
 
 	public void executeGame(Game game) throws GameException {
 		if (game == null || (game != null && game.equals(""))) {
-			System.out.println("Could not load game:" + game);
+			presentation.presentText("Could not load game:" + game);
 		} else {
-			System.out.println("Clear screen");
+			presentation.presentText("Clear screen");
 			try {
 				OsCheck.OSType ostype = OsCheck.getOperatingSystemType();
 				switch (ostype) {
@@ -69,15 +80,15 @@ public class GameEngine {
 					Runtime.getRuntime().exec("clear");
 					break;
 				}
-				System.out.println("******************************************************");
-				System.out.println("Os: " + ostype);
-				System.out.println("Executing game " + game.getName() + " version:" + game.getVersion() + "...");
-				System.out.println("Author:" + game.getAuthor());
-				System.out.println("License: " + game.getLicensing());
-				System.out.println("******************************************************");
-				System.out.println(game.getName());
-				System.out.println(game.getDescription());
-				System.out.println("******************************************************");
+				presentation.presentText("******************************************************");
+				presentation.presentText("Os: " + ostype);
+				presentation.presentText("Executing game " + game.getName() + " version:" + game.getVersion() + "...");
+				presentation.presentText("Author:" + game.getAuthor());
+				presentation.presentText("License: " + game.getLicensing());
+				presentation.presentText("******************************************************");
+				presentation.presentText(game.getName());
+				presentation.presentText(game.getDescription());
+				presentation.presentText("******************************************************");
 			} catch (IOException e) {
 			}
 			gameExecutor.executeGame(game);

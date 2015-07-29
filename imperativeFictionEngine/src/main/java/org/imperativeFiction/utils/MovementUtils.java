@@ -23,12 +23,12 @@ public class MovementUtils {
 		if (checkMovementPreconditions(location, gAction)) {
 			Boundary boundary = null;
 			String param = gAction.getParameters() != null ? gAction.getParameters().get(0) : null;
-			System.out.println("Movement:" + param);
+			logger.debug("Movement:" + param);
 			Movements movement = param != null ? Movements.valueOf(param.toUpperCase()) : null;
 			if (movement != null) {
 				switch (movement) {
 				case NORTH:
-					System.out.println("North..." + location);
+					logger.debug("North..." + location);
 					boundary = GameUtils.getDoor(location.getNorth());
 					break;
 				case SOUTH:
@@ -65,7 +65,7 @@ public class MovementUtils {
 			} else {
 				response.setResponse("Could not go to the " + param);
 			}
-			System.out.println("Executing location actions...");
+			logger.debug("Executing location actions...");
 			ActionResponse autoActionResponse = executeAutomaticAction(GameExecutor.getGameState().getLocation());
 			if (autoActionResponse != null && autoActionResponse.isQuit() != null && autoActionResponse.isQuit())
 				response = autoActionResponse;
@@ -78,22 +78,22 @@ public class MovementUtils {
 	private static ActionResponse executeAutomaticAction(Location location) {
 		//		... Get Automatic Action with location ...
 		ActionResponse resp = new ActionResponse();
-		System.out.println("executing action " + location);
+		logger.debug("executing action " + location);
 		AutomaticAction autoAction = GameUtils.getElement(new AutomaticActionLocationNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameAutomaticActions().getAutomaticAction(), location != null && location.getName() != null ? location.getName() : null);
-		System.out.println("Automatic action " + autoAction);
+		logger.debug("Automatic action " + autoAction);
 		if (autoAction != null) {
 			if (autoAction.isDie() != null && autoAction.isDie()) {
 				resp = GameUtils.die();
 			}
 			if (autoAction.getAccomplishGoal() != null) {
-				System.out.println("Get accomplishedGoal");
+				logger.debug("Get accomplishedGoal");
 				Iterator<String> ait = autoAction.getAccomplishGoal().iterator();
 				boolean found = false;
 				while (!found && ait.hasNext()) {
 					String goalName = ait.next();
-					System.out.println("Goal name: " + goalName);
+					logger.debug("Goal name: " + goalName);
 					Goal goal = GameUtils.getElement(new GoalNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameGoals().getGoal(), goalName);
-					System.out.println("Goal:" + goal);
+					logger.debug("Goal:" + goal);
 					resp = GoalUtils.accomplishGoal(goal);
 				}
 			}
@@ -105,10 +105,10 @@ public class MovementUtils {
 		Location other = null;
 		String toName = path.getToLocation();
 		String fromName = path.getFromLocation();
-		System.out.println("Path:" + path);
-		System.out.println("Current Location:" + location);
-		System.out.println("fromLocation:" + fromName);
-		System.out.println("toLocation:" + toName);
+		logger.debug("Path:" + path);
+		logger.debug("Current Location:" + location);
+		logger.debug("fromLocation:" + fromName);
+		logger.debug("toLocation:" + toName);
 		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(toName))
 			other = GameUtils.getLocation(fromName);
 		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(fromName))
@@ -118,15 +118,15 @@ public class MovementUtils {
 
 	private static boolean canGoDirection(Boundary boundary) {
 		//		System.out.println("boundary:" + boundary.getName());
-		System.out.println("boundary:" + boundary);
+		logger.debug("boundary:" + boundary);
 		if (boundary != null) {
-			System.out.println("boundary Name:" + boundary.getName());
-			System.out.println("isPath?" + (boundary instanceof Path));
-			System.out.println("IsDoor?" + (boundary instanceof Door));
-			System.out.println("Door Status:" + ((Door) boundary).getDoorStatus().value());
-			System.out.println("is door Open?" + ((Door) boundary).getDoorStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name()));
+			logger.debug("boundary Name:" + boundary.getName());
+			logger.debug("isPath?" + (boundary instanceof Path));
+			logger.debug("IsDoor?" + (boundary instanceof Door));
+			logger.debug("Door Status:" + ((Door) boundary).getDoorStatus().value());
+			logger.debug("is door Open?" + ((Door) boundary).getDoorStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name()));
 			boolean res = ((((boundary instanceof Path && !(boundary instanceof Door)) || (boundary instanceof Door && ((Door) boundary).getDoorStatus().value().equalsIgnoreCase(ObjectStatus.OPEN.name())))));
-			System.out.println("canGo:" + res);
+			logger.debug("canGo:" + res);
 			return res;
 		} else
 			return false;

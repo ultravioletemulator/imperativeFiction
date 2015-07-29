@@ -14,11 +14,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ConsolePresentation implements Presentation {
 
-	private Logger logger = LoggerFactory.getLogger(ConsolePresentation.class);
+	private static Logger logger = LoggerFactory.getLogger(ConsolePresentation.class);
 
 	public void presentText(String text) {
-		logger.debug(text);
-		System.out.println(text);
+		logger.info(text);
+		//System.out.println(text);
 	}
 
 	public void presentLocation() {
