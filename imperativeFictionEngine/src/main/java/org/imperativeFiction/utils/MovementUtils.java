@@ -1,8 +1,9 @@
-package org.imperativeFiction.engine;
+package org.imperativeFiction.utils;
 
-import org.imperativeFiction.core.AutomaticActionLocationNameEquals;
+import org.imperativeFiction.core.equals.AutomaticActionLocationNameEquals;
 import org.imperativeFiction.core.GameAction;
-import org.imperativeFiction.core.GoalNameEquals;
+import org.imperativeFiction.core.equals.GoalNameEquals;
+import org.imperativeFiction.engine.GameExecutor;
 import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,4 +1,4 @@
-package org.imperativeFiction.core;
+package org.imperativeFiction.core.equals;
 
 import java.util.Iterator;
 

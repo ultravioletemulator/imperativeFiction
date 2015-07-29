@@ -1,8 +1,11 @@
-package org.imperativeFiction.engine;
+package org.imperativeFiction.utils;
 
-import org.imperativeFiction.core.DoorNameEquals;
-import org.imperativeFiction.core.GameAction;
-import org.imperativeFiction.core.ObjectTypeNameEquals;
+import org.imperativeFiction.core.*;
+import org.imperativeFiction.core.equals.DoorNameEquals;
+import org.imperativeFiction.core.equals.ObjectCombinationEquals;
+import org.imperativeFiction.core.equals.ObjectTypeNameEquals;
+import org.imperativeFiction.engine.GameException;
+import org.imperativeFiction.engine.GameExecutor;
 import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,15 +91,15 @@ public class InteractionUtils {
 		ActionResponse response = GameExecutor.getFactory().createActionResponse();
 		if (gAction != null && gAction.getParameters() != null && gAction.getParameters().size() > 0) {
 			ObjectType obj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), gAction.getParameters().get(0));
-			System.out.println("Found Object:" + obj);
+			//			System.out.println("Found Object:" + obj);
 			if (obj != null) {
-				System.out.println("Adding to inventory:" + GameExecutor.getGameState().getInventory());
+				//				System.out.println("Adding to inventory:" + GameExecutor.getGameState().getInventory());
 				//				if (GameExecutor.getInventory()==null)
 				GameExecutor.getGameState().getInventory().getObjectName().add(obj.getName());
-				System.out.println("inventory after:" + GameExecutor.getGameState().getInventory());
+				//				System.out.println("inventory after:" + GameExecutor.getGameState().getInventory());
 				//removeObject from location ....
 				ObjectPlacement placement = GameUtils.getPlacement(obj, location);
-				GameExecutor.gameState.getGameObjectPlacements().getObjectPlacements().remove(placement);
+				GameExecutor.getGameState().getGameObjectPlacements().getObjectPlacements().remove(placement);
 			}
 			response.setResponse("You got " + obj.getName());
 		} else {
@@ -117,13 +120,13 @@ public class InteractionUtils {
 
 	public static ActionResponse openDoor(Door door, ObjectType obj) {
 		ActionResponse res = new ActionResponse();
-		if (door != null && door.getOpenWith() != null && obj.getName() != null) {
+		if (door != null && door.getOpenWithObject() != null && obj.getName() != null) {
 			// No object needed to open
-			if (obj == null && door.getOpenWith() == null || (door.getOpenWith() != null && !"".equals(door.getOpenWith()))) {
+			if (obj == null && door.getOpenWithObject() == null || (door.getOpenWithObject() != null && !"".equals(door.getOpenWithObject()))) {
 				door.setDoorStatus(ObjectStatus.OPEN);
 			}
 			// Open using object
-			if (door.getOpenWith().equalsIgnoreCase(obj.getName())) {
+			if (door.getOpenWithObject().equalsIgnoreCase(obj.getName())) {
 				door.setDoorStatus(ObjectStatus.OPEN);
 			}
 			res.setResponse("You opened the door " + door.getName() + ".");
@@ -131,5 +134,53 @@ public class InteractionUtils {
 			res.setResponse("The door " + door.getName() + " could no t be opened with " + obj.getName() + ".");
 		}
 		return res;
+	}
+
+	public static ObjectCombination findObjectCombination(ObjectType o1, ObjectType o2) {
+		ObjectCombination res = null;
+		Iterator<ObjectCombination> cit = GameExecutor.getRunningGame().getDefinition().getGameObjectCombinations().getObjectCombination().iterator();
+		boolean found = false;
+		ObjectCombinationEquals ocEq = new ObjectCombinationEquals();
+		ocEq.setO1(o1);
+		ocEq.setO2(o2);
+		while (cit.hasNext() && !found) {
+			ObjectCombination oc = cit.next();
+			ocEq.setCombination(oc);
+			if (ocEq.equals()) {
+				found = true;
+				res = oc;
+			}
+		}
+		return res;
+	}
+
+	public static ActionResponse combineObjects(ObjectType o1, ObjectType o2) {
+		// TODO
+		//System.out.println("TODO");
+		ActionResponse resp = new ActionResponse();
+		ObjectCombination oc = findObjectCombination(o1, o2);
+		ObjectType resObj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), oc.getObjectResult());
+		if (resObj != null) {
+			InventoryUtils.removeFromInventory(o1);
+			InventoryUtils.removeFromInventory(o2);
+			InventoryUtils.addToInventory(resObj);
+			resp.setResponse("You combined the " + o1.getName() + " and " + o2.getName() + " to get " + resObj.getName());
+		} else
+			resp.setResponse(o1.getName() + " and " + o2.getName() + " could not be combined.");
+		return resp;
+	}
+
+	public static ActionResponse use(GameAction gAction) {
+		return null;
+	}
+
+	public static ActionResponse useObject(ObjectType o1, ObjectType o2) {
+		ActionResponse resp = new ActionResponse();
+		if (o2 instanceof Door) {
+			openDoor((Door) o2, o1);
+		} else {
+			resp = combineObjects(o1, o2);
+		}
+		return resp;
 	}
 }

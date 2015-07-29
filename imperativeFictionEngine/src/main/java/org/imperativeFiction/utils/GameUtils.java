@@ -1,14 +1,16 @@
-package org.imperativeFiction.engine;
+package org.imperativeFiction.utils;
 
 import javazoom.jl.decoder.JavaLayerException;
 import org.imperativeFiction.core.*;
+import org.imperativeFiction.core.equals.BeanNameEquals;
+import org.imperativeFiction.core.equals.DoorNameEquals;
+import org.imperativeFiction.core.equals.MessageNameEquals;
+import org.imperativeFiction.engine.GameException;
+import org.imperativeFiction.engine.GameExecutor;
 import org.imperativeFiction.generated.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Unmarshaller;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +18,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.StringTokenizer;
 
 /**
  * Created by developer on 7/23/15.

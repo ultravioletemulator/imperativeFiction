@@ -10,6 +10,10 @@ import org.imperativeFiction.core.*;
 import org.imperativeFiction.generated.*;
 import org.imperativeFiction.presentations.ConsolePresentation;
 import org.imperativeFiction.presentations.Presentation;
+import org.imperativeFiction.utils.CharacterUtils;
+import org.imperativeFiction.utils.GameUtils;
+import org.imperativeFiction.utils.InteractionUtils;
+import org.imperativeFiction.utils.MovementUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -117,10 +121,10 @@ public class GameExecutor {
 
 	private ActionResponse executeAction(GameAction gAction) throws GameException {
 		ActionResponse response = null;
-		System.out.println("Action =" + gAction);
+		//		System.out.println("Action =" + gAction);
 		if (gAction != null && gAction.getAction() != null && gAction.getAction().getBasicAction() != null) {
 			ActionTypes actionType = ActionTypes.valueOf(gAction.getAction().getBasicAction());
-			System.out.println("Action type:" + actionType);
+			//			System.out.println("Action type:" + actionType);
 			if (actionType != null) {
 				switch (actionType) {
 				case open:
@@ -147,10 +151,14 @@ public class GameExecutor {
 				case push:
 					throw new GameException(new NotImplementedException());
 				case use:
+					response = InteractionUtils.use(gAction);
 					throw new GameException(new NotImplementedException());
 				case inventory:
 					response = InteractionUtils.showInventory();
 					break;
+				case eat:
+					response = CharacterUtils.eat(gAction.getParameters().get(0));
+					throw new GameException(new NotImplementedException());
 				case quit:
 					//throw new GameException("Game Finished");
 					response = new ActionResponse();
@@ -182,7 +190,7 @@ public class GameExecutor {
 			sb.append(location.getDescription());
 		sb.append("\n");
 		//		System.out.println("Placements:" + runningGame.getDefinition().getGameObjectPlacements());
-//		System.out.println("GameState: " + gameState);
+		//		System.out.println("GameState: " + gameState);
 		ActionResponse objResp = InteractionUtils.getObjectsInLocationResponse(gameState != null ? gameState.getGameObjectPlacements() : null, location);
 		sb.append(objResp.getResponse());
 		sb.append("\n");

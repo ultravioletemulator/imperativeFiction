@@ -96,7 +96,7 @@
                   description="North location south door" size="0"
                   status="visible"
                   fromLocation="northLocation" toLocation="endLocation"
-                  doorStatus="open" openWith="finishDoorKey">
+                  doorStatus="open" openWithObject="finishDoorKey">
                 <image>
                     <file path="door.jpg"/>
                 </image>
@@ -196,6 +196,7 @@
                 </image>
             </object>
         </gameObjects>
+        <gameObjectCombinations></gameObjectCombinations>
         <gameWeapons>
             <weapon name="whip" description="Indiana Jones like whip" size="0"
                     status="visible" damage="1">

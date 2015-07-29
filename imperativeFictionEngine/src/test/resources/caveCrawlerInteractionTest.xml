@@ -96,7 +96,7 @@
                   description="North location south door" size="0"
                   status="visible"
                   fromLocation="northLocation" toLocation="endLocation"
-                  doorStatus="closed" openWith="finishDoorKey">
+                  doorStatus="closed" openWithObject="finishDoorKey">
                 <image>
                     <file path="door.jpg"/>
                 </image>

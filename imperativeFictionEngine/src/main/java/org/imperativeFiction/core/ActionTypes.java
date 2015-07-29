@@ -4,7 +4,7 @@ package org.imperativeFiction.core;
  * Created by developer on 7/22/15.
  */
 public enum ActionTypes {
-	go, examine, get, talk, use, push, pull, open, close, inventory, quit, save, load
+	go, examine, get, talk, use, push, pull, open, close, inventory, eat, quit, save, load
 	//use --> push /pull
 	// give --> interact p1 with p2
 	//pick up --> get
@@ -15,4 +15,5 @@ public enum ActionTypes {
 	// exit --> quit
 	// save
 	// load
+	// eat --> feed
 }

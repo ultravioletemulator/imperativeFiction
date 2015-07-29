@@ -1,10 +1,11 @@
 package org.imperativeFiction.engine;
 
-import org.imperativeFiction.core.ActionNameEquals;
+import org.imperativeFiction.core.equals.ActionNameEquals;
 import org.imperativeFiction.core.ActionTypes;
 import org.imperativeFiction.core.GameAction;
 import org.imperativeFiction.core.UnknownCommandException;
 import org.imperativeFiction.generated.Action;
+import org.imperativeFiction.utils.GameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -92,7 +93,7 @@ public class CommandParser {
 			try {
 				actType = ActionTypes.valueOf(command.trim());
 				Action act = actType != null ? GameUtils.getElement(new ActionNameEquals(), GameExecutor.getRunningGame().getDefinition().getGenericActions().getAction(), actType.name()) : null;
-				System.out.println("getActionFromCommand:" + command + " action: " + actType + " act:" + act);
+//				System.out.println("getActionFromCommand:" + command + " action: " + actType + " act:" + act);
 				action = act;
 			} catch (IllegalArgumentException e) {
 			}

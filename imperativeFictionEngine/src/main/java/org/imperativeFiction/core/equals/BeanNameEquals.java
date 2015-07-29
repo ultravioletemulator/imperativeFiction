@@ -1,4 +1,4 @@
-package org.imperativeFiction.core;
+package org.imperativeFiction.core.equals;
 
 /**
  * Created by developer on 7/27/15.

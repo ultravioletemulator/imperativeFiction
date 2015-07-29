@@ -1,9 +1,48 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-
            jaxb:version="2.1"
         >
+
+    <!--
+        Progress
+            v01:
+                Maze crawler
+
+            v01.1:
+                Key/Door Interaction
+
+            v01.2:
+                General object Interaction
+
+            v02:
+                Basic Characters (No talking)
+                Armour/weapons
+
+            v02.1:
+                Character interaction talking
+
+            v02.02:
+                magic/potions etc...
+
+
+    TODO:
+        Object Interaction
+        Key -> Door opening/closing
+        Armours
+        Weapons
+        Potions
+
+        Special powers?¿
+
+        Characters -> conversations, interaction Give/get/use
+        Fights with random generation of damage.
+
+        magic, poison
+
+    -->
+
+
 
 
     <!--
@@ -72,6 +111,30 @@
         </xs:complexType>
     </xs:element>
 
+
+    <xs:complexType name="objectCombination">
+        <xs:sequence>
+            <xs:element name="object1Name" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="object2Name" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+            <xs:element name="objectResult" type="xs:string" minOccurs="1"
+                        maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+
+    <xs:element name="gameObjectCombinations">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="objectCombination"
+                            type="objectCombination" minOccurs="0"
+                            maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+
     <xs:element name="gameObjectPlacements">
         <xs:complexType>
             <xs:sequence>
@@ -100,6 +163,15 @@
         <xs:attribute name="status" type="objectStatus" use="required"/>
     </xs:complexType>
 
+    <!--
+        <xs:complexType name="key">
+            <xs:complexContent>
+                <xs:extension base="objectType">
+                    <xs:attribute name="opens" type="xs:string" use="required"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    -->
 
     <xs:simpleType name="objectStatus">
         <xs:restriction base="xs:string">
@@ -145,6 +217,17 @@
                       use="required"/>
     </xs:complexType>
 
+    <xs:complexType name="food">
+        <xs:complexContent>
+            <xs:extension base="objectType">
+                <xs:attribute name="life" type="xs:integer"
+                              use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+
     <!-- -->
     <xs:complexType name="boundary">
         <xs:complexContent>
@@ -182,7 +265,7 @@
             <xs:extension base="path">
                 <xs:attribute name="doorStatus" type="objectStatus"
                               use="required"/>
-                <xs:attribute name="openWith" type="xs:string"
+                <xs:attribute name="openWithObject" type="xs:string"
                         />
             </xs:extension>
         </xs:complexContent>
@@ -514,6 +597,8 @@
                 <xs:element ref="gameGoals" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element ref="gameObjects" minOccurs="1"
+                            maxOccurs="1"/>
+                <xs:element ref="gameObjectCombinations" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element name="gameWeapons" type="gameWeapons" minOccurs="1"
                             maxOccurs="unbounded"/>

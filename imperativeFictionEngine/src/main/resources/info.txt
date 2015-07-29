@@ -23,6 +23,8 @@ Run Game
 --------
 java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerMovementTest.xml
 
+java -jar target/imperativeFictionengine-1.0-SNAPSHOT-jar-with-dependencies.jar src/test/resources/caveCrawlerInteractionTest.xml
+
 
 
 

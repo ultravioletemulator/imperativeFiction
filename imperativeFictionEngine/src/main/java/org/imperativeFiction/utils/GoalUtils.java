@@ -1,6 +1,7 @@
-package org.imperativeFiction.engine;
+package org.imperativeFiction.utils;
 
-import org.imperativeFiction.core.GoalNameEquals;
+import org.imperativeFiction.core.equals.GoalNameEquals;
+import org.imperativeFiction.engine.GameExecutor;
 import org.imperativeFiction.generated.ActionResponse;
 import org.imperativeFiction.generated.GainedGoals;
 import org.imperativeFiction.generated.Goal;

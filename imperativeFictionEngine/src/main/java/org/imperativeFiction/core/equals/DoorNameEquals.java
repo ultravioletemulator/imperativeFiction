@@ -1,7 +1,6 @@
-package org.imperativeFiction.core;
+package org.imperativeFiction.core.equals;
 
 import org.imperativeFiction.generated.Door;
-import org.imperativeFiction.generated.Goal;
 
 /**
  * Created by developer on 7/27/15.
