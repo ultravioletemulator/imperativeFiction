@@ -205,13 +205,18 @@
                 </image>
             </weapon>
         </gameWeapons>
+        <gameArmours>
+            <armour name="steelArmour" description="steelArmour" size="2"
+                    status="visible" protection="3"/>
+        </gameArmours>
         <gameObjectPlacements>
-            <objectPlacements objectName="finishDoorKey"
+            <objectPlacements name="oplcfinishDoorKey" objectName="finishDoorKey"
+                              locationName="mainLocation"/>
+            <objectPlacements name="oplcsteelArmour" objectName="steelArmour"
                               locationName="mainLocation"/>
         </gameObjectPlacements>
         <gameAutomaticActions>
             <automaticAction name="gameFinishedAction">
-
                 <accomplishGoal>gameFinished</accomplishGoal>
                 <execution>
                     <onEnterLocation>endLocation</onEnterLocation>

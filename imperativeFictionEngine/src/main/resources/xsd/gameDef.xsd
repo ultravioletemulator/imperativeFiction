@@ -43,8 +43,6 @@
     -->
 
 
-
-
     <!--
      <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
@@ -146,9 +144,19 @@
 
     <xs:complexType name="gameWeapons">
         <xs:sequence>
-            <xs:element name="weapon" type="weaponType" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element name="weapon" type="weaponType" minOccurs="0"
+                        maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
+
+
+    <xs:complexType name="gameArmours">
+        <xs:sequence>
+            <xs:element name="armour" type="armourType" minOccurs="0"
+                        maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
 
     <xs:complexType name="objectType">
         <xs:sequence>
@@ -211,6 +219,8 @@
 
 
     <xs:complexType name="objectPlacement">
+        <xs:attribute name="name" type="xs:string"
+                      use="required"/>
         <xs:attribute name="objectName" type="xs:string"
                       use="required"/>
         <xs:attribute name="locationName" type="xs:string"
@@ -225,7 +235,6 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-
 
 
     <!-- -->
@@ -601,6 +610,8 @@
                 <xs:element ref="gameObjectCombinations" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element name="gameWeapons" type="gameWeapons" minOccurs="1"
+                            maxOccurs="1"/>
+                <xs:element name="gameArmours" type="gameArmours" minOccurs="1"
                             maxOccurs="1"/>
                 <xs:element ref="gameObjectPlacements" minOccurs="1"
                             maxOccurs="1"/>

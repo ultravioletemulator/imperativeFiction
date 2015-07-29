@@ -34,6 +34,9 @@ public class GameExecutor {
 	static CommandParser parser = new CommandParser();
 	CharacterState characterState = factory.createCharacterState();
 	private static Map<String, ObjectType> gameObjects = new HashMap<String, ObjectType>();
+	private static Map<String, Location> gameLocations = new HashMap<String, Location>();
+	private static Map<String, Door> gameDoors = new HashMap<String, Door>();
+	private static Map<String, ObjectPlacement> gameObjectPlacements = new HashMap<String, ObjectPlacement>();
 
 	public static ObjectFactory getFactory() {
 		return factory;
@@ -45,6 +48,18 @@ public class GameExecutor {
 
 	public static Map<String, ObjectType> getGameObjects() {
 		return gameObjects;
+	}
+
+	public static Map<String, Door> getGameDoors() {
+		return gameDoors;
+	}
+
+	public static Map<String, Location> getGameLocations() {
+		return gameLocations;
+	}
+
+	public static Map<String, ObjectPlacement> getGameObjectPlacements() {
+		return gameObjectPlacements;
 	}
 
 	public static Game getRunningGame() {
@@ -99,12 +114,28 @@ public class GameExecutor {
 
 	private void loadGameObjects() {
 		for (ObjectType obj : runningGame.getDefinition().getGameObjects().getObject()) {
-			gameObjects.put(obj.getName(), obj);
+			gameObjects.put(obj.getName().toLowerCase(), obj);
 		}
 		for (ObjectType obj : runningGame.getDefinition().getGameWeapons().getWeapon()) {
-			gameObjects.put(obj.getName(), obj);
+			gameObjects.put(obj.getName().toLowerCase(), obj);
+		}
+		for (ObjectType obj : runningGame.getDefinition().getGameArmours().getArmour()) {
+			gameObjects.put(obj.getName().toLowerCase(), obj);
 		}
 		logger.debug("Loaded GameObjects:" + gameObjects);
+		//		load Locations
+		for (Location obj : runningGame.getDefinition().getLocations().getLocation()) {
+			gameLocations.put(obj.getName().toLowerCase(), obj);
+		}
+		logger.debug("Loaded gameLocations:" + gameLocations);
+		for (Door obj : runningGame.getDefinition().getDoors().getDoor()) {
+			gameDoors.put(obj.getName().toLowerCase(), obj);
+		}
+		logger.debug("Loaded gameDoors:" + gameDoors);
+		for (ObjectPlacement obj : runningGame.getDefinition().getGameObjectPlacements().getObjectPlacements()) {
+			gameObjectPlacements.put(obj.getName().toLowerCase(), obj);
+		}
+		logger.debug("Loaded gameObjectPlacements:" + gameObjectPlacements);
 	}
 
 	private GameState initGame() {
@@ -126,6 +157,7 @@ public class GameExecutor {
 		//Locations
 		Location location = GameUtils.getLocation(runningGame.getInitialization().getInitialLocationName());
 		gameState.setLocation(location);
+		GameEngine.getPresentation().presentText("\n\n\n");
 		GameEngine.getPresentation().presentText("InitialState :" + characterState);
 		GameEngine.getPresentation().presentText("Inventory :" + gameState.getInventory());
 		return gameState;

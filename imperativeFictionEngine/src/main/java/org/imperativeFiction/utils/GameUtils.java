@@ -5,6 +5,7 @@ import org.imperativeFiction.core.*;
 import org.imperativeFiction.core.equals.BeanNameEquals;
 import org.imperativeFiction.core.equals.DoorNameEquals;
 import org.imperativeFiction.core.equals.MessageNameEquals;
+import org.imperativeFiction.engine.GameEngine;
 import org.imperativeFiction.engine.GameException;
 import org.imperativeFiction.engine.GameExecutor;
 import org.imperativeFiction.generated.*;
@@ -90,35 +91,28 @@ public class GameUtils {
 	//		return res;
 	//	}
 	public static Boundary getDoor(String boundaryName) {
-		boolean found = false;
+		//		boolean found = false;
 		Boundary res = null;
 		if (boundaryName != null) {
 			if ("wall".equalsIgnoreCase(boundaryName) || "emptyBoundary".equalsIgnoreCase(boundaryName)) {
 				res = new Wall();
 			}
-			Iterator<Door> lit = GameExecutor.getRunningGame().getDefinition().getDoors().getDoor().iterator();
-			while (!found && lit.hasNext()) {
-				Boundary loc = lit.next();
-				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {
-					res = loc;
-				}
-			}
+			//			Iterator<Door> lit = GameExecutor.getRunningGame().getDefinition().getDoors().getDoor().iterator();
+			//			while (!found && lit.hasNext()) {
+			//				Boundary loc = lit.next();
+			//				if (loc != null && boundaryName.equalsIgnoreCase(loc.getName())) {
+			//					res = loc;
+			//				}
+			//			}
+			res = GameExecutor.getGameDoors().get(boundaryName.toLowerCase());
 		}
 		return res;
 	}
 
 	public static Location getLocation(String locationName) {
-		boolean found = false;
-		Location res = null;
-		if (locationName != null) {
-			Iterator<Location> lit = GameExecutor.getRunningGame().getDefinition().getLocations().getLocation().iterator();
-			while (!found && lit.hasNext()) {
-				Location loc = lit.next();
-				if (loc != null && locationName.equalsIgnoreCase(loc.getName())) {
-					res = loc;
-				}
-			}
-		}
+		logger.debug("SEarching for location:" + locationName);
+		Location res = GameExecutor.getGameLocations().get(locationName.toLowerCase());
+		logger.debug("Got location:" + res);
 		return res;
 	}
 
@@ -216,7 +210,12 @@ public class GameUtils {
 	}
 
 	public static ObjectType getGameObject(String name) {
-		return GameExecutor.getGameObjects().get(name);
+		if (name != null) {
+			logger.debug("Getting obj:" + name);
+			logger.debug("from " + GameExecutor.getGameObjects());
+			return GameExecutor.getGameObjects().get(name.toLowerCase());
+		} else
+			return null;
 	}
 
 	public static ActionResponse die() {
@@ -256,7 +255,8 @@ public class GameUtils {
 		List<DoorLocationPlacement> doors = new ArrayList<DoorLocationPlacement>();
 		if (location != null) {
 			if ((location.getNorth() != null) && (MovementUtils.isBoundaryCrossable(location.getNorth()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNorth());
+				//Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNorth());
+				Door door = (Door) GameUtils.getDoor(location.getNorth());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.NORTH.name());
 				plc.setDoorName(door.getName());
@@ -264,7 +264,8 @@ public class GameUtils {
 				doors.add(plc);
 			}
 			if ((location.getSouth() != null) && (MovementUtils.isBoundaryCrossable(location.getSouth()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSouth());
+				//				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSouth());
+				Door door = (Door) GameUtils.getDoor(location.getSouth());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.SOUTH.name());
 				plc.setDoorName(door.getName());
@@ -280,7 +281,8 @@ public class GameUtils {
 				doors.add(plc);
 			}
 			if ((location.getWest() != null) && (MovementUtils.isBoundaryCrossable(location.getWest()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getWest());
+				//				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getWest());
+				Door door = (Door) GameUtils.getDoor(location.getWest());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.WEST.name());
 				plc.setDoorName(door.getName());
@@ -288,7 +290,8 @@ public class GameUtils {
 				doors.add(plc);
 			}
 			if ((location.getNortheast() != null) && (MovementUtils.isBoundaryCrossable(location.getNortheast()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNortheast());
+				//				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNortheast());
+				Door door = (Door) GameUtils.getDoor(location.getEast());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.NORTHEAST.name());
 				plc.setDoorName(door.getName());
@@ -296,7 +299,8 @@ public class GameUtils {
 				doors.add(plc);
 			}
 			if ((location.getNorthwest() != null) && (MovementUtils.isBoundaryCrossable(location.getNorthwest()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNorthwest());
+				//				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getNorthwest());
+				Door door = (Door) GameUtils.getDoor(location.getNorthwest());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.NORTHWEST.name());
 				plc.setDoorName(door.getName());
@@ -304,7 +308,8 @@ public class GameUtils {
 				doors.add(plc);
 			}
 			if ((location.getSoutheast() != null) && (MovementUtils.isBoundaryCrossable(location.getSoutheast()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSoutheast());
+				//				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSoutheast());
+				Door door = (Door) GameUtils.getDoor(location.getSoutheast());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.SOUTHEAST.name());
 				plc.setDoorName(door.getName());
@@ -312,7 +317,8 @@ public class GameUtils {
 				doors.add(plc);
 			}
 			if ((location.getSouthwest() != null) && (MovementUtils.isBoundaryCrossable(location.getSouthwest()))) {
-				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSouthwest());
+				//				Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), location.getSouthwest());
+				Door door = (Door) GameUtils.getDoor(location.getSouthwest());
 				DoorLocationPlacement plc = new DoorLocationPlacement();
 				plc.setDirection(Movements.SOUTHWEST.name());
 				plc.setDoorName(door.getName());

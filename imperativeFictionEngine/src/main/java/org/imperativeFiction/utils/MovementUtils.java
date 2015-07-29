@@ -109,10 +109,14 @@ public class MovementUtils {
 		logger.debug("Current Location:" + location);
 		logger.debug("fromLocation:" + fromName);
 		logger.debug("toLocation:" + toName);
-		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(toName))
+		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(toName)) {
+			//			other = GameUtils.getLocation(fromName);
 			other = GameUtils.getLocation(fromName);
-		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(fromName))
+		}
+		if (location != null && location.getName() != null && location.getName().equalsIgnoreCase(fromName)) {
+			//other = GameUtils.getLocation(toName);
 			other = GameUtils.getLocation(toName);
+		}
 		return other;
 	}
 

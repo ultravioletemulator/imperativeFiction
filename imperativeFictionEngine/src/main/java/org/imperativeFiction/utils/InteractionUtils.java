@@ -39,7 +39,8 @@ public class InteractionUtils {
 			String doorName = gAction.getParameters().get(0);
 			String keyName = gAction.getParameters().get(2);
 			Door door = GameUtils.getElement(new DoorNameEquals(), GameExecutor.getRunningGame().getDefinition().getDoors().getDoor(), doorName);
-			ObjectType key = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), keyName);
+			//ObjectType key = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), keyName);
+			ObjectType key = GameUtils.getGameObject (keyName);
 			openDoor(door, key);
 		}
 		return GameUtils.setObjectsStatus(gAction, ObjectStatus.OPEN);
@@ -90,24 +91,23 @@ public class InteractionUtils {
 	public static ActionResponse getObject(GameAction gAction, Location location) {
 		ActionResponse response = GameExecutor.getFactory().createActionResponse();
 		if (gAction != null && gAction.getParameters() != null && gAction.getParameters().size() > 0) {
-			ObjectType obj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), gAction.getParameters().get(0));
+			String objName = gAction.getParameters().get(0);
+			//			ObjectType obj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), objName);
+
+			ObjectType obj = GameUtils.getGameObject(objName != null ? objName.toLowerCase() : null);
 			//			System.out.println("Found Object:" + obj);
 			if (obj != null) {
-				//				System.out.println("Adding to inventory:" + GameExecutor.getGameState().getInventory());
-				//				if (GameExecutor.getInventory()==null)
 				GameExecutor.getGameState().getInventory().getObjectName().add(obj.getName());
-				//				System.out.println("inventory after:" + GameExecutor.getGameState().getInventory());
-				//removeObject from location ....
 				ObjectPlacement placement = GameUtils.getPlacement(obj, location);
 				GameExecutor.getGameState().getGameObjectPlacements().getObjectPlacements().remove(placement);
+				response.setResponse("You got " + obj.getName());
 			}
-			response.setResponse("You got " + obj.getName());
+			response.setResponse("Could not get " + objName);
 		} else {
 			response.setResponse("I don't know what to " + gAction.getAction().getName());
 		}
 		return response;
 	}
-
 
 	public static ActionResponse openDoor(Door door, ObjectType obj) {
 		ActionResponse res = new ActionResponse();
@@ -150,7 +150,8 @@ public class InteractionUtils {
 		//System.out.println("TODO");
 		ActionResponse resp = new ActionResponse();
 		ObjectCombination oc = findObjectCombination(o1, o2);
-		ObjectType resObj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), oc.getObjectResult());
+//		ObjectType resObj = GameUtils.getElement(new ObjectTypeNameEquals(), GameExecutor.getRunningGame().getDefinition().getGameObjects().getObject(), oc.getObjectResult());
+		ObjectType resObj = GameUtils.getGameObject(oc.getObjectResult());
 		if (resObj != null) {
 			InventoryUtils.removeFromInventory(o1);
 			InventoryUtils.removeFromInventory(o2);
