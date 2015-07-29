@@ -113,27 +113,63 @@ public class GameExecutor {
 	}
 
 	private void loadGameObjects() {
+		int objSize = runningGame.getDefinition().getGameObjects().getObject().size();
+		logger.debug("loading gameObjects...");
+		int i = 0;
 		for (ObjectType obj : runningGame.getDefinition().getGameObjects().getObject()) {
 			gameObjects.put(obj.getName().toLowerCase(), obj);
+			logger.debug(obj.getName());
+			logger.debug(i + " of " + objSize);
+			i++;
 		}
+		logger.debug("loading gameWeapons...");
+		int weaponSize = runningGame.getDefinition().getGameWeapons().getWeapon().size();
+		i = 0;
 		for (ObjectType obj : runningGame.getDefinition().getGameWeapons().getWeapon()) {
 			gameObjects.put(obj.getName().toLowerCase(), obj);
+			logger.debug(obj.getName());
+			logger.debug(i + " of " + weaponSize);
+			i++;
 		}
+		logger.debug("loading gameArmours...");
+		int armourSize = runningGame.getDefinition().getGameArmours().getArmour().size();
+		i = 0;
 		for (ObjectType obj : runningGame.getDefinition().getGameArmours().getArmour()) {
 			gameObjects.put(obj.getName().toLowerCase(), obj);
+			logger.debug(obj.getName());
+			logger.debug(i + " of " + armourSize);
+			i++;
 		}
 		logger.debug("Loaded GameObjects:" + gameObjects);
 		//		load Locations
+		logger.debug("loading gameLocations...");
+		int locationSize = runningGame.getDefinition().getLocations().getLocation().size();
+		i = 0;
 		for (Location obj : runningGame.getDefinition().getLocations().getLocation()) {
 			gameLocations.put(obj.getName().toLowerCase(), obj);
+			logger.debug(obj.getName());
+			logger.debug(i + " of " + locationSize);
+			i++;
 		}
 		logger.debug("Loaded gameLocations:" + gameLocations);
+		logger.debug("loading gameDoors...");
+		int doorSize = runningGame.getDefinition().getDoors().getDoor().size();
+		i = 0;
 		for (Door obj : runningGame.getDefinition().getDoors().getDoor()) {
 			gameDoors.put(obj.getName().toLowerCase(), obj);
+			logger.debug(obj.getName());
+			logger.debug(i + " of " + doorSize);
+			i++;
 		}
 		logger.debug("Loaded gameDoors:" + gameDoors);
+		logger.debug("loading gameObjectPlacements...");
+		int placmentSize = runningGame.getDefinition().getGameObjectPlacements().getObjectPlacements().size();
+		i = 0;
 		for (ObjectPlacement obj : runningGame.getDefinition().getGameObjectPlacements().getObjectPlacements()) {
 			gameObjectPlacements.put(obj.getName().toLowerCase(), obj);
+			logger.debug(obj.getName());
+			logger.debug(i + " of " + placmentSize);
+			i++;
 		}
 		logger.debug("Loaded gameObjectPlacements:" + gameObjectPlacements);
 	}
