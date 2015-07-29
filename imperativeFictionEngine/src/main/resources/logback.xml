@@ -33,26 +33,26 @@
 
 
 
-    <!-- -->
-    <logger name="org.impertiveFiction" level="DEBUG">
-        <appender-ref ref="file"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-    <logger name="org.impertiveFiction.engine" level="DEBUG">
-        <appender-ref ref="file"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-    <logger name="org.impertiveFiction.presentations" level="DEBUG">
-        <appender-ref ref="file"/>
-        <appender-ref ref="CONSOLE"/>
-    </logger>
-
-
     <!--
+    <logger name="org.imperativeFiction" level="DEBUG">
+        <appender-ref ref="file"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+    <logger name="org.imperativeFiction.engine" level="DEBUG">
+        <appender-ref ref="file"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+
+    <logger name="org.imperativeFiction.presentations" level="DEBUG">
+        <appender-ref ref="file"/>
+        <appender-ref ref="CONSOLE"/>
+    </logger>
+-->
+
+    <!-- -->
     <root level="debug">
         <appender-ref ref="file"/>
         <appender-ref ref="CONSOLE"/>
     </root>
--->
+
 </configuration>
